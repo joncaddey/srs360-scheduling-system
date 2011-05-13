@@ -217,6 +217,9 @@ The "braces on same line" style for Spring 2010 TCSS 305.
       <property name="format" value="^[a-rt-z][_a-zA-Z0-9]*$|^s[_a-np-zA-Z0-9][_a-zA-Z0-9]*$|^so[_a-ln-zA-Z0-9][_a-zA-Z0-9]*|som[_a-df-zA-Z0-9][_a-zA-Z0-9]*|some[a-zA-Z0-9][_a-zA-Z0-9]*|^s$|^so$|^som$|^some$ "/>
       <message key="name.invalidPattern" value="Local variable ''{0}'' must start with a lowercase letter, contain only lowercase letters, numbers and underscores, and not start with &quot;some_&quot;."/>
     </module>
+    <module name="LineLength">
+      <property name="max" value="60"/>
+    </module>
   </module>
   <module name="FileLength">
     <property name="max" value="1000"/>
