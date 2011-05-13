@@ -7,7 +7,8 @@
  */
 
 /**
- * Represents a Schedule within the program. <br>
+ * Contains information about a course like course title, level, etc., but not
+ * information about a specific section like who teaches it. <br>
  * <br>
  * <b>Invariants:</b>
  * <ul>
@@ -17,7 +18,7 @@
  * @author Jonathan Caddey
  * @version May 13, 2011
  */
-public class Schedule
+public class Course
 {
 
 }

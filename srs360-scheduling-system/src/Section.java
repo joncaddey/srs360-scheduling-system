@@ -7,7 +7,8 @@
  */
 
 /**
- * Represents a Schedule within the program. <br>
+ * Sections represent actual course offerings. A Section has an instructor to
+ * teach it as well as a time when it is taught, whereas a Course does not. <br>
  * <br>
  * <b>Invariants:</b>
  * <ul>
@@ -17,7 +18,7 @@
  * @author Jonathan Caddey
  * @version May 13, 2011
  */
-public class Schedule
+public class Section
 {
-
+  
 }
