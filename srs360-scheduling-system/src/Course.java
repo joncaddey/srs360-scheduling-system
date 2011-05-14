@@ -13,7 +13,7 @@
  * <br>
  * <b>Invariants:</b>
  * <ul>
- * <li>invariant1</li>
+ * <li>the curriculum code and title are not null.</li>
  * </ul>
  * 
  * @author Jonathan Caddey
@@ -48,13 +48,59 @@ public class Course
    *          course.
    * @param the_level the level of the course.
    * @param the_title the title of the course.
+   * @throws IllegalArgumentException if the_curriculum_code
+   *           or the_title are null.
    */
   public Course(final String the_curriculum_code,
                 final int the_level, final String the_title)
+    throws IllegalArgumentException
   {
+    if (the_curriculum_code == null || the_title == null)
+    {
+      throw new IllegalArgumentException(
+        "the_curriculum_code " +
+        "and the_title must be non-null");
+    }
     my_curriculum_code = the_curriculum_code;
     my_level = the_level;
     my_title = the_title;
+  }
+
+  /**
+   * <b>Preconditions:</b> none.<br>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null</li>
+   * </ul>
+   * 
+   * @return the "TCSS" in "TCSS 360"
+   */
+  public String getCurriculumCode()
+  {
+    return my_curriculum_code;
+  }
+
+  /**
+   * @return the 360 in "TCSS 360"
+   */
+  public int getLevel()
+  {
+    return my_level;
+  }
+
+  /**
+   * <b>Preconditions:</b> none.<br>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null</li>
+   * </ul>
+   * 
+   * @return the name of the Course, as it appears on the
+   *         Schedule.
+   */
+  public String getTitle()
+  {
+    return my_title;
   }
 
 }
