@@ -27,33 +27,39 @@ public class Schedule
 
   }
 
+  public boolean hasSection(final Course the_course)
+  {
+    return false;
+  }
+
   /**
+   * Determines whether the Schedule has a Section meeting
+   * the given parameters.  Returns true if there exists a Section on the Schedule
+   * which is of the_course, AND meets at one of the given GeneralTimes, AND
+   * only meets on days specified in the_days.  Returns false otherwise.<br>
    * <br>
-   * <br>
-   * <b>Preconditions:</b>
-   * <ul>
-   * <li>pre1</li>
-   * <li>pre2</li>
-   * </ul>
+   * <b>Preconditions:</b> none. </br>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>post1</li>
+   * <li>TODO</li>
    * <li>post2</li>
    * </ul>
    * 
-   * @param the_courses The Courses that should be on the
-   *          schedule.
-   * @param the_time_preference The times the Courses should
-   *          be offered.
-   * @return which Courses from the_courses are not on the
-   *         Schedule at the given time_preference.
+   * @param the_course the Course being looked for
+   * @param the_times the times the course is desired
+   * @param the_days the days that the desired course may be on
+   * @return
    */
-  public Collection<Course> getMissingCourses(
-      final Collection<Course> the_courses,
-      final TimePreference the_time_preference)
+  public boolean hasSection(final Course the_course,
+      final Collection<GeneralTime> the_times,
+      final Collection<Day> the_days)
   {
+    return false;
+  }
 
+  public Collection<Section> getSectionsTaughtBy(
+      final User the_instructor)
+  {
     return null;
-
   }
 }
