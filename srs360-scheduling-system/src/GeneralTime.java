@@ -11,9 +11,10 @@
  * preferences. <br>
  * 
  * @author Jonathan Caddey
+ * @author David Liddington(removed EITHER, changed name)
  * @version May 13, 2011
  */
-public enum TimePreference
+public enum GeneralTime
 {
 
   /**
@@ -24,10 +25,6 @@ public enum TimePreference
   /**
    * Prefers attending in the evening.
    */
-  EVENING,
-
-  /**
-   * Has no preference as to when to attend.
-   */
-  EITHER;
+  EVENING
+  
 }
