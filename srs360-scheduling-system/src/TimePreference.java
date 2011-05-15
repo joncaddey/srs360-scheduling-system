@@ -7,10 +7,8 @@
  */
 
 /**
- * Users use this class to express their general time preferences.
- * <br>
- * <br>
- * <b>Invariants:</b> none <br>
+ * Users use this class to express their general time
+ * preferences. <br>
  * 
  * @author Jonathan Caddey
  * @version May 13, 2011

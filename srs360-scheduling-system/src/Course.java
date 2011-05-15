@@ -55,11 +55,15 @@ public class Course
                 final int the_level, final String the_title)
     throws IllegalArgumentException
   {
-    if (the_curriculum_code == null || the_title == null)
+    if (the_curriculum_code == null)
     {
       throw new IllegalArgumentException(
-        "the_curriculum_code " +
-        "and the_title must be non-null");
+        "the_curriculum_code must not be null");
+    }
+    if (the_title == null)
+    {
+      throw new IllegalArgumentException(
+        "the_title must not be null");
     }
     my_curriculum_code = the_curriculum_code;
     my_level = the_level;
