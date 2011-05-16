@@ -6,6 +6,8 @@
  * srs360-scheduling-system
  */
 
+import java.util.Collection;
+
 /**
  * Sections represent actual course offerings. A Section has
  * an instructor to teach it as well as a time when it is
@@ -83,6 +85,17 @@ public class Section
   public User getInstructor()
   {
     return my_instructor;
+  }
+
+  // TODO should these methods be here?
+  public GeneralTime getGeneralTime()
+  {
+    return null;
+  }
+
+  public Collection<Day> getDays()
+  {
+    return null;
   }
 
 }
