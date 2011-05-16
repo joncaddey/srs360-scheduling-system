@@ -20,7 +20,7 @@ import java.util.Map;
  * </ul>
  * 
  * @author Gregory Cloutier
- * @version May 13, 2011
+ * @version May 16, 2011
  */
 public class UserCommunity
 {
