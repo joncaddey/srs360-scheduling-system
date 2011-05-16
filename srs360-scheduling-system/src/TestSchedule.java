@@ -82,6 +82,7 @@ public class TestSchedule
    * one is of the right Course and meets on none other than
    * the desired days.
    */
+  @Test
   public void testBadTimeSection()
   {
     my_days.remove(Day.MONDAY);
@@ -98,6 +99,7 @@ public class TestSchedule
    * No matching Sections are found, but one is of the right
    * Course and meets at one of the desired times.
    */
+  @Test
   public void testMissingDaysHasSection()
   {
     my_days.remove(Day.MONDAY);
@@ -112,6 +114,7 @@ public class TestSchedule
    * other than the desired days and meets at one of the
    * desired times.
    */
+  @Test
   public void testMissingCourseHasSection()
   {
     my_days.remove(Day.MONDAY);
