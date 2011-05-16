@@ -7,9 +7,10 @@ import java.util.List;
  * 
  * TCSS 360 Dr. Tenenberg
  * 
- * srs360-scheduling-system 
- */
-public class StudentPreferences
+ * srs360-scheduling-system
+ */  
+     
+public class InstructorPreferences
 {
   private List<Course> my_preferred_courses;
   
@@ -17,7 +18,9 @@ public class StudentPreferences
   
   private List<GeneralTime> my_preferred_general_times;
   
-  public StudentPreferences()
+  private int my_max_credit_hours;
+  
+  public InstructorPreferences()
   {
     my_preferred_courses = new ArrayList<Course>();
     my_preferred_days = new ArrayList<Day>();
@@ -67,5 +70,15 @@ public class StudentPreferences
   {
     return my_preferred_general_times;
   }
-
+  
+  public void setMaxCreditHours(int the_max_credit_hours)
+  {
+    my_max_credit_hours = the_max_credit_hours;
+  }
+  
+  public int getMaxCreditHours()
+  {
+    return my_max_credit_hours;
+  }
+  
 }
