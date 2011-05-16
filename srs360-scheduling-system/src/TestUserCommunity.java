@@ -15,14 +15,6 @@ import org.junit.Test;
  */
 
 /**
- * 
- * <br>
- * <br>
- * <b>Invariants:</b>
- * <ul>
- * <li>invariant1</li>
- * </ul>
- * 
  * @author Gregory Cloutier
  * @version May 16, 2011
  */
