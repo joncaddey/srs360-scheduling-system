@@ -9,57 +9,132 @@
 import java.util.Collection;
 
 /**
- * Represents a Schedule within the program. <br>
+ * Represents a Schedule within the program. Schedules are
+ * immutable.<br>
  * <br>
- * <b>Invariants:</b>
- * <ul>
- * <li>invariant1</li>
- * </ul>
+ * <b>Invariants:</b> none<br>
  * 
  * @author Jonathan Caddey
  * @version May 13, 2011
  */
 public class Schedule
 {
+  /**
+   * Creates a Schedule with the given Sections.
+   * 
+   * @param the_sections the Sections that are to be in the
+   *          Schedule.
+   * @throws IllegalArgumentException if the_sections is
+   *           null or contains null.
+   */
   public Schedule(final Collection<Section> the_sections)
     throws IllegalArgumentException
   {
 
   }
 
+  /**
+   * Determines whether there is a Section of the_course on
+   * this Schedule. Details such as the days the Section
+   * meets or who teaches the Section are ignored. <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_course is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>no Section of the_course is on this Schedule if
+   * false is returned</li>
+   * </ul>
+   * 
+   * @param the_course The Course being sought
+   * @return whether the_course is on this Schedule
+   */
   public boolean hasSection(final Course the_course)
   {
     return false;
   }
 
   /**
-   * Determines whether the Schedule has a Section meeting
-   * the given parameters.  Returns true if there exists a Section on the Schedule
-   * which is of the_course, AND meets at one of the given GeneralTimes, AND
-   * only meets on days specified in the_days.  Returns false otherwise.<br>
+   * Determines whether this Schedule has a Section meeting
+   * the given parameters. Returns true if there exists a
+   * Section on the Schedule which is of the_course, AND
+   * only meets on days included in the_days, AND meets at
+   * one of the_times. Returns false otherwise.
+   * 
    * <br>
-   * <b>Preconditions:</b> none. </br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_course is not null</li>
+   * <li>the_days is not null and does not contain null</li>
+   * <li>the_times is not null and does not contain null
+   * 
+   * </li>
+   * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
-   * <li>post2</li>
+   * <li>no Section of the_course which matches all
+   * parameters is on this Schedule if false is returned
+   * 
+   * </li>
    * </ul>
    * 
    * @param the_course the Course being looked for
-   * @param the_times the times the course is desired
-   * @param the_days the days that the desired course may be on
-   * @return
+   * @param the_days the days that the desired course may be
+   * @param the_times the times at which the course is
+   *          desired to be held
+   * @return whether this Schedule has at least one Section
+   *         meeting the given parameters.
    */
   public boolean hasSection(final Course the_course,
-      final Collection<GeneralTime> the_times,
-      final Collection<Day> the_days)
+      final Collection<Day> the_days,
+      final Collection<GeneralTime> the_times)
   {
     return false;
   }
 
+  /**
+   * Returns all the Sections taught by the given
+   * instructor. <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_instructor is not null</li>
+   * <li>the_instructor is an instructor</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>there is no Section in the Schedule which is taught
+   * by the_instructor and also not returned</li>
+   * </ul>
+   * 
+   * @param the_instructor a User who is an instructor.
+   * @return all the Sections taught by the_instructor.
+   */
   public Collection<Section> getSectionsTaughtBy(
       final User the_instructor)
   {
     return null;
+  }
+
+  /**
+   * Returns a Collection of all Sections on the Schedule.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b> none <br>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>The return value is not null</li>
+   * </ul>
+   * 
+   * @return the Sections on the Schedule.
+   */
+  public Collection<Section> getSections()
+  {
+    return null;
+
   }
 }
