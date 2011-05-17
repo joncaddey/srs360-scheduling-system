@@ -1,4 +1,4 @@
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
@@ -15,7 +15,10 @@ import java.util.Collection;
  * <b>Invariants:</b> none<br>
  * 
  * @author Jonathan Caddey
- * @version May 13, 2011
+ * @version May 16, 2011: Changed file header.
+ * @version May 13, 2011: Class created, hasSection,
+ *          getSectionsTaughtBy, getSections signatures
+ *          added.
  */
 public class Schedule
 {
