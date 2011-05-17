@@ -1,4 +1,4 @@
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
