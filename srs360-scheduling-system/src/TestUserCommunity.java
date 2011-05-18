@@ -16,7 +16,9 @@ import org.junit.Test;
 
 /**
  * @author Gregory Cloutier
- * @version May 16, 2011
+ * @version 05/16/11 Made Test class
+ * @version 05/18/11 Made Changes to testAuthenticate()
+ *          method.
  */
 public class TestUserCommunity
 {
@@ -37,22 +39,21 @@ public class TestUserCommunity
   public void setUp() throws Exception
   {
     my_users = new ArrayList<User>();
-    my_users.add(new User("bill"));
+    my_users.add(new User("bill", "bcstereo", "123456",
+      true, false, false, false));
     my_community = new UserCommunity(my_users);
   }
 
   /**
-   * Test method for
-   * {@link UserCommunity#authenticate
-   *   (java.lang.String, java.lang.String)}
-   * .
+   * Test method for UserCommunity's authenticate method .
    */
   @Test
   public void testAuthenticate()
   {
-    assertTrue(my_community.authenticate("bill", "123456"));
-    assertFalse(my_community.authenticate("lisa",
-                                          "098765"));
+    assertTrue("bcstereo is not within the system",
+        my_community.authenticate("bcstereo", "123456"));
+    assertFalse("lisa1997 is within the system",
+        my_community.authenticate("lisa1997", "098765"));
   }
 
 }

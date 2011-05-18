@@ -20,7 +20,9 @@ import java.util.Map;
  * </ul>
  * 
  * @author Gregory Cloutier
- * @version May 16, 2011
+ * @version 05/16/11 Made class
+ * @version 05/18/11 Updated authenticate() and constructor
+ *          method.
  */
 public class UserCommunity
 {
@@ -36,10 +38,11 @@ public class UserCommunity
   public UserCommunity
   (final Collection<User> a_list_of_users)
   {
+    // Under Construction
     my_authenticated_users = new HashMap<String, User>();
     for (User u : a_list_of_users)
     {
-      my_authenticated_users.put(u.getUserID(), u);
+      my_authenticated_users.put(u.getUserName(), u);
     }
   }
 
@@ -64,11 +67,13 @@ public class UserCommunity
   public boolean authenticate(final String a_user_id,
       final String a_password)
   {
+    boolean is_correct = false;
     if (my_authenticated_users.containsKey(a_user_id))
     {
-      return a_password == my_authenticated_users.get(
-          a_user_id).getPassword();
+      is_correct =
+          my_authenticated_users.get(a_user_id)
+              .authenticate(a_password);
     }
-    return false;
+    return is_correct;
   }
 }
