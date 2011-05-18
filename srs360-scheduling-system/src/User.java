@@ -20,7 +20,13 @@ import java.util.List;
  */
 public class User
 {
-  private String my_name;
+  private final String my_name;
+  private final String my_user_name;
+  private final String my_password;
+  private final boolean my_is_student;
+  private final boolean my_is_instructor;
+  private final boolean my_is_advisor;
+  private final boolean my_is_scheduler;
   private AdvisorPreferences advisor_preferences;
   private StudentPreferences student_preferences;
   private InstructorPreferences instructor_preferences;
@@ -31,13 +37,55 @@ public class User
    * @param the_name The user name.
    * @throws IllegalArgumentException if the name is null.
    */
-  public User(final String the_name)
-                           throws IllegalArgumentException
+  public User(final String the_name,
+              final String the_user_name,
+              final String the_password,
+              final boolean the_is_student,
+              final boolean the_is_instructor,
+              final boolean the_is_advisor,
+              final boolean the_is_scheduler)
+                             throws IllegalArgumentException
   {
     my_name = the_name; 
+    my_user_name = the_user_name;
+    my_password = the_password;
+    my_is_student = the_is_student;
+    my_is_instructor = the_is_instructor;
+    my_is_advisor = the_is_advisor;
+    my_is_scheduler = the_is_scheduler;
     advisor_preferences = new AdvisorPreferences();
     student_preferences = new StudentPreferences();
     instructor_preferences = new InstructorPreferences();   
+  }
+   
+  public boolean authenticate(String the_password)
+  {
+    return my_password.equals(the_password);
+  }
+  
+  public String getUserName()
+  {
+    return my_user_name;
+  }
+  
+  public boolean isStudent()
+  {
+    return my_is_student;
+  }
+  
+  public boolean isInstructor()
+  {
+    return my_is_instructor;
+  }
+  
+  public boolean isAdvisor()
+  {
+    return my_is_advisor;
+  }
+  
+  public boolean isScheduler()
+  {
+    return my_is_scheduler;
   }
   
   /**
@@ -50,11 +98,13 @@ public class User
    * @param the_schedule The Schedule of Courses
    * @return A List of missing Courses
    */
-  public List<Course> getAdvisorFeedback(Schedule the_schedule)
+  public List<Course> getAdvisorFeedback
+                                     (Schedule the_schedule)
   {
-    List<Course> missingCourseList = new ArrayList<Course>();
+    List<Course> missingCourseList =
+                                    new ArrayList<Course>();
     for (Course advisorPreferredCourse:
-                advisor_preferences.getPreferredCourses())
+                  advisor_preferences.getPreferredCourses())
     {
       if (!Schedule.contains(advisorPreferredCourse))
       {
@@ -63,5 +113,7 @@ public class User
     }
     return missingCourseList;
   }
+  
+  
   
 }
