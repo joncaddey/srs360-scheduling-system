@@ -30,7 +30,7 @@ public class TestUser
   @Before
   public void setUp()
   {
-    user = new User(null);
+    user = new User("David");
     advisor_preferences = new AdvisorPreferences();
   }
   
