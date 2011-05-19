@@ -106,7 +106,7 @@ public class User
     for (Course advisorPreferredCourse:
                   advisor_preferences.getPreferredCourses())
     {
-      if (!Schedule.contains(advisorPreferredCourse))
+      if (!the_schedule.hasSection(advisorPreferredCourse))
       {
         missingCourseList.add(advisorPreferredCourse);
       }
@@ -114,6 +114,51 @@ public class User
     return missingCourseList;
   }
   
+  public List<ArrayList<Course>> getStudentFeedback
+                                     (Schedule the_schedule)
+  {
+    List<ArrayList<Course>> feedbackList =
+                         new ArrayList<ArrayList<Course>>();  
+    ArrayList<Course> missingCourseList =
+                                    new ArrayList<Course>();
+    ArrayList<Course> wrongDayCourseList =
+                                    new ArrayList<Course>(); 
+    ArrayList<Course> wrongTimeCourseList =
+                                    new ArrayList<Course>();   
+    feedbackList.add(missingCourseList);
+    feedbackList.add(wrongDayCourseList);
+    feedbackList.add(wrongTimeCourseList);
+    
+    List<Day> preferredDays =
+                     student_preferences.getPreferredDays();
+    List<GeneralTime> preferredTimes =
+             student_preferences.getPreferredGeneralTimes();
+    
+    for (Course studentPreferredCourse:
+                  student_preferences.getPreferredCourses())
+    {   
+      if (!the_schedule.hasSection(studentPreferredCourse))
+      {
+        missingCourseList.add(studentPreferredCourse);
+      }
+      
+      if (the_schedule.hasSection(studentPreferredCourse)
+          && !preferredDays.contains(the_schedule.getCourse
+                        (studentPreferredCourse).getDays()))
+      {
+        wrongDayCourseList.add(studentPreferredCourse);
+      }
+      
+      if (the_schedule.hasSection(studentPreferredCourse)
+          && !preferredTimes.contains(the_schedule.getCourse
+            (studentPreferredCourse).getMorningOrEvening()))
+      {
+        wrongTimeCourseList.add(studentPreferredCourse);
+      }   
+    } 
+    return feedbackList;
+     
+  }
   
   
 }
