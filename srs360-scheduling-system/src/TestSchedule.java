@@ -27,7 +27,7 @@ public class TestSchedule
    * A Course representing TCSS 360.
    */
   private final Course my_course_360 = new Course("TCSS",
-    360, "QA");
+    360, "QA", 5);
 
   /**
    * An instructor User.
@@ -120,7 +120,7 @@ public class TestSchedule
     my_days.remove(Day.MONDAY);
     assertFalse("Should not have found, no Course",
         my_schedule_360.hasSection(new Course("TCSS", 305,
-          "Weed Out"), my_days, my_times));
+          "Weed Out", 5), my_days, my_times));
   }
 
   /**
