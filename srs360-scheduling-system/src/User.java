@@ -114,6 +114,24 @@ public class User
     return missingCourseList;
   }
   
+  /**
+   * Returns a List of 3 Lists of Courses which do not meet
+   * the student's requirements: a List of classes not
+   * available, a List of classes on the wrong day, and a
+   * List of classes at the wrong time.
+   * <br>
+   * <br>
+   * <b>Preconditions: the Schedule.</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * <b>Postconditions: the 3 Lists.</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * @param the_schedule The Schedule
+   * @return A List of 3 Lists
+   */
   public List<ArrayList<Course>> getStudentFeedback
                                      (Schedule the_schedule)
   {
@@ -156,9 +174,13 @@ public class User
         wrongTimeCourseList.add(studentPreferredCourse);
       }   
     } 
-    return feedbackList;
-     
+    return feedbackList;    
   }
   
-  
+  public List<ArrayList<Course>> getInstructorFeedback
+                                     (Schedule the_schedule)
+  {
+    return null;
+  }
+   
 }
