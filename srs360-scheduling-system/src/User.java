@@ -167,12 +167,8 @@ public class User
           }
         }     
       }
-      return sfs_collection;
-    }
-    
-    
-    
-    return sfs;
+    } 
+    return sfs_collection;
     
   }
   
