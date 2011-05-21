@@ -116,25 +116,27 @@ public class User
   }
   
   /**
-   * Returns a List of 3 Lists of Courses which do not meet
-   * the student's requirements: a List of classes not
-   * available, a List of classes on the wrong day, and a
-   * List of classes at the wrong time.
+   * For every course this student wants to take, this
+   * method returns the day and time he wants to take it, if
+   * the schedule does not already provide that.
    * <br>
    * <br>
    * <b>Preconditions: the Schedule.</b>
    * <ul>
    * <li>TODO</li>
    * </ul>
-   * <b>Postconditions: the 3 Lists.</b>
+   * <b>Postconditions: a Collection of responses, or 
+   * feedbacks, from the student. Each feedback has a course
+   * the student wants to take and the day and time he wants
+   * to take it.</b>
    * <ul>
    * <li>TODO</li>
    * </ul>
    * @param the_schedule The Schedule
-   * @return A List of 3 Lists
+   * @return A Collection of student feedbacks
    */
-  public Collection<Course> getStudentFeedback
-                                     (Schedule the_schedule)
+  public Collection<StudentFeedbackSummary> getStudentFeedback
+                               (final Schedule the_schedule)
   {
     Collection<StudentFeedbackSummary> sfs_collection
                   = new ArrayList<StudentFeedbackSummary>();
@@ -145,23 +147,24 @@ public class User
     List<GeneralTime> preferred_times =
              student_preferences.getPreferredGeneralTimes();
  
-    for(Course each_course: preferred_courses)
+    for(Course each_course : preferred_courses)
     {
       if(!the_schedule.hasSection(each_course,
                                   preferred_days,
                                   preferred_times))
       {
-        for(Day eachDay : Day.getAllDays())
+        for(Day each_day : Day.getAllDays())
         {
-          for(GeneralTime eachTime :
+          for(GeneralTime each_time :
                            GeneralTime.getAllGeneralTimes())
           {
-            if(preferred_days.contains(eachDay) &&
-               preferred_times.contains(eachTime))
+            if(preferred_days.contains(each_day) &&
+               preferred_times.contains(each_time))
             {
               StudentFeedbackSummary a_new_sfs =
-              new StudentFeedbackSummary(eachDay, eachTime);
-              
+                     new StudentFeedbackSummary(each_course,
+                                                each_day,
+                                                each_time);            
               sfs_collection.add(a_new_sfs);
             }
           }
