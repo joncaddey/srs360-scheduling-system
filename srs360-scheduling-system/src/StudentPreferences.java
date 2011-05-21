@@ -53,12 +53,14 @@ public class StudentPreferences
     return my_preferred_days;
   }
   
-  public void addPreferredGeneralTime(GeneralTime the_general_time)      
+  public void addPreferredGeneralTime
+                              (GeneralTime the_general_time)      
   {
     my_preferred_general_times.add(the_general_time);
   }
   
-  public void removePreferredGeneralTime(GeneralTime the_general_time)      
+  public void removePreferredGeneralTime
+                              (GeneralTime the_general_time)      
   {
     my_preferred_general_times.remove(the_general_time);
   }
