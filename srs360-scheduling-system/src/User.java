@@ -6,6 +6,7 @@
  * srs360-scheduling-system
  */
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -132,49 +133,47 @@ public class User
    * @param the_schedule The Schedule
    * @return A List of 3 Lists
    */
-  public List<ArrayList<Course>> getStudentFeedback
+  public Collection<Course> getStudentFeedback
                                      (Schedule the_schedule)
   {
-    List<ArrayList<Course>> feedbackList =
-                         new ArrayList<ArrayList<Course>>();  
-    ArrayList<Course> missingCourseList =
-                                    new ArrayList<Course>();
-    ArrayList<Course> wrongDayCourseList =
-                                    new ArrayList<Course>(); 
-    ArrayList<Course> wrongTimeCourseList =
-                                    new ArrayList<Course>();   
-    feedbackList.add(missingCourseList);
-    feedbackList.add(wrongDayCourseList);
-    feedbackList.add(wrongTimeCourseList);
-    
-    List<Day> preferredDays =
+    Collection<StudentFeedbackSummary> sfs_collection
+                  = new ArrayList<StudentFeedbackSummary>();
+    List<Course> preferred_courses =
+                  student_preferences.getPreferredCourses();
+    List<Day> preferred_days =
                      student_preferences.getPreferredDays();
-    List<GeneralTime> preferredTimes =
+    List<GeneralTime> preferred_times =
              student_preferences.getPreferredGeneralTimes();
+ 
+    for(Course each_course: preferred_courses)
+    {
+      if(!the_schedule.hasSection(each_course,
+                                  preferred_days,
+                                  preferred_times))
+      {
+        for(Day eachDay : Day.getAllDays())
+        {
+          for(GeneralTime eachTime :
+                           GeneralTime.getAllGeneralTimes())
+          {
+            if(preferred_days.contains(eachDay) &&
+               preferred_times.contains(eachTime))
+            {
+              StudentFeedbackSummary a_new_sfs =
+              new StudentFeedbackSummary(eachDay, eachTime);
+              
+              sfs_collection.add(a_new_sfs);
+            }
+          }
+        }     
+      }
+      return sfs_collection;
+    }
     
-    for (Course studentPreferredCourse:
-                  student_preferences.getPreferredCourses())
-    {   
-      if (!the_schedule.hasSection(studentPreferredCourse))
-      {
-        missingCourseList.add(studentPreferredCourse);
-      }
-      
-      if (the_schedule.hasSection(studentPreferredCourse)
-          && !preferredDays.contains(the_schedule.getCourse
-                        (studentPreferredCourse).getDays()))
-      {
-        wrongDayCourseList.add(studentPreferredCourse);
-      }
-      
-      if (the_schedule.hasSection(studentPreferredCourse)
-          && !preferredTimes.contains(the_schedule.getCourse
-            (studentPreferredCourse).getMorningOrEvening()))
-      {
-        wrongTimeCourseList.add(studentPreferredCourse);
-      }   
-    } 
-    return feedbackList;    
+    
+    
+    return sfs;
+    
   }
   
   public List<ArrayList<Course>> getInstructorFeedback

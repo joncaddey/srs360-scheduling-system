@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Simple Random Sample
  * 
@@ -16,7 +19,6 @@
  */
 public enum GeneralTime
 {
-
   /**
    * Prefers attending in the morning.
    */
@@ -25,6 +27,15 @@ public enum GeneralTime
   /**
    * Prefers attending in the evening.
    */
-  EVENING
+  EVENING;
+  
+  public static List<GeneralTime> getAllGeneralTimes()
+  {
+    List<GeneralTime> times = new ArrayList<GeneralTime>();
+    times.add(GeneralTime.MORNING);
+    times.add(GeneralTime.EVENING);
+    
+    return times;  
+  }
   
 }
