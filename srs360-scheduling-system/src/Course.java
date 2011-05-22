@@ -85,7 +85,7 @@ public class Course
    * @return A unique identifier for the Course. Example:
    *         "TCSS360".
    */
-  public String getCurriculumCode()
+  public String getID()
   {
     return my_id;
   }
