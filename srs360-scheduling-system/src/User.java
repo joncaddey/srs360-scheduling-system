@@ -199,7 +199,7 @@ public class User
    * </ul>
    * @param the_schedule The Schedule
    * @return The Collection of instructor feedbacks
-   */
+   */     
   public Collection<InstructorFeedback> getInstructorFeedback
                                (final Schedule the_schedule)
   {
