@@ -50,7 +50,7 @@ public class UserCommunity
    * <b>Preconditions:</b>
    * <ul>
    * <li>There is a list of users and passwords associated
-   * with them</li>
+   * with them.</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
