@@ -12,26 +12,26 @@ import java.util.List;
 
 public class AdvisorPreferences
 {
-  private List<Course> my_preferred_courses;
+  private List<Section> my_preferred_sections;
   
   public AdvisorPreferences()
   {
-    my_preferred_courses = new ArrayList<Course>();
+    my_preferred_sections = new ArrayList<Section>();
   } 
 
-  public void addCourse(Course the_course)
+  public void addSection(Section the_section)
   {
-    my_preferred_courses.add(the_course);
+    my_preferred_sections.add(the_section);
   }
   
-  public void removeCourse(Course the_course)
+  public void removeCourse(Section the_section)
   {
-    my_preferred_courses.remove(the_course);
+    my_preferred_sections.remove(the_section);
   }
   
-  public List<Course> getPreferredCourses()
+  public List<Section> getPreferredSections()
   {
-    return my_preferred_courses;
+    return my_preferred_sections;
   }
 
 }
