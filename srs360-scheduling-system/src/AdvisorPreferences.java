@@ -1,7 +1,3 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
 /**
  * Simple Random Sample
  * 
@@ -9,29 +5,48 @@ import java.util.List;
  * 
  * srs360-scheduling-system
  */
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
+/**
+ * Stores a list of advisor preferred sections.
+ * TODO
+ * <br><br><b>Invariants:</b>
+ * <ul><li>TODO invariant1</li>
+ * </ul>
+ * 
+ * @author David
+ * @version May 21, 2011: Class created.
+ */
 public class AdvisorPreferences
 {
-  private List<Section> my_preferred_sections;
+  /**
+   * A list of preferred sections.
+   */
+  private List<Course> my_preferred_courses;
   
+  /**
+   * Creates a new AdvisorPreferences.
+   */
   public AdvisorPreferences()
   {
-    my_preferred_sections = new ArrayList<Section>();
+    my_preferred_courses = new ArrayList<Course>();
   } 
 
-  public void addSection(Section the_section)
+  public void addCourse(Course the_course)
   {
-    my_preferred_sections.add(the_section);
+    my_preferred_courses.add(the_course);
   }
   
-  public void removeCourse(Section the_section)
+  public void removecourse(Course the_course)
   {
-    my_preferred_sections.remove(the_section);
+    my_preferred_courses.remove(the_course);
   }
   
-  public List<Section> getPreferredSections()
+  public List<Course> getPreferredcourses()
   {
-    return my_preferred_sections;
+    return my_preferred_courses;
   }
 
 }

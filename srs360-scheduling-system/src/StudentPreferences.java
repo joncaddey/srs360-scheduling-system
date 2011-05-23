@@ -38,12 +38,12 @@ public class StudentPreferences
     return my_preferred_courses;
   }
   
-  public void addPreferredDays(Day day)
+  public void addDay(Day day)
   {
     my_preferred_days.add(day);
   }
   
-  public void removePerferredDays(Day day)
+  public void removeDay(Day day)
   {
     my_preferred_days.remove(day);
   }
@@ -53,16 +53,14 @@ public class StudentPreferences
     return my_preferred_days;
   }
   
-  public void addPreferredGeneralTime
-                              (GeneralTime the_general_time)      
+  public void addTime(GeneralTime the_time)      
   {
-    my_preferred_general_times.add(the_general_time);
+    my_preferred_general_times.add(the_time);
   }
   
-  public void removePreferredGeneralTime
-                              (GeneralTime the_general_time)      
+  public void removeTime(GeneralTime the_time)      
   {
-    my_preferred_general_times.remove(the_general_time);
+    my_preferred_general_times.remove(the_time);
   }
 
   public List<GeneralTime> getPreferredGeneralTimes()

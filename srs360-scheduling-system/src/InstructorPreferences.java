@@ -12,7 +12,7 @@ import java.util.List;
      
 public class InstructorPreferences
 {
-  private List<Course> my_preferred_courses;
+  private List<Section> my_preferred_sections;
   
   private List<Day> my_preferred_days;
   
@@ -22,31 +22,31 @@ public class InstructorPreferences
   
   public InstructorPreferences()
   {
-    my_preferred_courses = new ArrayList<Course>();
+    my_preferred_sections = new ArrayList<Section>();
     my_preferred_days = new ArrayList<Day>();
     my_preferred_general_times = new ArrayList<GeneralTime>();
   }
-  public void addCourse(Course the_course)
+  public void addSection(Section the_section)
   {
-    my_preferred_courses.add(the_course);
+    my_preferred_sections.add(the_section);
   }
   
-  public void removeCourse(Course the_course)
+  public void removeSection(Section the_section)
   {
-    my_preferred_courses.remove(the_course);
+    my_preferred_sections.remove(the_section);
   }
   
-  public List<Course> getPreferredCourses()
+  public List<Section> getPreferredSections()
   {
-    return my_preferred_courses;
+    return my_preferred_sections;
   }
   
-  public void addPreferredDays(Day day)
+  public void addDay(Day day)
   {
     my_preferred_days.add(day);
   }
   
-  public void removePerferredDays(Day day)
+  public void removeDay(Day day)
   {
     my_preferred_days.remove(day);
   }
@@ -56,12 +56,12 @@ public class InstructorPreferences
     return my_preferred_days;
   }
   
-  public void addPreferredGeneralTime(GeneralTime the_general_time)      
+  public void addTime(GeneralTime the_general_time)      
   {
     my_preferred_general_times.add(the_general_time);
   }
   
-  public void removePreferredGeneralTime(GeneralTime the_general_time)      
+  public void removeTime(GeneralTime the_general_time)      
   {
     my_preferred_general_times.remove(the_general_time);
   }
