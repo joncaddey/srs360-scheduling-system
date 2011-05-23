@@ -21,6 +21,7 @@ import java.util.List;
  */
 public class User
 {
+  /*probably has Catalogue reference*/
   private final String my_name;
   private final String my_user_name;
   private final String my_password;
@@ -123,61 +124,63 @@ public class User
   
   /**
    * For every course this student wants to take, this
-   * method returns the day and time he wants to take it, if
-   * the schedule does not already provide that.
+   * method returns a "feedback collection" of "dayslots"
+   * (MW, TR) and times (day, evening) he will be on campus
+   * to take it, if the_schedule does not already provide
+   * that.
    * <br>
    * <br>
-   * <b>Preconditions: the Schedule.</b>
+   * <b>Preconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>the_schedule != null</li>
+   * <li>the collection of dayslots (MW, TR) != null</li>
    * </ul>
-   * <b>Postconditions: a Collection of responses, or 
-   * feedbacks, from a student, each of which has a course
-   * the student wants to take and the day and time he wants
-   * to take it.</b>
+   * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>the feedback collection != null</li>
    * </ul>
-   * @param the_schedule The Schedule
-   * @return The Collection of student feedbacks
+   * @param the_schedule The schedule of courses
+   * @return The collection of feedbacks
    */
-  public Collection<StudentFeedback> getStudentFeedback
-                               (final Schedule the_schedule)
+  public Collection<StudentFeedbackSummary> getStudentFeedback
+          (final Schedule the_schedule,
+           final Collection<DaySlot> the_dayslot_collection)
   {
-    Collection<StudentFeedback> student_feedback_collection
-                         = new ArrayList<StudentFeedback>();
-    List<Course> preferred_courses =
+    final Collection<StudentFeedbackSummary> fbk_collection =
+                    new ArrayList<StudentFeedbackSummary>();
+    final List<Course> preferred_courses =
                   student_preferences.getPreferredCourses();
-    List<Day> preferred_days =
+    final List<Day> preferred_days =
                      student_preferences.getPreferredDays();
-    List<GeneralTime> preferred_times =
+    final List<GeneralTime> preferred_times =
              student_preferences.getPreferredGeneralTimes();
  
-    for(Course each_course : preferred_courses)
+    for (Course each_course : preferred_courses)
     {
-      if(!the_schedule.hasSection(each_course,
-                                  preferred_days,
-                                  preferred_times))
+      if (!the_schedule.hasSection(each_course,
+                                   preferred_days,
+                                   preferred_times))
       {
-        for(Day each_day : Day.getAllDays())
+        for (DaySlot each_dayslot : the_dayslot_collection)
         {
-          for(GeneralTime each_time :
+          for (GeneralTime each_time :
                            GeneralTime.getAllGeneralTimes())
           {
-            if(preferred_days.contains(each_day) &&
+            if (preferred_days.containsAll
+                                 (each_dayslot.getDays()) &&
                preferred_times.contains(each_time))
             {
-              StudentFeedback student_feedback =
-                new StudentFeedback(each_course,each_day,
-                                                 each_time);            
-              student_feedback_collection.add
-                                         (student_feedback);
+              StudentFeedbackSummary student_feedback =
+                    new StudentFeedbackSummary(each_course,
+                                               each_dayslot,
+                                                 each_time);
+              fbk_collection.add(student_feedback);
             }
           }
         }     
       }
     } 
-    return student_feedback_collection;   
+    return fbk_collection;   
   }
     
   /**
@@ -205,8 +208,8 @@ public class User
   {
     Collection<InstructorFeedback> instructor_feedback_collection
                       = new ArrayList<InstructorFeedback>();
-    List<Course> preferred_courses =
-               instructor_preferences.getPreferredCourses();
+    List<Section> preferred_sections =
+               instructor_preferences.getPreferredSections();
     List<Day> preferred_days =
                   instructor_preferences.getPreferredDays();
     List<GeneralTime> preferred_times =
