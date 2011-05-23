@@ -7,6 +7,7 @@
  */
 
 import java.util.Collection;
+import java.util.Map;
 
 /**
  * Represents a Schedule within the program. Schedules are
@@ -15,6 +16,7 @@ import java.util.Collection;
  * <b>Invariants:</b> none<br>
  * 
  * @author Jonathan Caddey
+ * @version May 23, 2011: Implemented hasSection(3 arg).
  * @version May 16, 2011: Changed file header.
  * @version May 13, 2011: Class created, hasSection,
  *          getSectionsTaughtBy, getSections signatures
@@ -22,6 +24,10 @@ import java.util.Collection;
  */
 public class Schedule
 {
+
+  private final Map<Course, Collection<Section>>
+          my_course_to_sections;
+
   /**
    * Creates a Schedule with the given Sections.
    * 
@@ -70,7 +76,7 @@ public class Schedule
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>the_course is not null</li>
+   * <li>the_course != null</li>
    * <li>the_days is not null and does not contain null</li>
    * <li>the_times is not null and does not contain null
    * 
@@ -78,24 +84,43 @@ public class Schedule
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>no Section of the_course which matches all
-   * parameters is on this Schedule if false is returned
+   * <li>does not return null
    * 
    * </li>
    * </ul>
    * 
    * @param the_course the Course being looked for
    * @param the_days the days that the desired course may be
+   *          held on
    * @param the_times the times at which the course is
    *          desired to be held
    * @return whether this Schedule has at least one Section
    *         meeting the given parameters.
+   * @throws NullPointerException if the_course, the_days,
+   *           or the_times are null.
    */
   public boolean hasSection(final Course the_course,
       final Collection<Day> the_days,
       final Collection<GeneralTime> the_times)
+      throws NullPointerException
   {
-    return false;
+    boolean has_section = false;
+    final Collection<Section> sections =
+        my_course_to_sections.get(the_course);
+    if (sections != null)
+    {
+      for (Section section : sections)
+      {
+        if (the_days.containsAll(section.getDays()) &&
+            the_times.contains(section.getGeneralTime()))
+        {
+          has_section = true;
+          break;
+        }
+
+      }
+    }
+    return has_section;
   }
 
   /**
