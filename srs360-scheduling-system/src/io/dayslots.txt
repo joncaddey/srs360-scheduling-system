@@ -1,0 +1,22 @@
+%Lines starting with % are comments and are ignored, as well as blank lines.
+%The first line indicates what to call each day of the week, separated by commas.
+%The character(s) representing Monday should appear first.
+M,T,W,R,F,S,N
+
+%The second non-commented line is the day/evening cutoff time.
+1615
+
+%The rest of the lines are the dayslots--every 
+%combination of days when classes can be scheduled.
+M
+MT
+MTR
+MW
+MWR
+MWF
+T
+TR
+W
+R
+F
+S

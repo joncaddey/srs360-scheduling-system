@@ -1,0 +1,51 @@
+// credit David Philips for all on single line idea.
+user:
+name:Jonathan Caddey
+username:jcaddey
+password:yadda yadda
+
+student:
+times: MORNING, EVENING
+days: MWRF
+courses: TCSS360, TCSS343
+
+instructor:
+times: MORNING, EVENING
+days: MWRF
+courses: TCSS390
+
+advisor:
+courses: TCSS390, TCSS142, TCSS360, TCSS 325, TCSS305
+
+scheduler:
+
+
+
+
+
+user:
+name:
+username:
+password:
+
+student:
+times:
+days:
+courses:
+
+instructor:
+times:
+days:
+courses:
+
+advisor:
+courses:
+
+scheduler:
+
+
+
+
+
+
+
