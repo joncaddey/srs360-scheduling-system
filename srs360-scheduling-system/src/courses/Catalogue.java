@@ -15,7 +15,9 @@ import java.util.Collection;
  * <br>
  * <b>Invariants:</b>
  * <ul>
- * <li>TODO invariant1</li>
+ * <li>The master course list</li>
+ * <li>The day/night cutoff time</li>
+ * <li>The available time slots</li>
  * </ul>
  * 
  * @author Gregory Cloutier
@@ -50,14 +52,42 @@ public class Catalogue
    *          begin.
    */
   public Catalogue(final Collection<Course> the_course_list,
-                   final Collection<TimeSlot>
-                                            the_time_slots,
+                   final Collection<TimeSlot> the_time_slots,
                    final Time a_day_night_cutoff)
   {
     my_course_list = the_course_list;
     my_time_slots = the_time_slots;
     my_day_night_cutoff = a_day_night_cutoff;
 
+  }
+
+  /**
+   * Checks to see if a course is within the catalogue or
+   * not.
+   * 
+   * <br>
+   * <br>
+   * <b>Invariants:</b>
+   * <ul>
+   * <li>The course to be checked</li>
+   * <li>The course list</li>
+   * </ul>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>None</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * 
+   * @param the_course The course to be checked.
+   * @return True if the course is in the catalogue, false
+   *         when otherwise.
+   */
+  public boolean isInCatalogue(final Course the_course)
+  {
+    return my_course_list.contains(the_course);
   }
 
 }
