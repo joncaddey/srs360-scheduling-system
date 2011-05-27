@@ -8,11 +8,11 @@
 
 package users;
 
-import java.awt.List;
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+
+import courses.Catalogue;
 
 /**
  * 
@@ -35,10 +35,18 @@ public class UserCommunity
   private final Map<String, User> my_authenticated_users;
 
   /**
+   * The Catalogue of courses.
+   */
+  private final Catalogue my_catalogue;
+
+  /**
+   * @param the_catalogue
    * @param a_list_of_users List of authenticated users.
    */
-  public UserCommunity(final Collection<User> a_list_of_users)
+  public UserCommunity(final Collection<User> a_list_of_users,
+                       final Catalogue the_catalogue)
   {
+    my_catalogue = the_catalogue;
     // Under Construction
     my_authenticated_users = new HashMap<String, User>();
     for (User u : a_list_of_users)
