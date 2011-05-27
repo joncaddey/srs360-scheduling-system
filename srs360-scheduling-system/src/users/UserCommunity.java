@@ -1,16 +1,18 @@
-import java.awt.List;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
  * 
  * srs360-scheduling-system
  */
+
+package users;
+
+import java.awt.List;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * 
@@ -35,8 +37,7 @@ public class UserCommunity
   /**
    * @param a_list_of_users List of authenticated users.
    */
-  public UserCommunity
-  (final Collection<User> a_list_of_users)
+  public UserCommunity(final Collection<User> a_list_of_users)
   {
     // Under Construction
     my_authenticated_users = new HashMap<String, User>();

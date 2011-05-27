@@ -6,6 +6,8 @@
  * srs360-scheduling-system
  */
 
+package courses;
+
 import java.util.Collection;
 
 /**

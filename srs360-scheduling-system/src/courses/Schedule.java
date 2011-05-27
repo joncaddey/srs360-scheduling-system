@@ -5,9 +5,12 @@
  * 
  * srs360-scheduling-system
  */
+package courses;
 
 import java.util.Collection;
 import java.util.Map;
+
+import users.User;
 
 /**
  * Represents a Schedule within the program. Schedules are
@@ -146,6 +149,7 @@ public class Schedule
   {
     return null;
   }
+  
 
   /**
    * Returns a Collection of all Sections on the Schedule.

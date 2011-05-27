@@ -1,14 +1,18 @@
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
  * 
  * srs360-scheduling-system
  */
+
+package users;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import courses.Course;
 /**
  * Stores a list of advisor preferred sections.
  * TODO

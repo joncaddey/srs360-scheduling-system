@@ -1,10 +1,13 @@
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
  * 
  * srs360-scheduling-system
  */
+
+package users;
+
 import static org.junit.Assert.*;
 
 import java.util.List;
@@ -12,11 +15,17 @@ import java.util.List;
 import org.junit.Before;
 import org.junit.Test;
 
+import courses.Course;
+import courses.Schedule;
+
 /**
  * Contains tests for methods in the User class.
  * 
- * <br><br><b>Invariants:</b>
- * <ul><li>invariant1</li>
+ * <br>
+ * <br>
+ * <b>Invariants:</b>
+ * <ul>
+ * <li>invariant1</li>
  * </ul>
  * 
  * @author David
@@ -26,22 +35,27 @@ public class TestUser
 {
   private User user;
   private AdvisorPreferences advisor_preferences;
-  
+
   @Before
   public void setUp()
   {
     user = new User("David");
     advisor_preferences = new AdvisorPreferences();
   }
-  
+
   /**
-   * <br><br><b>Preconditions:</b>
-   * <ul><li>pre1: a valid Schedule containing TCSS360</li>
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>pre1: a valid Schedule containing TCSS360</li>
    * </ul>
    * <b>Postconditions:</b>
-   * <ul><li>post1: verification that TCSS360 is not
-   * included in the List of missing Courses</li>
+   * <ul>
+   * <li>post1: verification that TCSS360 is not included in
+   * the List of missing Courses</li>
    * </ul>
+   * 
    * @param the_schedule The Schedule of Courses
    */
   @Test
@@ -49,9 +63,9 @@ public class TestUser
   {
     Course tcss360 = new Course("TCSS360");
     advisor_preferences.addCourse(tcss360);
-    List<Course> missingCourses = user.getAdvisorFeedback
-                                             (the_schedule);
-    assertFalse(missingCourses.contains(tcss360));   
-  } 
+    List<Course> missingCourses =
+        user.getAdvisorFeedback(the_schedule);
+    assertFalse(missingCourses.contains(tcss360));
+  }
 
 }

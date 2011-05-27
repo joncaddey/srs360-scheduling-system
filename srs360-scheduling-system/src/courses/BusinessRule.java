@@ -1,12 +1,14 @@
-import java.util.Collection;
-
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
  * 
  * srs360-scheduling-system
  */
+
+package courses;
+
+import java.util.Collection;
 
 /**
  * A BusinessRule checks a Schedule to make sure the
