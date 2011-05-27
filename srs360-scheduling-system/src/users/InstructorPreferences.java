@@ -1,6 +1,12 @@
+package users;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+
+import courses.Day;
+import courses.GeneralTime;
+import courses.Section;
 
 /**
  * Simple Random Sample

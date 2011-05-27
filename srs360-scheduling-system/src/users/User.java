@@ -1,13 +1,23 @@
-/**
+/*
  * Simple Random Sample
  * 
  * TCSS 360 Dr. Tenenberg
  * 
  * srs360-scheduling-system
  */
+
+package users;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import courses.Course;
+import courses.Day;
+import courses.DaySlot;
+import courses.GeneralTime;
+import courses.Schedule;
+import courses.Section;
 
 /**
  * Creates a User of the Scheduling System.

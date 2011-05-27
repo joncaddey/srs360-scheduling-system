@@ -5,6 +5,7 @@
  * 
  * srs360-scheduling-system
  */
+package io;
 
 import static org.junit.Assert.*;
 

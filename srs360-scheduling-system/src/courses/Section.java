@@ -6,7 +6,11 @@
  * srs360-scheduling-system
  */
 
+package courses;
+
 import java.util.Collection;
+
+import users.User;
 
 /**
  * Sections represent actual course offerings. A Section has

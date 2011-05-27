@@ -6,6 +6,7 @@
  * srs360-scheduling-system
  */
 
+package courses;
 /**
  * Contains information about a course like course title,
  * level, number of credit hours, etc., but not information

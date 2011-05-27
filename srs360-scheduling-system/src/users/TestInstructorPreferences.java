@@ -1,7 +1,21 @@
+/*
+ * Simple Random Sample
+ * 
+ * TCSS 360 Dr. Tenenberg
+ * 
+ * srs360-scheduling-system
+ */
+
+
+package users;
 import static org.junit.Assert.*;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import courses.Course;
+import courses.Day;
+import courses.GeneralTime;
 
 public class TestInstructorPreferences
 {

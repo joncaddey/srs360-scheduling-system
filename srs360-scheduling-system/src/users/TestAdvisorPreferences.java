@@ -1,7 +1,11 @@
-import static org.junit.Assert.*;
+package users;
 
 import org.junit.Before;
 import org.junit.Test;
+
+import courses.Course;
+import courses.Section;
+import static org.junit.Assert.*;
 
 public class TestAdvisorPreferences
 {

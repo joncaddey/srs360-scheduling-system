@@ -5,6 +5,7 @@
  * 
  * srs360-scheduling-system
  */
+package courses;
 
 import static org.junit.Assert.*;
 
@@ -13,6 +14,8 @@ import java.util.Arrays;
 import java.util.Collection;
 
 import org.junit.*;
+
+import users.User;
 
 /**
  * Contains a series of tests for the Schedule class.

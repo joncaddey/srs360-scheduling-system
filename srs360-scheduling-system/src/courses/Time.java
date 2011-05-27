@@ -6,6 +6,9 @@
  * srs360-scheduling-system
  */
 
+package courses;
+
+
 /**
  * Times are immutable. TODO <br>
  * <br>

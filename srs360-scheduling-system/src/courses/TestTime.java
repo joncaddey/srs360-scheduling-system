@@ -5,6 +5,7 @@
  * 
  * srs360-scheduling-system
  */
+package courses;
 
 import static org.junit.Assert.*;
 
@@ -160,5 +161,11 @@ public class TestTime
   {
     Time.overlap(my_2300, my_100, my_2200, my_200, -1);
   }
+  
+  
+  
+  /**
+   * Constructor
+   */
 
 }
