@@ -40,10 +40,12 @@ public class UserCommunity
   private final Catalogue my_catalogue;
 
   /**
-   * @param the_catalogue
+   * @param the_catalogue The catalogue of courses possibly
+   *          offered.
    * @param a_list_of_users List of authenticated users.
    */
-  public UserCommunity(final Collection<User> a_list_of_users,
+  public UserCommunity(final Collection<User>
+                                       a_list_of_users,
                        final Catalogue the_catalogue)
   {
     my_catalogue = the_catalogue;
