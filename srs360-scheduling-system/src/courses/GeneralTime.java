@@ -27,9 +27,23 @@ public enum GeneralTime
    */
   EVENING;
   
+  /**
+   * Provides a list of all times.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * @return A list of all times
+   */
   public static List<GeneralTime> getAllTimes()
   {
-    List<GeneralTime> times = new ArrayList<GeneralTime>();
+    final List<GeneralTime> times =
+                               new ArrayList<GeneralTime>();
     times.add(GeneralTime.MORNING);
     times.add(GeneralTime.EVENING);
     

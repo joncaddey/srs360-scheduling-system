@@ -30,9 +30,7 @@ import courses.Schedule;
 public class StudentPreferences
 {
   private final List<Course> my_pref_courses;
-
   private final List<Day> my_pref_days;
-
   private final List<GeneralTime> my_pref_times;
 
   /**
@@ -208,7 +206,8 @@ public class StudentPreferences
    * For every course this student wants to take, this
    * method returns a "feedback collection" of "dayslots"
    * (MW, TR) and times (day, evening) he will be on campus
-   * to take it.
+   * to take it. It doesn't return anything if he will be
+   * on campus at the scheduled day/time anyway.
    * <br>
    * <b>Preconditions:</b>
    * <ul>

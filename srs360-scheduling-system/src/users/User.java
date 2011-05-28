@@ -7,7 +7,9 @@ package users;
 
 import java.util.Collection;
 
+import courses.DaySlot;
 import courses.Schedule;
+import courses.Section;
 
 /**
  * Represents a user of the Scheduling System.
@@ -162,4 +164,53 @@ public class User
                                     the_dayslot_collection);
   }
   
+  /**
+   * Returns a collection of sections the advisor wants on 
+   * the schedule that it does not presently have.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the schedule is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * @param the_schedule The schedule of courses
+   * @return A collection of missing sections
+   */
+  public Collection<Section> getAdvisorFeedback
+                               (final Schedule the_schedule)                          
+  {
+    return my_adv_prefs.getAdvisorFeedback(the_schedule);
+  }
+  
+  /**
+   * This method compares every course/day/time assigned
+   * to this instructor with the courses/days/times he
+   * wants to teach and returns a collection of course
+   * sections that do not match.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the schedule != null</li>
+   * <li>the instructor != null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the collection of unwanted sections != null</li>
+   * </ul>
+   * @param the_schedule The schedule of courses
+   * @param the_instructor The instructor for whom the
+   * collection of unwanted sections is prepared
+   * @return The collection of unwanted sections
+   */
+  public Collection<Section> getInstructorFeedback
+                               (final Schedule the_schedule,
+                                final User the_instructor)
+  {
+    return my_inst_prefs.getInstructorFeedback
+                             (the_schedule, the_instructor);
+  }
+
 }
