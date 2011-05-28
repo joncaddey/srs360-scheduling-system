@@ -120,7 +120,7 @@ public class AdvisorPreferences
                                    new ArrayList<Section>();
       for (Section each_section : my_pref_sections)
       {
-        if (!the_schedule.hasSection(each_section))
+        if (!the_schedule.getSections().contains(each_section))
         {
           missing_sections.add(each_section);
         }
