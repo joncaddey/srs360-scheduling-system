@@ -1,15 +1,11 @@
 /*
  * Simple Random Sample
  * 
- * TCSS 360 Dr. Tenenberg
- * 
  * srs360-scheduling-system
  */
-
 package courses;
 import java.util.ArrayList;
 import java.util.List;
-
 
 /**
  * Users use this class to express their general time
@@ -31,7 +27,7 @@ public enum GeneralTime
    */
   EVENING;
   
-  public static List<GeneralTime> getAllGeneralTimes()
+  public static List<GeneralTime> getAllTimes()
   {
     List<GeneralTime> times = new ArrayList<GeneralTime>();
     times.add(GeneralTime.MORNING);

@@ -1,77 +1,112 @@
 /*
  * Simple Random Sample
  * 
- * TCSS 360 Dr. Tenenberg
- * 
  * srs360-scheduling-system
  */
-
 package users;
 
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
 
-import courses.Course;
-import courses.Day;
-import courses.DaySlot;
-import courses.GeneralTime;
 import courses.Schedule;
-import courses.Section;
 
 /**
- * Creates a User of the Scheduling System.
- * 
- * <br><br><b>Invariants:</b>
- * <ul><li>invariant1</li>
+ * Represents a user of the Scheduling System.
+ * <br>
+ * <b>Invariants:</b>
+ * <ul>
+ * <li> name != null</li>
+ * <li> user name != null</li>
+ * <li> password != null</li>
  * </ul>
  * 
  * @author David
- * @version May 16, 2011
+ * @version May 27, 2011
  */
 public class User
 {
-  /*probably has Catalogue reference*/
   private final String my_name;
   private final String my_user_name;
   private final String my_password;
-  private final boolean my_is_student;
-  private final boolean my_is_instructor;
-  private final boolean my_is_advisor;
-  private final boolean my_is_scheduler;
-  private AdvisorPreferences advisor_preferences;
-  private StudentPreferences student_preferences;
-  private InstructorPreferences instructor_preferences;
+  private final boolean is_student;
+  private final boolean is_instructor;
+  private final boolean is_advisor;
+  private final boolean is_scheduler;
+  private final AdvisorPreferences my_adv_prefs;
+  private final StudentPreferences my_stud_prefs;
+  private final InstructorPreferences my_inst_prefs;
   
-  /**
-   * Creates a User with the given name.
-   * 
-   * @param the_name The user name.
-   * @throws IllegalArgumentException if the name is null.
-   */
+ /**
+  * Constructs a unique user of the scheduling system.
+  * 
+  * @param the_name The user's name
+  * @param the_user_name The user's system name
+  * @param the_password The user's system password
+  * @param the_student The user's student status (T/F)
+  * @param the_instructor The user's instructor status (T/F)
+  * @param the_advisor The user's advisor status (T/F)
+  * @param the_scheduler The user's scheduler status (T/F)
+  * @throws IllegalArgumentException if name, user name, or
+  * password == null
+  */
   public User(final String the_name,
               final String the_user_name,
               final String the_password,
-              final boolean the_is_student,
-              final boolean the_is_instructor,
-              final boolean the_is_advisor,
-              final boolean the_is_scheduler)
+              final boolean the_student,
+              final boolean the_instructor,
+              final boolean the_advisor,
+              final boolean the_scheduler)
                              throws IllegalArgumentException
   {
+    if (the_name == null)
+    {
+      throw new IllegalArgumentException
+                                    ("name cannot be null");
+    }
     my_name = the_name; 
+    if (the_user_name == null)
+    {
+      throw new IllegalArgumentException
+                               ("user name cannot be null");
+    }
     my_user_name = the_user_name;
+    if (the_password == null)
+    {
+      throw new IllegalArgumentException
+                                ("password cannot be null");
+    }
     my_password = the_password;
-    my_is_student = the_is_student;
-    my_is_instructor = the_is_instructor;
-    my_is_advisor = the_is_advisor;
-    my_is_scheduler = the_is_scheduler;
-    advisor_preferences = new AdvisorPreferences();
-    student_preferences = new StudentPreferences();
-    instructor_preferences = new InstructorPreferences();   
+    is_student = the_student;
+    is_instructor = the_instructor;
+    is_advisor = the_advisor;
+    is_scheduler = the_scheduler;
+    my_adv_prefs = new AdvisorPreferences();
+    my_stud_prefs = new StudentPreferences();
+    my_inst_prefs = new InstructorPreferences();   
   }
    
-  public boolean authenticate(String the_password)
+  /**
+   * Authenticates a user with his password. 
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the password is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the user's authentication status is not null</li>
+   * </ul>
+   * @param the_password The user's password
+   * @return The user's authentication status
+   * @throws IllegalArgumentException if password == null
+   */
+  public boolean authenticate(final String the_password)
+                             throws IllegalArgumentException
   {
+    if (the_password == null)
+    {
+      throw new IllegalArgumentException
+                                ("password cannot be null");
+    }
     return my_password.equals(the_password);
   }
   
@@ -82,174 +117,49 @@ public class User
   
   public boolean isStudent()
   {
-    return my_is_student;
+    return is_student;
   }
   
   public boolean isInstructor()
   {
-    return my_is_instructor;
+    return is_instructor;
   }
   
   public boolean isAdvisor()
   {
-    return my_is_advisor;
+    return is_advisor;
   }
   
   public boolean isScheduler()
   {
-    return my_is_scheduler;
+    return is_scheduler;
   }
   
   /**
-   * Compares preferred sections with available sections
-   * and returns a list of those that are missing.
-   * 
-   * <br><br><b>Preconditions:</b>
-   * <ul><li>pre1: a valid Schedule</li>
-   * </ul>
-   * <b>Postconditions:</b>
-   * <ul><li>post1: a list of missing sections</li>
-   * </ul>
-   * @param the_schedule The Schedule of Courses
-   * @return A List of missing Sections
-   */
-  public Collection<Section> getAdvisorFeedback
-                                     (Schedule the_schedule)
-  {
-    List<Section> preferred_sections =
-                 advisor_preferences.getPreferredSections();
-    Collection<Section> available_sections =
-                                 the_schedule.getSections();
-    List<Section> missing_sections =
-                                   new ArrayList<Section>();
-    for(Section each_preferred_section : preferred_sections)
-    {
-      if(!available_sections.contains(each_preferred_section))
-      {
-        missing_sections.add(each_preferred_section);
-      }
-    }
-    return missing_sections;
-  }
-  
-  /**
-   * For every course this student wants to take, this
-   * method returns a "feedback collection" of "dayslots"
-   * (MW, TR) and times (day, evening) he will be on campus
-   * to take it, if the_schedule does not already provide
-   * that.
-   * <br>
+   * Gets day and time feedback from a student regarding
+   * when he can be on campus for the courses he wants to
+   * take.
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>the_schedule != null</li>
-   * <li>the collection of dayslots (MW, TR) != null</li>
+   * <li>the schedule of courses is not null</li>
+   * <li>a collection of dayslots (MW, TR, etc) when courses
+   * are offered is not null</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>the feedback collection != null</li>
+   * <li>the returned feedback collection is not null</li>
    * </ul>
-   * @param the_schedule The schedule of courses
-   * @return The collection of feedbacks
+   * @param the_schedule A schedule of courses
+   * @param the_dayslot_collection The collection of dayslots
+   * @return The feedback collection of days and times
    */
   public Collection<StudentFeedbackSummary> getStudentFeedback
           (final Schedule the_schedule,
            final Collection<DaySlot> the_dayslot_collection)
   {
-    final Collection<StudentFeedbackSummary> fbk_collection =
-                    new ArrayList<StudentFeedbackSummary>();
-    final List<Course> preferred_courses =
-                  student_preferences.getPreferredCourses();
-    final List<Day> preferred_days =
-                     student_preferences.getPreferredDays();
-    final List<GeneralTime> preferred_times =
-             student_preferences.getPreferredGeneralTimes();
- 
-    for (Course each_course : preferred_courses)
-    {
-      if (!the_schedule.hasSection(each_course,
-                                   preferred_days,
-                                   preferred_times))
-      {
-        for (DaySlot each_dayslot : the_dayslot_collection)
-        {
-          for (GeneralTime each_time :
-                           GeneralTime.getAllGeneralTimes())
-          {
-            if (preferred_days.containsAll
-                                 (each_dayslot.getDays()) &&
-               preferred_times.contains(each_time))
-            {
-              StudentFeedbackSummary student_feedback =
-                    new StudentFeedbackSummary(each_course,
-                                               each_dayslot,
-                                                 each_time);
-              fbk_collection.add(student_feedback);
-            }
-          }
-        }     
-      }
-    } 
-    return fbk_collection;   
-  }
-    
-  /**
-   * For every course this instructor wants to teach, this
-   * method returns the day and time he wants to teach it,
-   * if the schedule does not already provide that.
-   * <br>
-   * <br>
-   * <b>Preconditions: the Schedule.</b>
-   * <ul>
-   * <li>TODO</li>
-   * </ul>
-   * <b>Postconditions: a Collection of responses, or 
-   * feedbacks, from the instructor, each of which has a
-   * course the instructor wants to teach and the day and
-   * time he wants to teach it.</b>
-   * <ul>
-   * <li>TODO</li>
-   * </ul>
-   * @param the_schedule The Schedule
-   * @return The Collection of instructor feedbacks
-   */     
-  public Collection<InstructorFeedback> getInstructorFeedback
-                               (final Schedule the_schedule)
-  {
-    Collection<InstructorFeedback> instructor_feedback_collection
-                      = new ArrayList<InstructorFeedback>();
-    List<Section> preferred_sections =
-               instructor_preferences.getPreferredSections();
-    List<Day> preferred_days =
-                  instructor_preferences.getPreferredDays();
-    List<GeneralTime> preferred_times =
-          instructor_preferences.getPreferredGeneralTimes();
- 
-    for(Course each_course : preferred_courses)
-    {
-      if(!the_schedule.hasSection(each_course,
-                                  preferred_days,
-                                  preferred_times))
-      {
-        for(Day each_day : Day.getAllDays())
-        {
-          for(GeneralTime each_time :
-                           GeneralTime.getAllGeneralTimes())
-          {
-            if(preferred_days.contains(each_day) &&
-               preferred_times.contains(each_time))
-            {
-              InstructorFeedback instructor_feedback =
-              new InstructorFeedback(each_course, each_day,
-                                                 each_time);            
-              instructor_feedback_collection.add
-                                      (instructor_feedback);
-            }
-          }
-        }     
-      }
-    } 
-    return instructor_feedback_collection;   
+    return my_stud_prefs.getStudentFeedback(the_schedule,
+                                    the_dayslot_collection);
   }
   
 }

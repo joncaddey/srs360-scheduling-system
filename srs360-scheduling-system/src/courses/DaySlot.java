@@ -1,37 +1,51 @@
 /*
  * Simple Random Sample
- * 
- * TCSS 360 Dr. Tenenberg
- * 
+ *
  * srs360-scheduling-system
  */
-
 package courses;
 
 import java.util.Collection;
+import java.util.Collections;
 
 /**
- * DaySlots are immutable.TODO <br>
+ * DaySlot is a combination of days on which a section may
+ * be offered. DaySlots are immutable.<br>
  * <br>
  * <b>Invariants:</b>
  * <ul>
- * <li>TODO invariant1</li>
+ * <li>getDays() != null</li>
  * </ul>
  * 
  * @author Jonathan Caddey (up until May 19)
+ * @author David Liddington 
  * @version May 19, 2011: Class created, original signatures
  *          added.
+ * @version May 27, 2011: Completed construction, getter.
  */
 public class DaySlot
 {
+  private final Collection<Day> my_days;
 
+ /**
+  * Creates a DaySlot of particular days.
+  * 
+  * @param the_days The days comprising the dayslot
+  * @throws IllegalArgumentException if the days == null
+  */
   public DaySlot(final Collection<Day> the_days)
+                             throws IllegalArgumentException
   {
-
+    if (the_days == null)
+    {
+      throw new IllegalArgumentException
+                              ("the_days must not be null");
+    }
+    my_days = Collections.unmodifiableCollection(the_days);
   }
 
   public Collection<Day> getDays()
   {
-    return null;
+    return my_days;
   }
 }
