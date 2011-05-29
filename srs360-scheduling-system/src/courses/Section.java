@@ -20,7 +20,7 @@ import users.User;
  * <br>
  * <b>Invariants:</b>
  * <ul>
- * <li>invariant 1</li>
+ * <li>none</li>
  * </ul>
  * 
  * @author Jonathan Caddey
@@ -38,10 +38,29 @@ public class Section
    */
   private final User my_instructor;
 
-  // TODO stuff like timeslots.
+  /**
+   * When this Section is offered.
+   */
+  private final TimeSlot my_time_slot;
 
+  /**
+   * Creates a Section. Certain arguments can be null if
+   * they are to be determined.
+   * 
+   * @param the_course what this is a Section of.
+   * @param the_instructor who teaches this--may be null if
+   *          TBA.
+   * @param the_time_slot when this is taught--may be null
+   *          if TBA.
+   * @param the_catalogue knows the morning/evening cutoff
+   *          time for reporting getGeneralTime().
+   * @throws IllegalArgumentException if the_course is null,
+   *           or if !the_instructor.isInstructor()
+   */
   public Section(final Course the_course,
-                 final User the_instructor)
+                 final User the_instructor,
+                 final TimeSlot the_time_slot,
+                 Catalogue the_catalogue)
     throws IllegalArgumentException
   // TODO must make sure the user has an
   // instructorpreferences.
@@ -59,6 +78,9 @@ public class Section
 
     my_course = the_course;
     my_instructor = the_instructor;
+    // probably need:
+    // my_general_time = the_catalogue.getGeneralTime(the_time_slot)
+    // don't need my_catalogue field
   }
 
   /**
@@ -91,10 +113,10 @@ public class Section
     return my_instructor;
   }
 
-  // TODO should these methods be here?
+  // TODO should these methods be here?  probably.
   public GeneralTime getGeneralTime()
   {
-    return null;
+    return my_general_time;
   }
 
   public Collection<Day> getDays()

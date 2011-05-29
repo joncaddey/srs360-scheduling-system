@@ -5,6 +5,7 @@
  * 
  * srs360-scheduling-system
  */
+
 package courses;
 
 import java.util.Collection;
@@ -13,8 +14,7 @@ import java.util.Map;
 import users.User;
 
 /**
- * Represents a Schedule within the program. Schedules are
- * immutable.<br>
+ * Represents a Schedule. Schedules are immutable.<br>
  * <br>
  * <b>Invariants:</b> none<br>
  * 
@@ -28,8 +28,7 @@ import users.User;
 public class Schedule
 {
 
-  private final Map<Course, Collection<Section>>
-          my_course_to_sections;
+  private final Map<Course, Collection<Section>> my_course_to_sections;
 
   /**
    * Creates a Schedule with the given Sections.
@@ -149,7 +148,6 @@ public class Schedule
   {
     return null;
   }
-  
 
   /**
    * Returns a Collection of all Sections on the Schedule.

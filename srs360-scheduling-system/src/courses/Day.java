@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An enum that provides the days of the week individually
+ * Provides the days of the week individually
  * or as a list of all days.
  * <br>
  * <b>Invariants:</b>
