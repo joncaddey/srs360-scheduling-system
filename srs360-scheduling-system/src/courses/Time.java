@@ -34,6 +34,12 @@ public class Time implements Comparable<Time>
   private static final int MINUTES_IN_HOUR = 60;
 
   /**
+   * What the hours is multiplied when having time in its
+   * integer form (example 1805 for 18:05).
+   */
+  private static final int BASE_100 = 100;
+
+  /**
    * The total minutes, counted from 0.
    */
   private final int my_minutes;
@@ -62,24 +68,59 @@ public class Time implements Comparable<Time>
 
   }
 
-  /*
-   * Second constructor should accept 1805 and know it's 18
-   * hours, 5 minutes. Should know 1861 is not a valid time.
+  /**
+   * Accepts the integer representation of the time, where
+   * the_time = hours * 100 + minutes. For example, to
+   * express 18:05, the_time should be 1805. No attempt will
+   * be made to normalize times where the hours is greater
+   * than 23 or the minutes is greater than 59.
+   * 
+   * @param the_time the integer form of the desired time.
+   * @throws IllegalArgumentException if the_time < 0,
+   *           the_time / 100 > 23, or the_time % 100 > 59.
    */
   public Time(final int the_time)
+    throws IllegalArgumentException
   {
-    this(the_time / 100, the_time % 100);
-
+    this(the_time / BASE_100, the_time % BASE_100);
+    if (the_time < 0)
+    {
+      throw new IllegalArgumentException(
+        "the_time must be positive.");
+    }
+    if (the_time / BASE_100 >= HOURS_IN_DAY)
+    {
+      throw new IllegalArgumentException(
+        "the_time / 100 must be less than 24");
+    }
+    if (the_time % BASE_100 >= MINUTES_IN_HOUR)
+    {
+      throw new IllegalArgumentException(
+        "the_time % 100 must be less than 60");
+    }
   }
 
-  /*
-   * the_minute_difference should be allowed to be any int;
-   * do modulo to normalize.
+  /**
+   * Allows a new Time to be created a given number of
+   * minutes after a given Time. the_time_elapsed can be any
+   * non-negative integer.
+   * 
+   * @param the_time a prior Time.
+   * @param the_time_elapsed the number of minutes later
+   *          this Time is.
+   * @throws IllegalArgumentException if the_time_elapsed is
+   *           less than 0.
    */
   public Time(final Time the_time,
-              final int the_minute_difference)
+              final int the_time_elapsed)
+    throws IllegalArgumentException
   {
-    this(0, the_time.my_minutes + the_minute_difference);
+    this(0, the_time.my_minutes + the_time_elapsed);
+    if (the_time_elapsed < 0)
+    {
+      throw new IllegalArgumentException(
+        "the_time_elapsed must be non-negative.");
+    }
 
   }
 
