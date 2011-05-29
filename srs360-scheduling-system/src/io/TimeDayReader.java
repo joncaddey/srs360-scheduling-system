@@ -12,6 +12,7 @@ import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Scanner;
 
 import courses.Day;
 import courses.DaySlot;
@@ -43,7 +44,21 @@ import courses.Time;
 public class TimeDayReader
 {
 
+  /**
+   * All the DaySlots from the last read invocation.
+   */
   private Collection<DaySlot> my_day_slots;
+
+  /**
+   * The morning/evening cutoff time.
+   */
+  private Time my_cutoff_time;
+
+  /**
+   * A mapping from the String representations of days to
+   * their Days.
+   */
+  private Map<String, Day> my_day_map;
 
   /**
    * Parses a String and returns the Days represented in
@@ -77,12 +92,42 @@ public class TimeDayReader
     // the current index.
     // Read it as the _longest_ match.
     // Increment the index.
+    
+    
     return null;
   }
 
-  public Collection<DaySlot> getDaySlots()
+  /**
+   * Reads a given String as a Time. The time must be in the
+   * form of an integer, where the integer = hours * 100 +
+   * minutes, with hours in military time. Beginning and
+   * ending whitespace is ignored.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_string is in the correct format</li>
+   * <li>the_string != null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * 
+   * @param the_string a String in the correct format.
+   * @return the Time represented in the_string.
+   * @throws NullPointerException if the_string is null.
+   * @throws NumberFormatException if the_string cannot be
+   *           converted to an integer.
+   * @throws IllegalArgumentException if the integer is does
+   *           not represent a Time.
+   */
+  public Time parseTimeString(final String the_string)
+      throws IllegalArgumentException,
+      NullPointerException, NumberFormatException
   {
-    return Collections.unmodifiableCollection(my_day_slots);
+    return new Time(Integer.parseInt(the_string.trim()));
   }
 
   /**
@@ -143,36 +188,43 @@ public class TimeDayReader
   }
 
   /**
-   * Reads a given String as a Time. The time must be in the
-   * form of an integer, where the integer = hours * 100 +
-   * minutes, with hours in military time. Beginning and
-   * ending whitespace is ignored.
-   * 
-   * <br>
+   * Reads the input, as described in the class
+   * documentation. <br>
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>the_string is in the correct format</li>
-   * <li>the_string != null</li>
+   * <li>The input to the_scanner must fit the description
+   * provided in the class documentation</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>information is correctly gathered from the input.</li>
    * </ul>
    * 
-   * @param the_string a String in the correct format.
-   * @return the Time represented in the_string.
-   * @throws NullPointerException if the_string is null.
-   * @throws NumberFormatException if the_string cannot be
-   *           converted to an integer.
-   * @throws IllegalArgumentException if the integer is does
-   *           not represent a Time.
+   * @param the_scanner can read correctly formatted input.
+   * @throws IllegalArgumentException if the_scanner is
+   *           null.
+   * @throws FileFormatException if the input of the_scanner
+   *           does not adhere to the description provided
+   *           in class documentation.
    */
-  public Time parseTimeString(final String the_string)
-      throws IllegalArgumentException,
-      NullPointerException, NumberFormatException
+  public void read(final Scanner the_scanner)
+      throws IllegalArgumentException, FileFormatException
   {
-    return new Time(Integer.parseInt(the_string.trim()));
+    final LineCommentScanner scanner =
+        new LineCommentScanner(the_scanner);
+    my_day_map = readDays(scanner.getNonComment());
+    my_cutoff_time =
+        parseTimeString(scanner.getNonComment());
   }
 
+  public Collection<DaySlot> getDaySlots()
+  {
+    return Collections.unmodifiableCollection(my_day_slots);
+  }
+
+  public Time getCutoffTime()
+  {
+    return my_cutoff_time;
+  }
 }

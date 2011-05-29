@@ -10,6 +10,8 @@ package io;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -118,9 +120,54 @@ public class TestTimeDayReader
   public void testNotATimeParseTimeString()
   {
     my_reader.parseTimeString("1260");
+
   }
 
-  
-  
-  
+  /**
+   * parseDayString when two days start with same character.
+   */
+
+  /**
+   * parseDayString when days appear out of order.
+   */
+
+  /**
+   * parseDayString when the String is null.
+   */
+
+  /**
+   * parseDayString when the String is only whitespace.
+   */
+
+  /**
+   * parseDayString when unrecognized characters.
+   */
+
+  /**
+   * read(Scanner) when works properly, for
+   * test-dayslots.txt
+   */
+  @Test
+  public void testWorksOkayRead()
+  {
+    Scanner scanner = null;
+    try
+    {
+      scanner =
+          new Scanner(new File("src/io/test-dayslots.txt"));
+    }
+    catch (IOException the_e)
+    {
+      fail("Exception: " + the_e.getMessage());
+    }
+    final TimeDayReader reader = new TimeDayReader();
+    reader.read(scanner);
+    assertEquals("Wrong cutoff hour", 16, reader
+        .getCutoffTime().getHour());
+    assertEquals("Wrong cutoff minute", 15, reader
+        .getCutoffTime().getMinute());
+    // TODO finish this. should this be in a different
+    // thing? Should stuff be hardcoded?
+
+  }
 }

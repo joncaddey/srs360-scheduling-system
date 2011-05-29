@@ -42,6 +42,7 @@ public class Time implements Comparable<Time>
    * Constructs a Time given the_hours and the_minutes.
    * Neither argument should be negative, but the time will
    * be normalized if the_hours > 23 or the_minutes > 59.
+   * For example, passing 1:61 will be interpreted as 2:01.
    * 
    * @param the_hours the hour of the day.
    * @param the_minutes the minutes of the day.
@@ -85,12 +86,12 @@ public class Time implements Comparable<Time>
 
   public int getHour()
   {
-    return my_minutes / 60;
+    return my_minutes / MINUTES_IN_HOUR;
   }
 
   public int getMinute()
   {
-    return my_minutes % 60;
+    return my_minutes % MINUTES_IN_HOUR;
   }
 
   /**
