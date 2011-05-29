@@ -62,7 +62,7 @@ public class Course
                 final int the_credits)
     throws IllegalArgumentException
   {
-    if (the_id == null)
+    if (the_id == null) 
     {
       throw new IllegalArgumentException(
         "the_id must not be null");

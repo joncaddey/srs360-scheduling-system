@@ -4,6 +4,9 @@ package courses;
 import org.junit.Before;
 import org.junit.Test;
 
+import users.AdvisorPreferences;
+import users.InstructorPreferences;
+import users.StudentPreferences;
 import users.User;
 
 public class TestSection
@@ -22,15 +25,22 @@ public class TestSection
    * Section(Course, User, null, null) when the User is not
    * an instructor.
    */
-  
-  /* TODO: finish this after changing User constructor*/
   @Test(expected = IllegalArgumentException.class)
   public void testUserNotInstructorParameterSection()
   {
-    final Course course = new Course(null, null, 0);
-    boolean isInstructor = false;
-    final User user = new User(String, String, null, isInstructor,
-                         false, false, false);
+    final Course course = new Course("", "", 0);
+    final StudentPreferences stud_prefs =
+                                   new StudentPreferences();
+    final InstructorPreferences inst_prefs = null;
+    final AdvisorPreferences adv_prefs =
+                                   new AdvisorPreferences();
+    
+    // null inst_prefs, the second parameter, means the user
+    // is not an instructor
+    final User user = new User("", "", stud_prefs,
+                                       null,
+                                       adv_prefs, false);
+    
     new Section(course, user, null, null);
   }
 
