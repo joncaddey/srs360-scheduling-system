@@ -63,7 +63,7 @@ public class TimeSlot
             .getDays());
     my_start = the_start;
     my_end = the_end;
-  }
+  } 
 
   /**
    * Determines whether a given TimeSlot meets at any time

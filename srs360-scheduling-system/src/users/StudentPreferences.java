@@ -250,7 +250,7 @@ public class StudentPreferences
     for (Course each_course : my_pref_courses)
     {
       if (!the_schedule.hasSection(each_course,
-                                   my_pref_days,
+                                   my_pref_days, 
                                    my_pref_times))
       {
         for (DaySlot each_dayslot : the_dayslot_collection)
