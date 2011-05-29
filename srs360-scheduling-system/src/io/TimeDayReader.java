@@ -8,6 +8,7 @@
 
 package io;
 
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
@@ -31,7 +32,10 @@ import courses.Time;
  * offered.
  * </p>
  * <p>
- * Instances are immutable.
+ * Many methods require that read() be invoked before them
+ * and will throw an IllegalStateException otherwise. The
+ * idea is to construct an instance, invoke the read method,
+ * and then invoke other methods.
  * </p>
  * <b>Invariants:</b>
  * <ul>
@@ -43,6 +47,18 @@ import courses.Time;
  */
 public class TimeDayReader
 {
+
+  /**
+   * The message for when methods are called at
+   * inappropriate times.
+   */
+  private static final String READ_INPUT_FIRST_MSG =
+      "Must read input before invoking this method.";
+  /**
+   * Whether information has successfully been read from a
+   * file and is ready to be retrieved.
+   */
+  private boolean my_successfully_read;
 
   /**
    * All the DaySlots from the last read invocation.
@@ -65,38 +81,105 @@ public class TimeDayReader
    * that String. The days should not be separated by any
    * characters.
    * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the instance has already read in input</li>
+   * <li>the_string != null</li>
+   * <li>the_string contains days as encountered from the
+   * read() invocation.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * 
+   * @param the_string a String with days represented as
+   *          described.
+   * @return the Days contained in the_string.
+   * @throws IllegalArgumentException if the_string contains
+   *           an unrecognized day.
+   * @throws NullPointerException if the_string is null.
+   * @throws IllegalStateException if read has not been
+   *           invoked.
+   */
+  public Collection<Day> parseDayString(
+      final String the_string)
+      throws IllegalArgumentException,
+      NullPointerException, IllegalStateException
+  {
+    if (!my_successfully_read)
+    {
+      throw new IllegalStateException(READ_INPUT_FIRST_MSG);
+    }
+    return parseDayString(the_string, my_day_map);
+  }
+
+  /**
+   * Parses a String and returns the Days represented in
+   * that String. The days should not be separated by any
+   * characters. The names of the days should be contained
+   * in the_day_map.
    * 
    * <br>
    * <br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>the_string != null</li>
-   * <li>the_string represents days the same way days as are
-   * represented in the file this parsed.</li>
+   * <li>the_day_map has mappings of names to all 7 Days
+   * 
+   * 
+   * </li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>none</li>
    * </ul>
    * 
-   * @return the Days represented in the_string.
-   * @throws IllegalArgumentException if the_string is null
-   *           or contains elements that are not recognized
-   *           as days.
+   * @param the_string a String with days represented as
+   *          described.
+   * @param the_day_map a mapping of String names to all 7
+   *          Days.
+   * @return the Days contained in the_string.
+   * @throws IllegalArgumentException if the_string contains
+   *           an unrecognized day.
+   * @throws NullPointerException if the_string is null or
+   *           the_day_map is null.
    */
-  public Collection<Day> parseDayString(
-      final String the_string)
-      throws IllegalArgumentException
-  {
-    return parseDayString(my_day_map);
-  }
-
   protected Collection<Day> parseDayString(
       final String the_string,
       final Map<String, Day> the_day_map)
-      throws IllegalArgumentException
+      throws IllegalArgumentException, NullPointerException
   {
-    return null;
+    Collection<Day> days = new ArrayList<Day>();
+    int index = 0;
+    while (index < the_string.length())
+    {
+      String longest = "";
+      // see if remaining string starts with any known day
+      for (String day_string : the_day_map.keySet())
+      {
+        if (the_string.startsWith(day_string, index) &&
+            day_string.length() > longest.length())
+        {
+          longest = day_string;
+        }
+      }
+
+      if (longest.length() == 0)
+      {
+        throw new IllegalArgumentException(
+          "\"" + the_string.substring(index) +
+              "\" is not the start of a known day.");
+      }
+      else
+      {
+        index += longest.length();
+        days.add(the_day_map.get(longest));
+      }
+    }
+    return days;
   }
 
   /**
@@ -200,33 +283,84 @@ public class TimeDayReader
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>information is correctly gathered from the input.</li>
+   * <li>information is correctly gathered from the input.
+   * 
+   * 
+   * </li>
    * </ul>
    * 
    * @param the_scanner can read correctly formatted input.
    * @throws IllegalArgumentException if the_scanner is
    *           null.
-   * @throws FileFormatException if the input of the_scanner
-   *           does not adhere to the description provided
-   *           in class documentation.
+   * @throws InputFormatException if the input of
+   *           the_scanner does not adhere to the
+   *           description provided in class documentation.
    */
   public void read(final Scanner the_scanner)
-      throws IllegalArgumentException, FileFormatException
+      throws IllegalArgumentException, InputFormatException
   {
+    // TODO if something goes wrong..?
     final LineCommentScanner scanner =
         new LineCommentScanner(the_scanner);
     my_day_map = readDays(scanner.getNonComment());
     my_cutoff_time =
         parseTimeString(scanner.getNonComment());
+    String line = scanner.getNonComment();
+    my_day_slots = new ArrayList<DaySlot>();
+    while (line != null)
+    {
+      my_day_slots.add(new DaySlot(parseDayString(line,
+          my_day_map)));
+      line = scanner.getNonComment();
+    }
+    my_successfully_read = true;
   }
 
+  /**
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>input has already been read.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null</li>
+   * </ul>
+   * 
+   * @return an unmodifiable view of all possible Day
+   *         combinations when Sections can be scheduled.
+   * @throws IllegalStateException if invoked before input
+   *           is read.
+   */
   public Collection<DaySlot> getDaySlots()
+      throws IllegalStateException
   {
+    if (!my_successfully_read)
+    {
+      throw new IllegalStateException(READ_INPUT_FIRST_MSG);
+    }
     return Collections.unmodifiableCollection(my_day_slots);
   }
 
-  public Time getCutoffTime()
+  /**
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>input has already been read.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null</li>
+   * </ul>
+   * 
+   * @return the morning/evening cutoff time.
+   * @throws IllegalStateException if invoked before input
+   *           is read.
+   */
+  public Time getCutoffTime() throws IllegalStateException
   {
+    if (!my_successfully_read)
+    {
+      throw new IllegalStateException(READ_INPUT_FIRST_MSG);
+    }
     return my_cutoff_time;
   }
 }
