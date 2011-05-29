@@ -45,7 +45,7 @@ import courses.Time;
  * @author Jonathan Caddey
  * @version May 28, 2011: Class created.
  */
-public class TimeDayReader
+public class TimeSlotReader
 {
 
   /**

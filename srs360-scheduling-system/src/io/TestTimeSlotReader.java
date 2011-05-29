@@ -12,26 +12,34 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
 
 import org.junit.*;
 
 import courses.Day;
+import courses.DaySlot;
 
 /**
- * Contains a series of tests for TimeDayReader.
+ * Contains a series of tests for TimeSlotReader.
  * 
  * @author Jonathan Caddey
  * @version May 28, 2011: Class created.
  */
-public class TestTimeDayReader
+public class TestTimeSlotReader
 {
 
   /**
    * A reader to be used for tests.
    */
-  private TimeDayReader my_reader;
+  private TimeSlotReader my_reader;
+
+  /**
+   * A mapping of day names to their Days for tests.
+   */
+  private Map<String, Day> my_day_map;
 
   /**
    * Sets up tests.
@@ -39,7 +47,8 @@ public class TestTimeDayReader
   @Before
   public void setup()
   {
-    my_reader = new TimeDayReader();
+    my_reader = new TimeSlotReader();
+    my_day_map = my_reader.readDays("M,T,W,Th,F,S,Sn");
   }
 
   /**
@@ -130,9 +139,11 @@ public class TestTimeDayReader
   @Test
   public void testSamePrefixParseDayString()
   {
-    final Day[] days =
-        (Day[]) my_reader.parseDayString("MThT",
-            my_reader.readDays("M,T,W,Th,F,S,N")).toArray();
+    Day[] days = new Day[0];
+    days =
+        my_reader.parseDayString("MThT",
+            my_reader.readDays("M,T,W,Th,Friday,S,N"))
+            .toArray(days);
     assertArrayEquals("Misinterpreted prefix", new Day[] {
         Day.MONDAY, Day.THURSDAY, Day.TUESDAY}, days);
   }
@@ -140,14 +151,32 @@ public class TestTimeDayReader
   /**
    * parseDayString when the String is null.
    */
+  @Test(expected = NullPointerException.class)
+  public void testNullParseDayString()
+  {
+    my_reader.parseDayString(null,
+        (Map<String, Day>) Collections.EMPTY_MAP);
+  }
 
   /**
-   * parseDayString when the String is only whitespace.
+   * parseDayString when the String is empty.
    */
+  @Test
+  public void testWhiteSpaceParseDayString()
+  {
+    assertEquals("Should have found 0 days", 0, my_reader
+        .parseDayString("", my_day_map).size());
+  }
 
   /**
    * parseDayString when unrecognized characters.
    */
+  @Test(expected = IllegalArgumentException.class)
+  public void testUnrecognizedDayParseDayString()
+  {
+    my_reader.parseDayString("MonTeuWedTh",
+        my_reader.readDays("Mon,Teu,Wed,Thu,Fri,Sat,Sun"));
+  }
 
   /**
    * read(Scanner) when works properly, for
@@ -156,23 +185,17 @@ public class TestTimeDayReader
   @Test
   public void testWorksOkayRead()
   {
-    Scanner scanner = null;
-    try
-    {
-      scanner =
-          new Scanner(new File("src/io/test-dayslots.txt"));
-    }
-    catch (IOException the_e)
-    {
-      fail("Exception: " + the_e.getMessage());
-    }
+    final Scanner scanner =
+        new Scanner("M,T,W,Th,F,S,Sn\n" + "1615\n" + "MW\n"
+                    + "TTh");
     my_reader.read(scanner);
     assertEquals("Wrong cutoff hour", 16, my_reader
         .getCutoffTime().getHour());
     assertEquals("Wrong cutoff minute", 15, my_reader
         .getCutoffTime().getMinute());
-    // TODO finish this. should this be in a different
-    // thing? Should stuff be hardcoded?
+    Collection<DaySlot> day_slots = my_reader.getDaySlots();
+    assertEquals("Wrong number dayslots", 2, day_slots.size());
+    
 
   }
 }
