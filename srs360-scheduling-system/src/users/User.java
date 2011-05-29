@@ -104,6 +104,73 @@ public class User
     return my_name;
   }
   
+  /**
+   * Returns the Student role of the User
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the role is not null</li>
+   * </ul>
+   * @return The user's Student role
+   */
+  public boolean isStudent()
+  {
+    return my_stud_prefs != null;
+  }
+  
+  /**
+   * Returns the Instructor role of the User
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the role is not null</li>
+   * </ul>
+   * @return The user's Instructor role
+   */
+  public boolean isInstructor()
+  {
+    return my_inst_prefs != null;
+  }
+  
+  /**
+   * Returns the Advisor role of the User
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the role is not null</li>
+   * </ul>
+   * @return The user's Advisor role
+   */
+  public boolean isAdvisor()
+  {
+    return my_adv_prefs != null;
+  }
+  
+  /**
+   * Returns the Scheduler role of the User
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the role is not null</li>
+   * </ul>
+   * @return The user's Scheduler role
+   */
   public boolean isScheduler()
   {
     return is_scheduler;
