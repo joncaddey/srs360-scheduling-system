@@ -12,12 +12,12 @@ package io;
  * @author Jonathan Caddey
  * @version May 28, 2011: Class created.
  */
-public class FileFormatException extends RuntimeException
+public class InputFormatException extends RuntimeException
 {
-  public FileFormatException() {
+  public InputFormatException() {
     super();
   }
-  public FileFormatException(final String the_message) {
+  public InputFormatException(final String the_message) {
     super(" " + the_message);    
   }
 
