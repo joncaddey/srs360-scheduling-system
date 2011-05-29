@@ -15,7 +15,9 @@ import org.junit.*;
  * Tests the methods from Time class. It's testing Time.
  * 
  * @author Jonthan Caddey
+ * @author David 
  * @version May 20, 2011: Class created.
+ * @version May 29, 2011: David added constructor tests.
  */
 public class TestTime
 {
@@ -162,10 +164,57 @@ public class TestTime
     Time.overlap(my_2300, my_100, my_2200, my_200, -1);
   }
   
-  
+  /**
+   * Time(int, int) when the arguments are negative.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testNegativeParametersTime()
+  {
+    new Time(-1, -1);
+  }
   
   /**
-   * Constructor
+   * Time(int, int) when the hours > 23 or the minutes > 59
+   * time is normalized.
    */
+  @Test
+  public void testNormalizedHoursAndMinutesTime()
+  {
+    final Time time1 = new Time(25, 0);
+    assertTrue("the hours are not normalized",
+                time1.getHour() == 1);
+    
+    final Time time2 = new Time(0, 65);
+    assertTrue("the minutes are not normalized",
+                time2.getMinute() == 5);
+  }
+  
+  /**
+   * Time(int) when the argument < 0.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testIncorrectParameter1Time()
+  {
+    new Time(-1);
+  }
+  
+  /**
+   * Time(int) when the argument/100 > 23.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testIncorrectParameter2Time()
+  {
+    new Time(2400);
+  }
+  
+  /**
+   * Time(int) when the argument % 100 > 59. 
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testIncorrectParametersTime()
+  {
+    new Time(60);   
+  }
+  
 
 }

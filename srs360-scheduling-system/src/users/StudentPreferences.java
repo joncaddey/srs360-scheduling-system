@@ -205,9 +205,9 @@ public class StudentPreferences
   /**
    * For every course this student wants to take, this
    * method returns a "feedback collection" of "dayslots"
-   * (MW, TR) and times (day, evening) he will be on campus
-   * to take it. It doesn't return anything if he will be
-   * on campus at the scheduled day/time anyway.
+   * (example MW, TR) and times (day, evening) he will be on
+   * campus to take it. It doesn't return anything if he
+   * will be on campus at the scheduled day/time anyway.
    * <br>
    * <b>Preconditions:</b>
    * <ul>
@@ -230,7 +230,7 @@ public class StudentPreferences
            throws IllegalArgumentException
   {
     if (the_schedule == null)
-    {
+    { 
       throw new IllegalArgumentException
                                 ("schedule cannot be null");
     }
