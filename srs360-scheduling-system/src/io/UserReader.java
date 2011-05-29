@@ -14,15 +14,17 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
 
+import users.AdvisorPreferences;
+import users.InstructorPreferences;
+import users.StudentPreferences;
 import users.User;
 
 /**
  * <p>
  * Parses a file containing all the users and their
- * preferences. The file should contain the information of
- * all users. Empty lines or lines starting with the '%'
- * character are skipped by the reader. Information is
- * organized using case-insensitive tags.
+ * preferences. Blank lines and lines starting with "%" are
+ * ignored. Information is organized using case-sensitive
+ * tags.
  * </p>
  * <p>
  * The representation of a new user on the file starts with
@@ -78,13 +80,6 @@ import users.User;
  */
 public class UserReader
 {
-
-  /**
-   * Lines starting with this String are ignored by the
-   * reader. Blank lines are also ignored.
-   */
-  private static final String COMMENT_STRING = "%";
-
   /**
    * Indicates the next lines from file will concern a new
    * user.
@@ -146,56 +141,49 @@ public class UserReader
    */
   public void read(final File the_file) throws IOException
   {
+    String tag;
     final LineCommentScanner scanner =
         new LineCommentScanner(new Scanner(the_file));
-    String tag = scanner.getNonComment();
-    if (tag != null)
+    tag = scanner.getNonComment();
+    while (tag != null)
     {
-      tag = tag.toUpperCase();
-    }
-    while (USER_TAG.equals(tag))
-    {
-      final String user_name = scanner.getNonComment();
 
-      System.out.println("USER ID: " +
-                         scanner.getNonComment());
-      System.out.println("PASSWORD: " +
-                         scanner.getNonComment());
+      // initialize fields to be used for constructing user.
+      final String user_name = scanner.getNonComment();
+      final String user_id = scanner.getNonComment();
+      final String password = scanner.getNonComment();
+
+      StudentPreferences student = null;
+      InstructorPreferences instructor = null;
+      AdvisorPreferences advisor = null;
+      boolean is_scheduler = false;
+
+      // TODO if password is null something's wrong
 
       tag = scanner.getNonComment();
-      if (tag != null)
+      while (!USER_TAG.equals(tag))
       {
-        tag = tag.toUpperCase();
-      }
+        if (STUDENT_TAG.equals(tag))
+        {
+          student = parseStudentPreferences(scanner);
+        }
 
-      while (tag != null && !USER_TAG.equals(tag))
-      {
-        if (tag.equals(STUDENT_TAG))
-        {
-          System.out.println("STUDENT");
-        }
-        else if (tag.equals(INSTRUCTOR_TAG))
-        {
-          System.out.println("INSTRUCTOR");
-        }
-        else if (tag.equals(ADVISOR_TAG))
-        {
-          System.out.println("ADVISOR");
-        }
-        else if (tag.equals(SCHEDULER_TAG))
-        {
-          System.out.println("ADVISOR");
-        }
         tag = scanner.getNonComment();
-        if (tag != null)
-        {
-          tag = tag.toUpperCase();
-        }
-
       }
+
+      my_user_map.put(user_id, new User(user_name,
+        password, student, instructor, advisor,
+        is_scheduler));
     }
 
   }
+
+  protected StudentPreferences parseStudentPreferences(
+      final LineCommentScanner the_scanner)
+  {
+    return null;
+  }
+  
 
   // Should have Map<String, User> getUserMap, which returns
   // mapping of userId to Users.
@@ -238,12 +226,12 @@ public class UserReader
     Scanner scanner;
     try
     {
-      String separator = System
-      .getProperty("line.separator");
+      String separator =
+          System.getProperty("line.separator");
       scanner =
           new Scanner(new File(
             "src/io/testUserReaderFile.txt"))
-              .useDelimiter("[(aa)(bb)]");//%[^\n]+\n+
+              .useDelimiter("[(aa)(bb)]");// %[^\n]+\n+
 
       System.out.println(scanner.next());
       System.out.println(scanner.next());

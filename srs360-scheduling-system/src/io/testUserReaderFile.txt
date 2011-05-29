@@ -1,16 +1,10 @@
-helloaabcdefgbbhaha
-
-
-
-
-
 USER
 jonathan
 jcaddey
 yadda yadda
-STudent
-Instructor
-User
+STUDENT
+INSTRUCTOR
+USER
 name
 id
 password
