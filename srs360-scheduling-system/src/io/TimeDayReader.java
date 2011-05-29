@@ -32,8 +32,6 @@ import courses.Time;
  * <p>
  * Instances are immutable.
  * </p>
- * <br>
- * <br>
  * <b>Invariants:</b>
  * <ul>
  * <li>TODO invariant1</li>
@@ -84,7 +82,7 @@ public class TimeDayReader
 
   public Collection<DaySlot> getDaySlots()
   {
-    return my_day_slots;
+    return Collections.unmodifiableCollection(my_day_slots);
   }
 
   /**

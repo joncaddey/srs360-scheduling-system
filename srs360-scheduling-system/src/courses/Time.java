@@ -8,16 +8,19 @@
 
 package courses;
 
-
 /**
- * Times are immutable. TODO <br>
+ * The time of day on a 24 hour clock. There is no
+ * representation of Days. Times are immutable.<br>
  * <br>
  * <b>Invariants:</b>
  * <ul>
- * <li>TODO invariant1</li>
+ * <li>0 <= getHours() < 24</li>
+ * <li>0 <= getMinutes() < 60</li>
  * </ul>
  * 
- * @author Jonathan Caddey (up to May 19)
+ * @author Jonathan Caddey (up to May 29)
+ * @version May 29, 2011: class and constructor
+ *          documentation, constructors implementation.
  * @version May 19, 2011 (evening): getLaterTime removed;
  *          loosened restrictions on 2 arg constructor
  *          instead to accept negative values.
@@ -27,22 +30,35 @@ package courses;
 public class Time implements Comparable<Time>
 {
 
+  private static final int HOURS_IN_DAY = 24;
+  private static final int MINUTES_IN_HOUR = 60;
+
   /**
    * The total minutes, counted from 0.
    */
   private final int my_minutes;
 
-  /*
-   * first constructor should accept positive or negative
-   * values, whatever range, and do mod or whatever to it to
-   * normalize it (0 <= hour <24, 0 <= min < 60). For
-   * example, it should know what to do with Time(10, 5 -
-   * 15). This makes it easy to see what time 30 minutes
-   * earlier was, for example.
+  /**
+   * Constructs a Time given the_hours and the_minutes.
+   * Neither argument should be negative, but the time will
+   * be normalized if the_hours > 23 or the_minutes > 59.
+   * 
+   * @param the_hours the hour of the day.
+   * @param the_minutes the minutes of the day.
+   * @throws IllegalArgumentException if the_hours < 0 or
+   *           the_minutes < 0.
    */
   public Time(final int the_hours, final int the_minutes)
+    throws IllegalArgumentException
   {
-    my_minutes = the_hours * 60 + the_minutes;
+    if (the_hours < 0 || the_minutes < 0)
+    {
+      throw new IllegalArgumentException(
+        "the_hours and the_minutes must be positive.");
+    }
+    my_minutes =
+        (the_hours * MINUTES_IN_HOUR + the_minutes) %
+            (HOURS_IN_DAY * MINUTES_IN_HOUR);
 
   }
 
