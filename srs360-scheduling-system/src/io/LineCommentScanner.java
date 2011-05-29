@@ -30,10 +30,16 @@ public class LineCommentScanner
   private int my_line_number;
   private String my_last;
 
+  /**
+   * Initializes at line 0.
+   * 
+   * @param the_scanner used to parse input. Only a
+   *          reference is held--no copy is made.
+   */
   public LineCommentScanner(final Scanner the_scanner)
   {
     my_scanner = the_scanner;
-    my_line_number = 1;
+    my_line_number = 0;
   }
 
   /**
@@ -47,16 +53,14 @@ public class LineCommentScanner
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>will not return null</li>
+   * <li>the end of input is reached if null is returned.</li>
    * </ul>
    * 
    * @return the next line from the given Scanner which is
-   *         not blank and does not start with "%".
-   * @throws NoSuchElementException if end of file is
-   *           reached before a non-commented line.
+   *         not blank and does not start with "%", or null
+   *         if there is no such line.
    */
   public String getNonComment()
-      throws NoSuchElementException
   {
     String non = null;
     while (my_scanner.hasNext())
@@ -70,16 +74,8 @@ public class LineCommentScanner
         break;
       }
     }
-    if (non == null)
-    {
-      throw new NoSuchElementException(
-        "Expected a non-comment line, "
-            + "but reached end of file");
-    }
     return non;
   }
-  
-  
 
   public int getLineNumber()
   {
