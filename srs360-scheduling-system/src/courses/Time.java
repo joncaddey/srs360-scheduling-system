@@ -155,11 +155,18 @@ public class Time implements Comparable<Time>
    * @param the_end_2
    * @param the_difference
    * @return
+   * @throws IllegalArgumentException if the_difference < 0.
    */
   public static boolean overlap(final Time the_start_1,
       final Time the_end_1, final Time the_start_2,
       final Time the_end_2, final int the_difference)
+      throws IllegalArgumentException
   {
+    if (the_difference < 0)
+    {
+      throw new IllegalArgumentException(
+        "the_difference must e positive.");
+    }
     final int s1 = the_start_1.my_minutes;
     final int e1 = the_end_1.my_minutes + the_difference;
     final int s2 = the_start_2.my_minutes;
