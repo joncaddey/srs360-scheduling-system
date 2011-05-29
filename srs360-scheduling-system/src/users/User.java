@@ -27,63 +27,50 @@ import courses.Section;
 public class User
 {
   private final String my_name;
-  private final String my_user_name;
   private final String my_password;
-  private final boolean is_student;
-  private final boolean is_instructor;
-  private final boolean is_advisor;
-  private final boolean is_scheduler;
-  private final AdvisorPreferences my_adv_prefs;
   private final StudentPreferences my_stud_prefs;
   private final InstructorPreferences my_inst_prefs;
+  private final AdvisorPreferences my_adv_prefs;
+  private final boolean is_scheduler;
   
  /**
   * Constructs a unique user of the scheduling system.
   * 
   * @param the_name The user's name
-  * @param the_user_name The user's system name
+  * @param the_user_ID The user's system name
   * @param the_password The user's system password
   * @param the_student The user's student status (T/F)
   * @param the_instructor The user's instructor status (T/F)
   * @param the_advisor The user's advisor status (T/F)
   * @param the_scheduler The user's scheduler status (T/F)
   * @throws IllegalArgumentException if name, user name, or
-  * password == null
-  */
+  * password == null  
+  */ 
   public User(final String the_name,
-              final String the_user_name,
               final String the_password,
-              final boolean the_student,
-              final boolean the_instructor,
-              final boolean the_advisor,
+              final StudentPreferences the_stud_prefs,
+              final InstructorPreferences the_inst_prefs,
+              final AdvisorPreferences the_adv_prefs,
               final boolean the_scheduler)
                              throws IllegalArgumentException
   {
     if (the_name == null)
-    {
+    { 
       throw new IllegalArgumentException
                                     ("name cannot be null");
     }
-    my_name = the_name; 
-    if (the_user_name == null)
-    {
-      throw new IllegalArgumentException
-                               ("user name cannot be null");
-    }
-    my_user_name = the_user_name;
+    
     if (the_password == null)
     {
       throw new IllegalArgumentException
                                 ("password cannot be null");
     }
+    my_name = the_name; 
     my_password = the_password;
-    is_student = the_student;
-    is_instructor = the_instructor;
-    is_advisor = the_advisor;
+    my_stud_prefs = the_stud_prefs;
+    my_inst_prefs = the_inst_prefs; 
+    my_adv_prefs = the_adv_prefs;
     is_scheduler = the_scheduler;
-    my_adv_prefs = new AdvisorPreferences();
-    my_stud_prefs = new StudentPreferences();
-    my_inst_prefs = new InstructorPreferences();   
   }
    
   /**
@@ -114,22 +101,7 @@ public class User
   
   public String getUserName()
   {
-    return my_user_name;
-  }
-  
-  public boolean isStudent()
-  {
-    return is_student;
-  }
-  
-  public boolean isInstructor()
-  {
-    return is_instructor;
-  }
-  
-  public boolean isAdvisor()
-  {
-    return is_advisor;
+    return my_name;
   }
   
   public boolean isScheduler()

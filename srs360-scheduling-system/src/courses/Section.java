@@ -1,8 +1,6 @@
 /*
  * Simple Random Sample
  * 
- * TCSS 360 Dr. Tenenberg
- * 
  * srs360-scheduling-system
  */
 
@@ -42,6 +40,11 @@ public class Section
    * When this Section is offered.
    */
   private final TimeSlot my_time_slot;
+  
+  /**
+   * The general time (morning/evening) for this section.
+   */
+  private final GeneralTime my_general_time;
 
   /**
    * Creates a Section. Certain arguments can be null if
@@ -60,27 +63,25 @@ public class Section
   public Section(final Course the_course,
                  final User the_instructor,
                  final TimeSlot the_time_slot,
-                 Catalogue the_catalogue)
+                 final Catalogue the_catalogue)
     throws IllegalArgumentException
-  // TODO must make sure the user has an
-  // instructorpreferences.
   {
     if (the_course == null)
     {
       throw new IllegalArgumentException(
         "the_course must not be null");
     }
-    if (the_instructor == null)
+    if ( the_instructor != null &&
+       (!the_instructor.isInstructor()))
     {
       throw new IllegalArgumentException(
-        "the_instructor must not be null");
+        "the_instructor must be in the instructor role");
     }
-
     my_course = the_course;
     my_instructor = the_instructor;
-    // probably need:
-    // my_general_time = the_catalogue.getGeneralTime(the_time_slot)
-    // don't need my_catalogue field
+    my_time_slot = the_time_slot;
+    my_general_time = the_catalogue.getGeneralTime
+                                             (my_time_slot);    
   }
 
   /**
@@ -113,15 +114,76 @@ public class Section
     return my_instructor;
   }
 
-  // TODO should these methods be here?  probably.
+  /**
+   * Returns the general time for this section.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the returned general time is not null</li>
+   * </ul>
+   * @return The general time for this section
+   */
   public GeneralTime getGeneralTime()
   {
     return my_general_time;
   }
 
+  /**
+   * Returns the days this section meets.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>The returned days is not null.</li>
+   * </ul>
+   * @return The days this section meets
+   */
   public Collection<Day> getDays()
   {
-    return null;
+    return my_time_slot.getDays();
+  }
+  
+  /**
+   * Returns the start time for this section.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>The returned start time is not null.</li>
+   * </ul>
+   * @return The start time for this section
+   */
+  public Time getStartTime()
+  {
+    return my_time_slot.getStart();
+  }
+  
+  /**
+   * Returns the end time for this section.
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>The returned end time is not null.</li>
+   * </ul>
+   * @return The end time for this section
+   */
+  public Time getEndTime()
+  {
+    return my_time_slot.getEnd();
   }
 
 }
