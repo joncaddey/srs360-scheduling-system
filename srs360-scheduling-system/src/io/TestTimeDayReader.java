@@ -124,12 +124,18 @@ public class TestTimeDayReader
   }
 
   /**
-   * parseDayString when two days start with same character.
+   * parseDayString when two days start with same character
+   * and appear out of order.
    */
-
-  /**
-   * parseDayString when days appear out of order.
-   */
+  @Test
+  public void testSamePrefixParseDayString()
+  {
+    final Day[] days =
+        (Day[]) my_reader.parseDayString("MThT",
+            my_reader.readDays("M,T,W,Th,F,S,N")).toArray();
+    assertArrayEquals("Misinterpreted prefix", new Day[] {
+        Day.MONDAY, Day.THURSDAY, Day.TUESDAY}, days);
+  }
 
   /**
    * parseDayString when the String is null.
@@ -160,11 +166,10 @@ public class TestTimeDayReader
     {
       fail("Exception: " + the_e.getMessage());
     }
-    final TimeDayReader reader = new TimeDayReader();
-    reader.read(scanner);
-    assertEquals("Wrong cutoff hour", 16, reader
+    my_reader.read(scanner);
+    assertEquals("Wrong cutoff hour", 16, my_reader
         .getCutoffTime().getHour());
-    assertEquals("Wrong cutoff minute", 15, reader
+    assertEquals("Wrong cutoff minute", 15, my_reader
         .getCutoffTime().getMinute());
     // TODO finish this. should this be in a different
     // thing? Should stuff be hardcoded?

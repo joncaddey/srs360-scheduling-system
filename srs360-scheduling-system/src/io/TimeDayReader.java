@@ -88,12 +88,14 @@ public class TimeDayReader
       final String the_string)
       throws IllegalArgumentException
   {
-    // Try each day and see if the string starts with it at
-    // the current index.
-    // Read it as the _longest_ match.
-    // Increment the index.
-    
-    
+    return parseDayString(my_day_map);
+  }
+
+  protected Collection<Day> parseDayString(
+      final String the_string,
+      final Map<String, Day> the_day_map)
+      throws IllegalArgumentException
+  {
     return null;
   }
 
