@@ -16,6 +16,7 @@ import java.util.Scanner;
 import org.junit.*;
 
 import courses.Course;
+import courses.GeneralTime;
 
 /**
  * Contains tests for the UserReader class.
@@ -77,5 +78,28 @@ public class TestUserReader
   public void testNullParseCourseString()
   {
     my_reader.parseCourseString(null);
+  }
+
+  /**
+   * parseGeneralTimeString when working properly.
+   */
+  @Test
+  public void testWorksOkayParseGeneralTimeString()
+  {
+    final Collection<GeneralTime> times =
+        my_reader.parseGeneralTimeString("MORNING,EVENING");
+    assertTrue("Missing MORNING",
+        times.contains(GeneralTime.MORNING));
+    assertTrue("Missing EVENING",
+        times.contains(GeneralTime.EVENING));
+  }
+
+  /**
+   * parseGeneralTimeString when unrecognized time of day.
+   */
+  @Test(expected = IllegalArgumentException.class)
+  public void testUnrecognizedTimeParseGeneralTimeString()
+  {
+    my_reader.parseGeneralTimeString("MORNING, EVENING");
   }
 }
