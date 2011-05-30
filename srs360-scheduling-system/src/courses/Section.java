@@ -42,10 +42,20 @@ public class Section
   private final TimeSlot my_time_slot;
   
   /**
+   * The start Time for the Section.
+   */
+  private final Time my_start_time;
+  
+  /**
+   * The end Time for the Section.
+   */
+  private final Time my_end_time;
+  
+  /**
    * The general time (morning/evening) for this section.
    */
   private final GeneralTime my_general_time;
-
+  
   /**
    * Creates a Section. Certain arguments can be null if
    * they are to be determined.
@@ -80,6 +90,8 @@ public class Section
     my_course = the_course;
     my_instructor = the_instructor;
     my_time_slot = the_time_slot;
+    my_start_time = the_time_slot.getStart();
+    my_end_time = the_time_slot.getEnd();
     my_general_time = the_catalogue.getGeneralTime
                                              (my_time_slot);    
   }

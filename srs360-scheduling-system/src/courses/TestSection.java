@@ -1,6 +1,5 @@
 package courses;
 
-
 import org.junit.Before;
 import org.junit.Test;
 
@@ -39,8 +38,7 @@ public class TestSection
     // is not an instructor
     final User user = new User("", "", stud_prefs,
                                        null,
-                                       adv_prefs, false);
-    
+                                       adv_prefs, false);  
     new Section(course, user, null, null);
   }
 
