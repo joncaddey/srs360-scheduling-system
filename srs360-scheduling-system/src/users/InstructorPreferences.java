@@ -29,19 +29,24 @@ import courses.Section;
  */
 public class InstructorPreferences
 {
-  private final List<Course> my_pref_courses;
-  private final List<Day> my_pref_days;
-  private final List<GeneralTime> my_pref_times;
+  private final Collection<Day> my_pref_days;
+  private final Collection<GeneralTime> my_pref_times;
+  private final Collection<Course> my_pref_courses;
+  private int my_max_credit_hours;
 
-    /**
-     * Constructs an InstructorPreferences.
-     */
-    public InstructorPreferences()
-    {
-      my_pref_courses = new ArrayList<Course>();
-      my_pref_days = new ArrayList<Day>();
-      my_pref_times = new ArrayList<GeneralTime>();
-    }
+  /**
+   * Constructs an InstructorPreferences.
+   */
+  public InstructorPreferences(final Collection<Day> the_days,
+                    final Collection<GeneralTime> the_times,
+                    final Collection<Course> the_courses,
+                    int the_max_hours)
+  {
+    my_pref_days = the_days;
+    my_pref_times = the_times;
+    my_pref_courses = the_courses;
+    my_max_credit_hours = the_max_hours;
+  }
 
     /**
      * Adds a course to the instructor's course list.
