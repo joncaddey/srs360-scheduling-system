@@ -7,6 +7,7 @@
  */
 
 package courses;
+
 /**
  * Contains information about a course like course title,
  * level, number of credit hours, etc., but not information
@@ -21,6 +22,8 @@ package courses;
  * </ul>
  * 
  * @author Jonathan Caddey
+ * @version May 30, 2011: added equals, hashcode, and
+ *          toString.
  * @version May 20, 2011: combined my_curriculum_code with
  *          my_level to be expressed by my_id.
  * @version May 19, 2011: added credits field (thank you
@@ -62,7 +65,7 @@ public class Course
                 final int the_credits)
     throws IllegalArgumentException
   {
-    if (the_id == null) 
+    if (the_id == null)
     {
       throw new IllegalArgumentException(
         "the_id must not be null");
@@ -106,6 +109,43 @@ public class Course
   public int getCredits()
   {
     return my_credits;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public boolean equals(final Object the_other)
+  {
+    boolean to_return = the_other == this;
+    if (!to_return && the_other != null &&
+        the_other.getClass() == getClass())
+    {
+      final Course other_course = (Course) the_other;
+      to_return =
+          getID().equals(other_course.getID()) &&
+              getTitle().equals(other_course.getTitle()) &&
+              getCredits() == other_course.getCredits();
+    }
+    return to_return;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  public int hashCode()
+  {
+    return my_id.hashCode() + my_title.hashCode() +
+           my_credits;
+  }
+
+  /**
+   * Returns a String containing the course ID, title, and
+   * credit hours.
+   */
+  public String toString()
+  {
+    return getID() + " " + getTitle() + " " + getCredits();
+
   }
 
 }
