@@ -252,7 +252,7 @@ public class StudentPreferences
       if (!the_schedule.hasSection(each_course,
                                    my_pref_days, 
                                    my_pref_times))
-      {
+      {       
         for (DaySlot each_dayslot : the_dayslot_collection)
         {
           for (GeneralTime each_time :
@@ -274,5 +274,5 @@ public class StudentPreferences
     } 
     return fbk_collection;   
   }
-
+  
 }
