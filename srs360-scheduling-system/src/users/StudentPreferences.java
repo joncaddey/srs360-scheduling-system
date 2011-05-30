@@ -29,18 +29,20 @@ import courses.Schedule;
  */
 public class StudentPreferences
 {
-  private final List<Course> my_pref_courses;
-  private final List<Day> my_pref_days;
-  private final List<GeneralTime> my_pref_times;
+  private final Collection<Day> my_pref_days;
+  private final Collection<GeneralTime> my_pref_times;
+  private final Collection<Course> my_pref_courses;
 
   /**
    * Constructs a StudentPreferences.
    */
-  public StudentPreferences()
+  public StudentPreferences(final Collection<Day> the_days,
+                    final Collection<GeneralTime> the_times,
+                    final Collection<Course> the_courses)
   {
-    my_pref_courses = new ArrayList<Course>();
-    my_pref_days = new ArrayList<Day>();
-    my_pref_times = new ArrayList<GeneralTime>();
+    my_pref_days = the_days;
+    my_pref_times = the_times;
+    my_pref_courses = the_courses;
   }
 
   /**

@@ -16,8 +16,9 @@ import courses.Schedule;
 import courses.Section;
 
 /**
- * Provides the advisor's preferences of sections for the 
- * schedule. 
+ * Provides the advisor's preferences of courses for the 
+ * schedule. Multiple sections of a course are indicated
+ * by multiple requests for a course.
  * <br>
  * <b>Invariants:</b>
  * <ul>
@@ -29,14 +30,14 @@ import courses.Section;
  */
 public class AdvisorPreferences
 {
-  private final List<Section> my_pref_sections;
+  private final Collection<Course> my_pref_courses;
   
   /**
    * Constructs an AdvisorPreferences.
    */
-  public AdvisorPreferences()
+  public AdvisorPreferences(Collection<Course> the_courses)
   {
-    my_pref_sections = new ArrayList<Section>();
+    my_pref_courses = the_courses;
   } 
 
   /**
@@ -53,14 +54,14 @@ public class AdvisorPreferences
    * @param the_section The section to be added
    * @throws IllegalArgumentException if the section == null
    */
-  public void addsection(final Section the_section)
+  public void addCourse(final Course the_course)
                              throws IllegalArgumentException
   {
-    if (the_section == null)
+    if (the_course == null)
     {
       throw new IllegalArgumentException();
     }
-    my_pref_sections.add(the_section);
+    my_pref_courses.add(the_course);
   }
   
   /**
@@ -77,19 +78,19 @@ public class AdvisorPreferences
    * @param the_section The section to be removed
    * @throws IllegalArgumentException if the section == null
    */
-  public void removesection(final Section the_section)
+  public void removeCourse(final Section the_course)
                              throws IllegalArgumentException
   {
-    if (the_section == null)
+    if (the_course == null)
     {
       throw new IllegalArgumentException();
     }
-    my_pref_sections.remove(the_section);
+    my_pref_courses.remove(the_course);
   }
 
-  public List<Section> getPreferredsections()
+  public Collection<Course> getPreferredCourses()
   {
-    return my_pref_sections;
+    return my_pref_courses;
   }
 
   /**
@@ -116,7 +117,7 @@ public class AdvisorPreferences
     {
       throw new IllegalArgumentException();
     } 
-      final List<Section> missing_sections =
+      final List<Course> missing_sections =
                                    new ArrayList<Section>();
       for (Section each_section : my_pref_sections)
       {
