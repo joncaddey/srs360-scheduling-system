@@ -225,7 +225,22 @@ public class UserReader
         {
           student = parseStudentPreferences(scanner);
         }
-
+        else if (INSTRUCTOR_TAG.equals(tag))
+        {
+          instructor = parseInstructorPreferences(scanner);
+        }
+        else if (ADVISOR_TAG.equals(tag))
+        {
+          advisor = parseAdvisorPreferences(scanner);
+        }
+        else if (SCHEDULER_TAG.equals(tag))
+        {
+          is_scheduler = true;
+        }
+        else
+        {
+          // TODO something's wrong!
+        }
         tag = scanner.getNonComment();
       }
 
@@ -264,7 +279,32 @@ public class UserReader
             .getNonComment());
     final Collection<GeneralTime> times =
         parseGeneralTimeString(the_scanner.getNonComment());
-    return null;
+    final Collection<Course> courses =
+        parseCourseString(the_scanner.getNonComment());
+    return new StudentPreferences(days, times, courses);
+  }
+
+  protected InstructorPreferences parseInstructorPreferences(
+      final LineCommentScanner the_scanner)
+  {
+    final Collection<Day> days =
+        my_reader.parseDayString(the_scanner
+            .getNonComment());
+    final Collection<GeneralTime> times =
+        parseGeneralTimeString(the_scanner.getNonComment());
+    final int max_credit_hours =
+        Integer.parseInt(the_scanner.getNonComment());
+    final Collection<Course> courses =
+        parseCourseString(the_scanner.getNonComment());
+    return new InstructorPreferences(days, times, courses,
+      max_credit_hours);
+  }
+
+  protected AdvisorPreferences parseAdvisorPreferences(
+      final LineCommentScanner the_scanner)
+  {
+    return new AdvisorPreferences(
+      parseCourseString(the_scanner.getNonComment()));
   }
 
   /**
@@ -345,10 +385,9 @@ public class UserReader
   protected Collection<GeneralTime> parseGeneralTimeString(
       final String the_string) throws NullPointerException,
       IllegalArgumentException
-      // TODO TEST THIS
   {
     final String[] token = the_string.split(",");
-    Collection<GeneralTime> times =
+    final Collection<GeneralTime> times =
         new ArrayList<GeneralTime>(token.length);
     final GeneralTime[] all_times = GeneralTime.values();
 
