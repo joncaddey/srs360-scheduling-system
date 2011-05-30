@@ -147,18 +147,19 @@ public class UserReader
     tag = scanner.getNonComment();
     while (tag != null)
     {
+      // TODO if not USER_TAG then something's up
 
       // initialize fields to be used for constructing user.
       final String user_name = scanner.getNonComment();
       final String user_id = scanner.getNonComment();
       final String password = scanner.getNonComment();
+      // TODO if password is null something's wrong
 
       StudentPreferences student = null;
       InstructorPreferences instructor = null;
       AdvisorPreferences advisor = null;
       boolean is_scheduler = false;
 
-      // TODO if password is null something's wrong
 
       tag = scanner.getNonComment();
       while (!USER_TAG.equals(tag))
@@ -178,6 +179,23 @@ public class UserReader
 
   }
 
+  /**
+   * getNonComment should return the non comment after the Student Tag.
+   * TODO add Description
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * @param the_scanner
+   * @return
+   */
   protected StudentPreferences parseStudentPreferences(
       final LineCommentScanner the_scanner)
   {
