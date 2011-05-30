@@ -10,16 +10,19 @@ package io;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
-
-import courses.Course;
 
 import users.AdvisorPreferences;
 import users.InstructorPreferences;
 import users.StudentPreferences;
 import users.User;
+import courses.Course;
+import courses.Day;
+import courses.GeneralTime;
 
 /**
  * <p>
@@ -69,6 +72,12 @@ import users.User;
  * on its own line.
  * </p>
  * 
+ * <p>
+ * Data must be read using the read method before other
+ * methods may be used. Data may be read only once,
+ * effecively making instances immutable.
+ * <p/>
+ * 
  * 
  * <br>
  * <br>
@@ -116,20 +125,49 @@ public class UserReader
    */
   private Map<String, User> my_user_map;
 
-  
-  
   /**
-   * 
-   * @param the_course_map a mapping of course IDs to corrosponding Courses.
-   * @param the_reader a reader that has already read information.
+   * A mapping of course IDs to Courses.
    */
-  public UserReader(Map<String, Course> the_course_map, TimeSlotReader the_reader) {
-    
-  }
-  // constructor needs as an argument something that can
-  // parse Strings, and possibly a list of all Courses.
+  private Map<String, Course> my_course_map;
 
-  // Should have read(File)
+  /**
+   * Knows how to parse a day String.
+   */
+  private TimeSlotReader my_reader;
+
+  /**
+   * Whether input has successfully been read.
+   */
+  private boolean my_successfully_read;
+
+  /**
+   * Creates a UserReader. Data must be inputed before other
+   * methods may be called.
+   * 
+   * @param the_course_map a mapping of course IDs to
+   *          corresponding Courses.
+   * @param the_reader a reader that has already read Day
+   *          information.
+   * @throws IllegalArgumentException if either argument is
+   *           null.
+   */
+  public UserReader(final TimeSlotReader the_reader,
+                    final Map<String, Course> the_course_map)
+    throws IllegalArgumentException
+  {
+    if (the_course_map == null)
+    {
+      throw new IllegalArgumentException(
+        "the_course_map must not be null");
+    }
+    if (the_reader == null)
+    {
+      throw new IllegalArgumentException(
+        "the_reader must not be null");
+    }
+    my_course_map = the_course_map;
+    my_reader = the_reader;
+  }
 
   /**
    * Reads a given file containing information about all the
@@ -147,15 +185,23 @@ public class UserReader
    * <li>TODO</li>
    * </ul>
    * 
-   * @param the_file contains the user data in the correct
-   *          format.
+   * @throws IllegalStateException if data has already been
+   *           read.
+   * @param the_scanner contains the user data in the
+   *          correct format.
    * 
    */
-  public void read(final File the_file) throws IOException
+  public void read(final Scanner the_scanner)
+      throws IllegalStateException
   {
+    if (my_successfully_read)
+    {
+      throw new IllegalStateException(
+        "Data may be read only once.");
+    }
     String tag;
     final LineCommentScanner scanner =
-        new LineCommentScanner(new Scanner(the_file));
+        new LineCommentScanner(the_scanner);
     tag = scanner.getNonComment();
     while (tag != null)
     {
@@ -171,7 +217,6 @@ public class UserReader
       InstructorPreferences instructor = null;
       AdvisorPreferences advisor = null;
       boolean is_scheduler = false;
-
 
       tag = scanner.getNonComment();
       while (!USER_TAG.equals(tag))
@@ -189,11 +234,13 @@ public class UserReader
         is_scheduler));
     }
 
+    my_successfully_read = true;
+
   }
 
   /**
-   * getNonComment should return the non comment after the Student Tag.
-   * TODO add Description
+   * getNonComment should return the non comment after the
+   * Student Tag. TODO add Description
    * 
    * <br>
    * <br>
@@ -205,18 +252,128 @@ public class UserReader
    * <ul>
    * <li>TODO</li>
    * </ul>
+   * 
    * @param the_scanner
    * @return
    */
   protected StudentPreferences parseStudentPreferences(
       final LineCommentScanner the_scanner)
   {
+    final Collection<Day> days =
+        my_reader.parseDayString(the_scanner
+            .getNonComment());
+    final Collection<GeneralTime> times =
+        parseGeneralTimeString(the_scanner.getNonComment());
     return null;
   }
-  
 
-  // Should have Map<String, User> getUserMap, which returns
-  // mapping of userId to Users.
+  /**
+   * Returns a collection of all the Courses corresponding
+   * to the course IDs found in the given string. Course IDs
+   * should be separated by commas.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_string != null</li>
+   * <li>the_string is as described</li>
+   * <li>every course ID in the_string is a key in the Map
+   * given upon construction.
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the Course for every recognized course ID is in the
+   * returned list.</li>
+   * </ul>
+   * 
+   * @param the_string contains course IDs separated by
+   *          commas.
+   * @return the Courses corresponding to the course IDs in
+   *         the_string.
+   * @throws NullPointerException if the_string is null.
+   * @throws IllegalArgumentException if an unrecognized
+   *           course ID is in the_string.
+   */
+  protected Collection<Course> parseCourseString(
+      final String the_string) throws NullPointerException,
+      IllegalArgumentException
+  {
+    final String[] token = the_string.split(",");
+    final Collection<Course> courses =
+        new ArrayList<Course>(token.length);
+    for (int i = 0; i < token.length; i++)
+    {
+      if (my_course_map.containsKey(token[i]))
+      {
+        courses.add(my_course_map.get(token[i]));
+      }
+      else
+      {
+        throw new IllegalArgumentException("\"" + token[i] +
+                                           "\" is not a recognized course ID.");
+      }
+    }
+    return courses;
+  }
+
+  /**
+   * Given a string of times of day separated by commas,
+   * returns a Collection of GeneralTimes that represent
+   * those times of day.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>Every time of day in the_string is the toString()
+   * output of a GeneralTime.</li>
+   * <li>the_string != null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * 
+   * @param the_string fits format as described above.
+   * @return the GeneralTimes represented in the_string.
+   * @throws NullPointerException if the_string is null.
+   * @throws IllegalArgumentException if a time in
+   *           the_string does not match the toString()
+   *           output of a GeneralTime.
+   */
+  protected Collection<GeneralTime> parseGeneralTimeString(
+      final String the_string) throws NullPointerException,
+      IllegalArgumentException
+      // TODO TEST THIS
+  {
+    final String[] token = the_string.split(",");
+    Collection<GeneralTime> times =
+        new ArrayList<GeneralTime>(token.length);
+    final GeneralTime[] all_times = GeneralTime.values();
+
+    // for every token, check to make sure it represents a
+    // GeneralTime.
+    for (int i = 0; i < token.length; i++)
+    {
+      boolean found = false;
+      for (int j = 0; !found && j < all_times.length; j++)
+      {
+        if (token[i].equals(all_times[j].toString()))
+        {
+          times.add(all_times[j]);
+          found = true;
+        }
+      }
+      if (!found)
+      {
+        throw new IllegalArgumentException("\"" + token[i] +
+                                           "\" is not a recognized time of day.");
+      }
+    }
+
+    return times;
+  }
 
   /**
    * Returns a mapping of user IDs to the Users they belong
