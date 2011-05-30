@@ -35,7 +35,8 @@ import courses.Time;
  * Many methods require that read() be invoked before them
  * and will throw an IllegalStateException otherwise. The
  * idea is to construct an instance, invoke the read method,
- * and then invoke other methods.
+ * and then invoke other methods. The read method is not
+ * allowed to be invoked a second time.
  * </p>
  * <b>Invariants:</b>
  * <ul>
@@ -295,10 +296,18 @@ public class TimeSlotReader
    * @throws InputFormatException if the input of
    *           the_scanner does not adhere to the
    *           description provided in class documentation.
+   * @throws IllegalStateException if input has already been
+   *           read.
    */
   public void read(final Scanner the_scanner)
-      throws IllegalArgumentException, InputFormatException
+      throws IllegalArgumentException,
+      InputFormatException, IllegalStateException
   {
+    if (my_successfully_read)
+    {
+      throw new IllegalStateException(
+        "Input may be read only once");
+    }
     // TODO if something goes wrong..?
     final LineCommentScanner scanner =
         new LineCommentScanner(the_scanner);

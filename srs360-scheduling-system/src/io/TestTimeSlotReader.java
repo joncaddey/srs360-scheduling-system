@@ -37,6 +37,11 @@ public class TestTimeSlotReader
   private TimeSlotReader my_reader;
 
   /**
+   * A simple scanner with correct input.
+   */
+  private Scanner my_scanner;
+
+  /**
    * A mapping of day names to their Days for tests.
    */
   private Map<String, Day> my_day_map;
@@ -49,6 +54,9 @@ public class TestTimeSlotReader
   {
     my_reader = new TimeSlotReader();
     my_day_map = my_reader.readDays("M,T,W,Th,F,S,Sn");
+    my_scanner =
+        new Scanner("M,T,W,Th,F,S,Sn\n" + "1615\n" + "MW\n"
+                    + "TTh");
   }
 
   /**
@@ -185,17 +193,25 @@ public class TestTimeSlotReader
   @Test
   public void testWorksOkayRead()
   {
-    final Scanner scanner =
-        new Scanner("M,T,W,Th,F,S,Sn\n" + "1615\n" + "MW\n"
-                    + "TTh");
-    my_reader.read(scanner);
+    my_reader.read(my_scanner);
     assertEquals("Wrong cutoff hour", 16, my_reader
         .getCutoffTime().getHour());
     assertEquals("Wrong cutoff minute", 15, my_reader
         .getCutoffTime().getMinute());
     Collection<DaySlot> day_slots = my_reader.getDaySlots();
-    assertEquals("Wrong number dayslots", 2, day_slots.size());
-    
+    assertEquals("Wrong number dayslots", 2,
+        day_slots.size());
+
+  }
+
+  /**
+   * read(Scanner) after already having called read.
+   */
+  @Test(expected = IllegalStateException.class)
+  public void testSecondReadRead()
+  {
+    my_reader.read(my_scanner);
+    my_reader.read(my_scanner);
 
   }
 }
