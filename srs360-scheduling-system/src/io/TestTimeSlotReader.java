@@ -212,6 +212,22 @@ public class TestTimeSlotReader
   {
     my_reader.read(my_scanner);
     my_reader.read(my_scanner);
+  }
 
+  /**
+   * getCutoffTime before input is read.
+   */
+  @Test(expected = IllegalStateException.class)
+  public void testBeforeReadGetCutoffTime()
+  {
+    my_reader.getCutoffTime();
+  }
+
+  /**
+   * getDaySlots before input is read.
+   */
+  public void testBeforeReadGetDaySlotsTime()
+  {
+    my_reader.getDaySlots();
   }
 }

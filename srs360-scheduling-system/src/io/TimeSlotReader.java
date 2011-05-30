@@ -36,7 +36,8 @@ import courses.Time;
  * and will throw an IllegalStateException otherwise. The
  * idea is to construct an instance, invoke the read method,
  * and then invoke other methods. The read method is not
- * allowed to be invoked a second time.
+ * allowed to be invoked a second time. This effectively
+ * makes an instance immutable once input is read.
  * </p>
  * <b>Invariants:</b>
  * <ul>
