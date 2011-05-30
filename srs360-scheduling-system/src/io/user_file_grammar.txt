@@ -1,4 +1,9 @@
 // credit David Philips for all on single line idea.
+
+NOTE this is outdated.  No longer have any tags except for USER, STUDENT, INSTRUCTOR, ADVISOR, and SCHEDULER.  
+Everything else is implicit.
+
+
 user:
 name:Jonathan Caddey
 username:jcaddey

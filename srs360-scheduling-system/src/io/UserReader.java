@@ -14,6 +14,8 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Scanner;
 
+import courses.Course;
+
 import users.AdvisorPreferences;
 import users.InstructorPreferences;
 import users.StudentPreferences;
@@ -114,6 +116,16 @@ public class UserReader
    */
   private Map<String, User> my_user_map;
 
+  
+  
+  /**
+   * 
+   * @param the_course_map a mapping of course IDs to corrosponding Courses.
+   * @param the_reader a reader that has already read information.
+   */
+  public UserReader(Map<String, Course> the_course_map, TimeSlotReader the_reader) {
+    
+  }
   // constructor needs as an argument something that can
   // parse Strings, and possibly a list of all Courses.
 
