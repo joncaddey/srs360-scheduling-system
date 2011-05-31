@@ -93,7 +93,7 @@ public class StudentPreferences
     my_pref_courses.remove(the_course);
   }
 
-  public List<Course> getPreferredCourses()
+  public Collection<Course> getPreferredCourses()
   {
     return my_pref_courses;
   }
@@ -203,7 +203,7 @@ public class StudentPreferences
   {
     return my_pref_times;
   }
-  
+   
   /**
    * For every course this student wants to take, this
    * method returns a "feedback collection" of "dayslots"

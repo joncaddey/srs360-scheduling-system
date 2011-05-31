@@ -96,7 +96,7 @@ public class InstructorPreferences
       my_pref_courses.remove(the_course);
     }
 
-    public List<Course> getPreferredCourses()
+    public Collection<Course> getPreferredCourses()
     {
       return my_pref_courses;
     }
@@ -149,7 +149,7 @@ public class InstructorPreferences
       my_pref_days.remove(the_day);
     }
 
-    public List<Day> getPreferredDays()
+    public Collection<Day> getPreferredDays()
     {
       return my_pref_days;
     }
@@ -202,7 +202,7 @@ public class InstructorPreferences
       my_pref_times.remove(the_time);
     }
 
-    public List<GeneralTime> getPreferredGeneralTimes()
+    public Collection<GeneralTime> getPreferredGeneralTimes()
     {
       return my_pref_times;
     }

@@ -7,6 +7,7 @@ package users;
 
 import java.util.Collection;
 
+import courses.Course;
 import courses.DaySlot;
 import courses.Schedule;
 import courses.Section;
@@ -218,13 +219,13 @@ public class User
    * @param the_schedule The schedule of courses
    * @return A collection of missing sections
    */
-  public Collection<Section> getAdvisorFeedback
+  public Collection<Course> getAdvisorFeedback
                                (final Schedule the_schedule)                          
   {
     return my_adv_prefs.getAdvisorFeedback(the_schedule);
   }
   
-  /**
+  /** 
    * This method compares every course/day/time assigned
    * to this instructor with the courses/days/times he
    * wants to teach and returns a collection of course
