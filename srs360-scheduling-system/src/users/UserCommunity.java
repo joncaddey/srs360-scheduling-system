@@ -8,11 +8,14 @@
 
 package users;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
 
 import courses.Catalogue;
+import courses.Schedule;
 
 /**
  * 
@@ -105,13 +108,23 @@ public class UserCommunity
    * <li>TODO</li>
    * </ul>
    */
-  public void gatherFeedback()
+  public void gatherFeedback(final Schedule the_schedule)
   {
-
+    my_advisor_feedback = new ArrayList<AdvisorFeedback>();
+    for (User user : my_authenticated_users.values())
+    {
+      if (user.isAdvisor())
+      {
+        my_advisor_feedback.add(user
+            .getAdvisorFeedback(the_schedule));
+      }
+    }
   }
 
-  public Collection<AdvisorFeedback> getStudentFeedback()
+  public Collection<AdvisorFeedback> getAdvisorFeedback()
   {
+    return new ArrayList<AdvisorFeedback>(
+      my_advisor_feedback);
 
   }
 
