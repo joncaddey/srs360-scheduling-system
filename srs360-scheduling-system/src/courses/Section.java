@@ -14,7 +14,8 @@ import users.User;
  * Sections represent actual course offerings. A Section has
  * an instructor to teach it as well as a time when it is
  * taught, whereas a Course does not. Sections are
- * immutable.<br>
+ * immutable. Certain fields can be null to indicate
+ * TBA--see constructor.<br>
  * <br>
  * <b>Invariants:</b>
  * <ul>
@@ -22,6 +23,7 @@ import users.User;
  * </ul>
  * 
  * @author Jonathan Caddey
+ * @author David Liddington modified constructor
  * @version May 13, 2011
  */
 public class Section
@@ -40,22 +42,22 @@ public class Section
    * When this Section is offered.
    */
   private final TimeSlot my_time_slot;
-  
+
   /**
    * The start Time for the Section.
    */
   private final Time my_start_time;
-  
+
   /**
    * The end Time for the Section.
    */
   private final Time my_end_time;
-  
+
   /**
    * The general time (morning/evening) for this section.
    */
   private final GeneralTime my_general_time;
-  
+
   /**
    * Creates a Section. Certain arguments can be null if
    * they are to be determined.
@@ -65,8 +67,8 @@ public class Section
    *          TBA.
    * @param the_time_slot when this is taught--may be null
    *          if TBA.
-   * @param the_catalogue knows the morning/evening cutoff
-   *          time for reporting getGeneralTime().
+   * @param the_time the time of day this meets. time for
+   *          reporting getGeneralTime().
    * @throws IllegalArgumentException if the_course is null,
    *           or if !the_instructor.isInstructor()
    */
@@ -81,8 +83,8 @@ public class Section
       throw new IllegalArgumentException(
         "the_course must not be null");
     }
-    if ( the_instructor != null &&
-       (!the_instructor.isInstructor()))
+    if (the_instructor != null &&
+        (!the_instructor.isInstructor()))
     {
       throw new IllegalArgumentException(
         "the_instructor must be in the instructor role");
@@ -92,7 +94,7 @@ public class Section
     my_time_slot = the_time_slot;
     my_start_time = the_time_slot.getStart();
     my_end_time = the_time_slot.getEnd();
-    my_general_time = the_time;                                               
+    my_general_time = the_time;
   }
 
   /**
@@ -126,8 +128,7 @@ public class Section
   }
 
   /**
-   * Returns the general time for this section.
-   * <br>
+   * Returns the general time for this section. <br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -136,6 +137,7 @@ public class Section
    * <ul>
    * <li>the returned general time is not null</li>
    * </ul>
+   * 
    * @return The general time for this section
    */
   public GeneralTime getGeneralTime()
@@ -144,8 +146,7 @@ public class Section
   }
 
   /**
-   * Returns the days this section meets.
-   * <br>
+   * Returns the days this section meets. <br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -154,16 +155,16 @@ public class Section
    * <ul>
    * <li>The returned days is not null.</li>
    * </ul>
+   * 
    * @return The days this section meets
    */
   public Collection<Day> getDays()
   {
     return my_time_slot.getDays();
   }
-  
+
   /**
-   * Returns the start time for this section.
-   * <br>
+   * Returns the start time for this section. <br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -172,16 +173,16 @@ public class Section
    * <ul>
    * <li>The returned start time is not null.</li>
    * </ul>
+   * 
    * @return The start time for this section
    */
   public Time getStartTime()
   {
     return my_time_slot.getStart();
   }
-  
+
   /**
-   * Returns the end time for this section.
-   * <br>
+   * Returns the end time for this section. <br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -190,6 +191,7 @@ public class Section
    * <ul>
    * <li>The returned end time is not null.</li>
    * </ul>
+   * 
    * @return The end time for this section
    */
   public Time getEndTime()

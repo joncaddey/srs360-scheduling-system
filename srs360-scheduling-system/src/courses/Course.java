@@ -141,6 +141,8 @@ public class Course
   /**
    * Returns a String containing the course ID, title, and
    * credit hours.
+   * 
+   * @return a String representation of this Course.
    */
   public String toString()
   {
