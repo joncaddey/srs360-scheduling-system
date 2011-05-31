@@ -18,7 +18,9 @@ package courses;
  * <li>0 <= getMinutes() < 60</li>
  * </ul>
  * 
- * @author Jonathan Caddey (up to May 29)
+ * @author Jonathan Caddey
+ * @version May 30, 2011: compareTo implemented.
+ *          Documentation added.
  * @version May 29, 2011: class and constructor
  *          documentation, constructors implementation.
  * @version May 19, 2011 (evening): getLaterTime removed;
@@ -34,7 +36,7 @@ public class Time implements Comparable<Time>
   private static final int MINUTES_IN_HOUR = 60;
 
   /**
-   * What the hours is multiplied when having time in its
+   * What the hours is multiplied by when having time in its
    * integer form (example 1805 for 18:05).
    */
   private static final int BASE_100 = 100;
@@ -124,41 +126,59 @@ public class Time implements Comparable<Time>
 
   }
 
+  /**
+   * @return the hour.
+   */
   public int getHour()
   {
     return my_minutes / MINUTES_IN_HOUR;
   }
 
+  /**
+   * @return the minutes.
+   */
   public int getMinute()
   {
     return my_minutes % MINUTES_IN_HOUR;
   }
 
   /**
-   * Returns whether the two times overlap. TODO add
-   * Description
+   * Returns whether two durations overlap. The durations
+   * are the times between the_start and the_end. The start
+   * time must be before the corresponding end time--i.e. no
+   * duration may start in the evening and end in the
+   * morning. The durations overlap if either duration ends
+   * within the_difference minutes of the other duration
+   * starting.
    * 
    * <br>
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>the_start_1.compareTo(the_end_1) < 0</li>
+   * <li>the_start_2.compareTo(the_end_2) < 0</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>none</li>
    * </ul>
    * 
-   * @param the_start_1
-   * @param the_end_1
-   * @param the_start_2
-   * @param the_end_2
-   * @param the_difference
-   * @return
+   * @param the_start_1 the start of the first duration.
+   * @param the_end_1 the end of the first duration.
+   * @param the_start_2 the start of the second duration.
+   * @param the_end_2 the end of the second duration.
+   * @param the_difference the necessary time between the
+   *          two durations.
+   * @return whether the two durations overlap.
+   * @throws IllegalArgumentException if either start is at
+   *           a later time than their corresponding ends,
+   *           or the_difference < 0.
+   * @throws NullPointerException if any argument is null.
    */
   public static boolean overlap(final Time the_start_1,
       final Time the_end_1, final Time the_start_2,
       final Time the_end_2, final int the_difference)
+      throws IllegalArgumentException, NullPointerException
   {
     if (the_difference < 0)
     {
@@ -172,11 +192,41 @@ public class Time implements Comparable<Time>
     return (s1 < e2 && e2 < e1) || (s2 < e1 && e1 < e2);
   }
 
+  /**
+   * Compares based on getHours() * 60 + getMinutes().
+   * 
+   * @param the_other the Time to compare to.
+   */
   @Override
-  public int compareTo(final Time the_arg0)
+  public int compareTo(final Time the_other)
   {
-    // TODO Auto-generated method stub
-    return 0;
+    return my_minutes - the_other.my_minutes;
+  }
+
+  /**
+   * {@inheritDoc}
+   */
+  @Override
+  public int hashCode()
+  {
+    return my_minutes;
+  }
+
+  /**
+   * @return whether the_other is the same time as this.
+   * @param the_other a Time to compare to.
+   */
+  @Override
+  public boolean equals(final Object the_other)
+  {
+    boolean to_return = false;
+    if (the_other != null &&
+        the_other.getClass() == getClass())
+    {
+      final Time other_time = (Time) the_other;
+      to_return = other_time.my_minutes == my_minutes;
+    }
+    return to_return;
   }
 
 }

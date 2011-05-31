@@ -254,25 +254,36 @@ public class UserReader
   }
 
   /**
-   * getNonComment should return the non comment after the
-   * Student Tag. TODO add Description
+   * Constructs a StudentPreferences object from the
+   * information retrieved from the Scanner. The position of
+   * the input is advanced to after the method finishes
+   * reading information.
    * 
    * <br>
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>the_scanner != null</li>
+   * <li>The next lines contain a comma-delimited list of
+   * preferred Days, a comma-delimited list of preferred
+   * times, and a comma-delimited list of course IDs for
+   * preferred courses.</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>none</li>
    * </ul>
    * 
-   * @param the_scanner
-   * @return
+   * @param the_scanner can read the required input.
+   * @return an object holding the information read from
+   *         input.
+   * @throws NullPointerException if the_scanner is null.
+   * @throws InputFormatException if the_scanner's input is
+   *           not formatted as described.
    */
   protected StudentPreferences parseStudentPreferences(
       final LineCommentScanner the_scanner)
+      throws NullPointerException, InputFormatException
   {
     final Collection<Day> days =
         my_reader.parseDayString(the_scanner
@@ -284,8 +295,38 @@ public class UserReader
     return new StudentPreferences(days, times, courses);
   }
 
+  /**
+   * Constructs an InstructorPreferences object from the
+   * information retrieved from the Scanner. The position of
+   * the input is advanced to after the method finishes
+   * reading information.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_scanner != null</li>
+   * <li>The next lines contain a comma-delimited list of
+   * preferred Days, a comma-delimited list of preferred
+   * times, the preferred credit hours to teach, and a
+   * comma-delimited list of course IDs for preferred
+   * courses.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * 
+   * @param the_scanner can read the required input.
+   * @return an object holding the information read from
+   *         input.
+   * @throws NullPointerException if the_scanner is null.
+   * @throws InputFormatException if the_scanner's input is
+   *           not formatted as described.
+   */
   protected InstructorPreferences parseInstructorPreferences(
       final LineCommentScanner the_scanner)
+      throws InputFormatException, NullPointerException
   {
     final Collection<Day> days =
         my_reader.parseDayString(the_scanner
@@ -300,8 +341,35 @@ public class UserReader
       max_credit_hours);
   }
 
+  /**
+   * Constructs an AdvisorPreferences object from the
+   * information retrieved from the Scanner. The position of
+   * the input is advanced to after the method finishes
+   * reading information.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_scanner != null</li>
+   * <li>The next line contain a comma-delimited list of
+   * course IDs for recommended courses.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * 
+   * @param the_scanner can read the required input.
+   * @return an object holding the information read from
+   *         input.
+   * @throws NullPointerException if the_scanner is null.
+   * @throws InputFormatException if the_scanner's input is
+   *           not formatted as described.
+   */
   protected AdvisorPreferences parseAdvisorPreferences(
       final LineCommentScanner the_scanner)
+      throws NullPointerException, InputFormatException
   {
     return new AdvisorPreferences(
       parseCourseString(the_scanner.getNonComment()));
@@ -443,11 +511,11 @@ public class UserReader
     Collection<String> hello = new ArrayList<String>();
     hello.add("Hello");
     hello.add("World");
-    Collection<String> goodbye = new ArrayList<String>(hello);
+    Collection<String> goodbye =
+        new ArrayList<String>(hello);
     hello.remove("Hello");
     System.out.println(hello);
     System.out.println(goodbye);
-    
-    
+
   }
 }
