@@ -8,11 +8,10 @@
 
 package io;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
 
@@ -40,7 +39,7 @@ import courses.GeneralTime;
  * If the user is a Student, the "STUDENT" tag should follow
  * on its own line. The next line should contain a list of
  * days the student would be willing to go to school (see
- * TODO DaySlotReader.parseDayString()). The line after that
+ * TimeSlotReader.parseDayString()). The line after that
  * should be a comma-separated list of times of day the
  * student would be willing to go to school, being either
  * "MORNING", "EVENING", or "MORNING,EVENING". Finally, the
@@ -52,7 +51,7 @@ import courses.GeneralTime;
  * If the user is a Instructor, the "INSTRUCTOR" tag should
  * follow on its own line. The next line should contain a
  * list of days the instructor would be willing to teach
- * (see TODO DaySlotReader.parseDayString()). The line after
+ * (see TimeSlotReader.parseDayString()). The line after
  * that should be a comma-separated list of times of day the
  * instructor would be willing to teach, being either
  * "MORNING", "EVENING", or "MORNING,EVENING". Finally, the
@@ -83,7 +82,7 @@ import courses.GeneralTime;
  * <br>
  * <b>Invariants:</b>
  * <ul>
- * <li>TODO invariant1</li>
+ * <li>none</li>
  * </ul>
  * 
  * @author Jonathan Caddey
@@ -178,11 +177,12 @@ public class UserReader
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>the_scanner has input in the correct format</li>
+   * <li>the_scanner != null</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>all user information is read in</li>
    * </ul>
    * 
    * @throws IllegalStateException if data has already been
@@ -194,6 +194,7 @@ public class UserReader
   public void read(final Scanner the_scanner)
       throws IllegalStateException
   {
+    my_user_map = new HashMap<String, User>();
     if (my_successfully_read)
     {
       throw new IllegalStateException(
@@ -219,7 +220,7 @@ public class UserReader
       boolean is_scheduler = false;
 
       tag = scanner.getNonComment();
-      while (!USER_TAG.equals(tag))
+      while (tag != null && !USER_TAG.equals(tag))
       {
         if (STUDENT_TAG.equals(tag))
         {
@@ -239,7 +240,9 @@ public class UserReader
         }
         else
         {
-          // TODO something's wrong!
+          throw new InputFormatException(
+            "Expected USER, STUDENT, INSTRUCTOR, "
+                + "ADVISOR, or SCHEDULER tag.");
         }
         tag = scanner.getNonComment();
       }
@@ -501,7 +504,7 @@ public class UserReader
    * @return a mapping of user IDs to the Users they belong
    *         to.
    */
-  Map<String, User> getUserMap()
+  public Map<String, User> getUserMap()
   {
     return Collections.unmodifiableMap(my_user_map);
   }

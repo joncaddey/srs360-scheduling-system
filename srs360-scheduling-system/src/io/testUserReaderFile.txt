@@ -1,20 +1,25 @@
+%Test data file for testOkayRead() in testUserReader
+%do not change idly, or else the test will fail.
+
+
 USER
-jonathan
-jcaddey
+Busy Body
+bbody
 yadda yadda
 
 STUDENT
 MWF
 MORNING,EVENING
-TCSS360,TCSS325,TCSS305
+TCSS360,TCSS305
 
 INSTRUCTOR
 MWF
 EVENING
 15
-TCSS390C
+TCSS360
 
 USER
-name
-id
-password
+Shelly Scheduler
+sscheduler
+password123
+SCHEDULER
