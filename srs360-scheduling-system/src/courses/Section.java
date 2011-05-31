@@ -24,6 +24,7 @@ import users.User;
  * 
  * @author Jonathan Caddey
  * @author David Liddington modified constructor
+ * @version May 31, 2011: Jon eliminated TimeSlot fields.
  * @version May 13, 2011
  */
 public class Section
@@ -38,11 +39,7 @@ public class Section
    */
   private final User my_instructor;
 
-  /**
-   * When this Section is offered.
-   */
-  private final TimeSlot my_time_slot;
-
+  private final DaySlot my_day_slot;
   /**
    * The start Time for the Section.
    */
@@ -58,43 +55,20 @@ public class Section
    */
   private final GeneralTime my_general_time;
 
-  /**
-   * Creates a Section. Certain arguments can be null if
-   * they are to be determined.
-   * 
-   * @param the_course what this is a Section of.
-   * @param the_instructor who teaches this--may be null if
-   *          TBA.
-   * @param the_time_slot when this is taught--may be null
-   *          if TBA.
-   * @param the_time the time of day this meets. time for
-   *          reporting getGeneralTime().
-   * @throws IllegalArgumentException if the_course is null,
-   *           or if !the_instructor.isInstructor()
-   */
   public Section(final Course the_course,
                  final User the_instructor,
-                 final TimeSlot the_time_slot,
-                 final GeneralTime the_time)
-    throws IllegalArgumentException
+                 final DaySlot the_day_slot,
+                 final GeneralTime the_general_time,
+                 final Time the_start_time,
+                 final Time the_end_time)
   {
-    if (the_course == null)
-    {
-      throw new IllegalArgumentException(
-        "the_course must not be null");
-    }
-    if (the_instructor != null &&
-        (!the_instructor.isInstructor()))
-    {
-      throw new IllegalArgumentException(
-        "the_instructor must be in the instructor role");
-    }
     my_course = the_course;
     my_instructor = the_instructor;
-    my_time_slot = the_time_slot;
-    my_start_time = the_time_slot.getStart();
-    my_end_time = the_time_slot.getEnd();
-    my_general_time = the_time;
+    my_day_slot = the_day_slot;
+    my_general_time = the_general_time;
+    my_start_time = the_start_time;
+    my_end_time = the_end_time;
+
   }
 
   /**
@@ -160,7 +134,7 @@ public class Section
    */
   public Collection<Day> getDays()
   {
-    return my_time_slot.getDays();
+    return my_day_slot.getDays();
   }
 
   /**
@@ -178,7 +152,7 @@ public class Section
    */
   public Time getStartTime()
   {
-    return my_time_slot.getStart();
+    return my_start_time;
   }
 
   /**
@@ -196,7 +170,7 @@ public class Section
    */
   public Time getEndTime()
   {
-    return my_time_slot.getEnd();
+    return my_end_time;
   }
 
 }

@@ -39,13 +39,14 @@ public class UserCommunity
    */
   private final Catalogue my_catalogue;
 
+  private Collection<AdvisorFeedback> my_advisor_feedback;
+
   /**
    * @param the_catalogue The catalogue of courses possibly
    *          offered.
    * @param a_list_of_users List of authenticated users.
    */
-  public UserCommunity(final Collection<User>
-                                       a_list_of_users,
+  public UserCommunity(final Collection<User> a_list_of_users,
                        final Catalogue the_catalogue)
   {
     my_catalogue = the_catalogue;
@@ -53,7 +54,7 @@ public class UserCommunity
     my_authenticated_users = new HashMap<String, User>();
     for (User u : a_list_of_users)
     {
-      my_authenticated_users.put(u.getUserName(), u);
+      my_authenticated_users.put(u.getName(), u);
     }
   }
 
@@ -69,6 +70,7 @@ public class UserCommunity
    * authentication</li>
    * </ul>
    * 
+   * @author Gregory Cloutier
    * @param a_user_id the user's ID
    * @param a_password The password correlated with the
    *          user's ID
@@ -86,5 +88,43 @@ public class UserCommunity
               .authenticate(a_password);
     }
     return is_correct;
+  }
+
+  /**
+   * 
+   * TODO add Description
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   */
+  public void gatherFeedback()
+  {
+
+  }
+
+  public Collection<AdvisorFeedback> getStudentFeedback()
+  {
+
+  }
+
+  public User getInstructor(final String the_name)
+  {
+    // TODO this is not a good implementation.
+    for (User user : my_authenticated_users.values())
+    {
+      if (user.getName().equals(the_name))
+      {
+        return user;
+      }
+    }
+    return null;
   }
 }

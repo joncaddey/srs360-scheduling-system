@@ -41,7 +41,7 @@ import courses.Time;
  * </p>
  * <b>Invariants:</b>
  * <ul>
- * <li>TODO invariant1</li>
+ * <li>none</li>
  * </ul>
  * 
  * @author Jonathan Caddey
