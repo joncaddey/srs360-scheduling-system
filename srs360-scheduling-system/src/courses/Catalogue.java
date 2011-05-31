@@ -8,10 +8,13 @@
 
 package courses;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 
 /**
- * TODO <br>
+ * Contains information for all Schedules in general.
+ * Instances are immutable.<br>
  * <br>
  * <b>Invariants:</b>
  * <ul>
@@ -21,6 +24,9 @@ import java.util.Collection;
  * </ul>
  * 
  * @author Gregory Cloutier
+ * @author Jonathan Caddey
+ * @version May 30, 2011: Jon made small modifications,
+ *          added class doc, added getGeneralTime
  * @version May 27, 2011: Class created.
  */
 public class Catalogue
@@ -31,9 +37,10 @@ public class Catalogue
   private final Collection<Course> my_course_list;
 
   /**
-   * All possible time slots.
+   * All possible combinations of days during which sections
+   * may be offered.
    */
-  private final Collection<TimeSlot> my_time_slots;
+  private final Collection<DaySlot> my_day_slots;
 
   /**
    * The day/night cutoff. Used to determine if classes are
@@ -46,19 +53,21 @@ public class Catalogue
    * 
    * @param the_course_list The list of courses within the
    *          schedule.
-   * @param the_time_slots The available time slots.
+   * @param the_day_slots The available combinations of days
+   *          sections may be offered.
    * @param a_day_night_cutoff The day/night cutoff time,
    *          where day classes end and evening classes
    *          begin.
+   * @author Gregory Cloitier
+   * @author Jonathan Caddey (modified signature)
    */
   public Catalogue(final Collection<Course> the_course_list,
-                   final Collection<TimeSlot> the_time_slots,
+                   final Collection<DaySlot> the_day_slots,
                    final Time a_day_night_cutoff)
   {
-    my_course_list = the_course_list;
-    my_time_slots = the_time_slots;
+    my_course_list = new ArrayList<Course>(the_course_list);
+    my_day_slots = new ArrayList<DaySlot>(the_day_slots);
     my_day_night_cutoff = a_day_night_cutoff;
-
   }
 
   /**
@@ -88,6 +97,59 @@ public class Catalogue
   public boolean isInCatalogue(final Course the_course)
   {
     return my_course_list.contains(the_course);
+  }
+
+  /**
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null</li>
+   * </ul>
+   * 
+   * @return every possible combination of Days a Section is
+   *         allowed to be held on.
+   */
+  public Collection<DaySlot> getDaySlots()
+  {
+    return Collections.unmodifiableCollection(my_day_slots);
+  }
+
+  /**
+   * Determines which general time of day the given time is
+   * in.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the_time != null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>none</li>
+   * </ul>
+   * 
+   * @param the_time the time in question.
+   * @return what general time of day the given time belongs
+   *         to.
+   * @throws NullPointerException if the_time is null.
+   */
+  public GeneralTime getGeneralTime(final Time the_time)
+      throws NullPointerException
+  {
+    GeneralTime time;
+    if (the_time.compareTo(my_day_night_cutoff) < 0)
+    {
+      time = GeneralTime.MORNING;
+    }
+    else
+    {
+      time = GeneralTime.EVENING;
+    }
+    return time;
   }
 
 }
