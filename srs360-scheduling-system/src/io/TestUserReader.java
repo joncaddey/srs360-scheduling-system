@@ -10,12 +10,16 @@ package io;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.Collection;
+import java.util.Map;
 import java.util.Scanner;
 
 import org.junit.*;
 
 import users.StudentPreferences;
+import users.User;
 
 import courses.Course;
 import courses.Day;
@@ -127,5 +131,27 @@ public class TestUserReader
     assertEquals("Wrong number of preferred Days", 5,
         student.getPreferredDays().size());
   }
-  
+
+  /**
+   * read when working properly.
+   */
+  @Test
+  public void testOkayRead()
+  {
+    try
+    {
+      my_reader.read(new Scanner(new File(
+        "src/io/testUserReaderFile.txt")));
+    }
+    catch (final IOException the_e)
+    {
+      fail("Exception.");
+    }
+    final Map<String, User> map = my_reader.getUserMap();
+    assertTrue("Should have had first user",
+        map.containsKey("bbody"));
+    assertTrue("Should have read Scheduler in.",
+        map.get("sscheduler").isScheduler());
+  }
+
 }

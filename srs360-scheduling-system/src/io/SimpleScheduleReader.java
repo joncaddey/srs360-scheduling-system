@@ -5,46 +5,48 @@
  * 
  * srs360-scheduling-system
  */
+
 package io;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.Scanner;
 import java.util.StringTokenizer;
 
+import courses.Catalogue;
+
 /**
- * TODO this must be revised now that it is no longer a
- * utility class.
- * 
+ * <p>
  * A SimpleScheduleReader reads a given .csv file to produce
- * a Schedule. Cells that start with the COMMENT_STRING are
- * treated as comments and ignored by the
- * SimpleScheduleReader. Entire lines rows are commented by
- * commenting the first cell in that row. Every row after
- * SKIP_LINES non-commented lines have been skipped is
- * assumed to represent a Section on a Schedule with the
- * following format:
- * 
- * <br>
- * <br>
+ * a Schedule. Cells that start with "%" are treated as
+ * comments and ignored by the SimpleScheduleReader. Entire
+ * lines rows are commented by commenting the first cell in
+ * that row. Every row after 2 non-commented lines have been
+ * skipped is assumed to represent a Section on a Schedule
+ * columns in the following order:
+ * </p>
+ * <p>
  * <code>
- * COURSE_ID  SECTION CLASS_TITLE INSTRUCTOR DAYS 
- * START_TIME END_TIME  CREDITS
- * </code> <br>
- * <br>
+ * COURSE_ID, SECTION, CLASS_TITLE, INSTRUCTOR, DAYS, 
+ * START_TIME, END_TIME, CREDITS
+ * </code>
+ * </p>
  * 
- * TODO <br>
- * <br>
+ * <p>
+ * Cells that are yet to be determined can be commented,
+ * left blank, or contain "TBA". Of the cells, only
+ * INSTRUCTOR, DAYS, START_TIME, and END_TIME may be TBA.
+ * Input must be read with a read invocation before the
+ * Schedule can be retrieved.
+ * </p>
  * <b>Invariants:</b>
  * <ul>
- * <li>TODO invariant1</li>
+ * <li>none</li>
  * </ul>
  * 
  * @author Jonathan Caddey
- * @version 2011-05-19: Class created.
+ * @version May 19, 2011: Class created.
  */
 public final class SimpleScheduleReader
 {
@@ -72,45 +74,59 @@ public final class SimpleScheduleReader
    */
   public static final int DEFAULT_ROW_OFFSET = 2;
 
-  private final String my_delimiter;
-  private final String my_comment_string;
-  private final int my_row_offset;
-  private final String my_tba;
+  /**
+   * Whether input has been read successfully.
+   */
+  private boolean my_successfully_read = false;
 
-  public SimpleScheduleReader(final String the_delimiter,
-                              final String the_comment_string,
-                              final int the_row_offset,
-                              final String the_tba)
+  /**
+   * Reads input in the format described in the class
+   * documentation.
+   * 
+   * <br>
+   * <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>Data has not already been successfully read.</li>
+   * <li>the_reader has already read information</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>TODO</li>
+   * </ul>
+   * 
+   * @param the_scanner reads input which has the proper
+   *          format.
+   * @param the_reader has read input containing the names
+   *          for all Days.
+   * @param the_catalogue used to lookup instructor names.
+   * @throws IllegalStateException if data has already been
+   *           read.
+   */
+  public void read(final Scanner the_scanner,
+      final TimeSlotReader the_reader,
+      final Catalogue the_catalogue)
+      throws IllegalStateException
   {
-    my_delimiter = the_delimiter;
-    my_comment_string = the_comment_string;
-    my_row_offset = the_row_offset;
-    my_tba = the_tba;
-  }
-
-  public SimpleScheduleReader()
-  {
-    this(DEFAULT_DELIMITER, DEFAULT_COMMENT_STRING,
-         DEFAULT_ROW_OFFSET, DEFAULT_TBA);
-  }
-
-  public static void read(File the_file) throws IOException
-  {
-    BufferedReader reader;
-    reader = new BufferedReader(new FileReader(the_file));
+    if (my_successfully_read)
+    {
+      throw new IllegalStateException(
+        "Can only read input once.");
+    }
     String line;
     int to_skip = DEFAULT_ROW_OFFSET;
-    StringTokenizer tk;
 
-    String course_id;
-    String section;
-    String class_title;
-    String instructor;
-    String days;
-    String start_time;
-    String end_time;
-    String credits;
-    line = reader.readLine();
+    String course_id; // should look up from Catalogue
+    String section; // useful for making section
+    String title; // does not need--in catalogue
+    String instructor; // needs to get a reference to the
+                       // actual instructor User from
+                       // Catalogue.
+    String days; // must parse with TimeSlotReader
+    String start_time; // must parse with TimeSlotReader
+    String end_time; // must parse with TimeSlotReader
+    String credits; // must parse with Integer
+    line = the_scanner.nextLine();
 
     // Must skip first few lines.
     while (null != line && to_skip > 0)
@@ -120,26 +136,15 @@ public final class SimpleScheduleReader
         to_skip--;
         System.out.println("Skipped line: " + line);
       }
-      line = reader.readLine();
+      line = the_scanner.nextLine();
     }
 
     // now treat each non-commented line as a Section.
     while (null != line)
     {
-      if (!line.startsWith(DEFAULT_COMMENT_STRING))
-      {
-        tk =
-            new StringTokenizer(line, DEFAULT_DELIMITER,
-              true);
-        //course_id = nextCell(tk);
 
-      }
-      line = reader.readLine();
     }
-
-    reader.close();
   }
-
 
   /**
    * Returns an array containing the Strings that appear
@@ -170,11 +175,11 @@ public final class SimpleScheduleReader
   protected String[] parseCells(final String the_line)
       throws NullPointerException
   {
-    final String[] r = the_line.split(my_delimiter);
+    final String[] r = the_line.split(DEFAULT_DELIMITER);
     for (int i = 0; i < r.length; i++)
     {
-      if ("".equals(r[i]) || r[i].equals(my_tba) ||
-          r[i].startsWith(my_comment_string))
+      if ("".equals(r[i]) || r[i].equals(DEFAULT_TBA) ||
+          r[i].startsWith(DEFAULT_COMMENT_STRING))
       {
         r[i] = null;
       }
