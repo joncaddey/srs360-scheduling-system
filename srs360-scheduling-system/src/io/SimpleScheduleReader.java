@@ -11,6 +11,7 @@ package io;
 import java.util.Scanner;
 
 import users.User;
+import users.UserCommunity;
 import courses.Catalogue;
 import courses.Course;
 import courses.DaySlot;
@@ -79,7 +80,7 @@ public final class SimpleScheduleReader
 
   /**
    * Contains the Schedule constructed from the last
-   * succesfull read invocation.
+   * successful read invocation.
    */
   private Schedule my_schedule;
 
@@ -92,19 +93,22 @@ public final class SimpleScheduleReader
    * Contains information on all instructors.
    */
   private final Catalogue my_catalogue;
+  private final UserCommunity my_user_community;
 
   /**
    * Creates an instance.
    * 
    * @param the_reader already read input containing names
    *          of all the Days.
-   * @param the_catalogue populated with any instructors.
+   * @param the_catalogue
    */
   public SimpleScheduleReader(final TimeSlotReader the_reader,
-                              final Catalogue the_catalogue)
+                              final Catalogue the_catalogue,
+                              final UserCommunity the_user_community)
   {
     my_reader = the_reader;
     my_catalogue = the_catalogue;
+    my_user_community = the_user_community;
   }
 
   /**
@@ -204,12 +208,13 @@ public final class SimpleScheduleReader
 
   protected Section parseSectionString(final String the_line)
   {
-    // course_id; // should look up from Catalogue
+    // course_id; // should look up from Catalogue <course
+    // id to course>
     // section; // useful for making section
-    // title; // does not need--in catalogue
+    // title; // does not need
     // instructor; // needs to get a reference to the
     // // actual instructor User from
-    // // Catalogue.
+    // // UserCommunity <user name to Users.>
     // days; // must parse with TimeSlotReader
     // start_time; // must parse with TimeSlotReader
     // end_time; // must parse with TimeSlotReader
@@ -224,11 +229,13 @@ public final class SimpleScheduleReader
     int i = 0;
     final Course course =
         my_catalogue.getCourse(token[i++]);
-    final String section = token[i++];
+    // final String section = token[i++];
+    i++; // skip section letter
     i++; // skip title
     if (token[i] != null)
     {
-      instructor = my_catalogue.getInstructor(token[i]);
+      instructor =
+          my_user_community.getInstructor(token[i]);
     }
     i++;
     if (token[i] != null)
@@ -247,8 +254,9 @@ public final class SimpleScheduleReader
       end_time = my_reader.parseTimeString(token[i]);
     }
     // credits ignored.
-    // TODO finish this. make Section, need new constructor.
-    return null;
+    return new Section(course, instructor, dayslot,
+      my_catalogue.getGeneralTime(start_time), start_time,
+      end_time);
   }
 
   public static void main(final String[] the_args)

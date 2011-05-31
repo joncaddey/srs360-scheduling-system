@@ -100,7 +100,7 @@ public class User
     return my_password.equals(the_password);
   }
   
-  public String getUserName()
+  public String getName()
   {
     return my_name;
   }

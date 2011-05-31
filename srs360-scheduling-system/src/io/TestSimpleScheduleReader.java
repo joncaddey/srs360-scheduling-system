@@ -9,6 +9,8 @@ package io;
 
 import static org.junit.Assert.*;
 
+import java.util.Scanner;
+
 import org.junit.*;
 
 /**
@@ -20,8 +22,7 @@ import org.junit.*;
 public class TestSimpleScheduleReader
 {
 
-  private final SimpleScheduleReader my_reader =
-      new SimpleScheduleReader();
+  private final SimpleScheduleReader my_reader;
 
   /**
    * Sets up objects for the unit tests.
@@ -29,7 +30,11 @@ public class TestSimpleScheduleReader
   @Before
   public void setUp()
   {
+    TimeSlotReader reader = new TimeSlotReader();
+    reader.read(new Scanner("M,T,W,Th,F,S,Sn\n1615\nMW\nTR\nF"));
+    
 
+    my_reader = new SimpleScheduleReader(reader, the_catalogue, the_user_community)
   }
 
   /**
@@ -55,6 +60,15 @@ public class TestSimpleScheduleReader
         new String[] {null, "Hello", null, null, "world!"},
         my_reader
             .parseCells(",Hello,TBA,%comments are ignored,world!,"));
+  }
+  
+  
+  /**
+   * parseSectionString when working properly
+   */
+  @Test
+  public void testOkayParseSectionString() {
+    
   }
 
 }
