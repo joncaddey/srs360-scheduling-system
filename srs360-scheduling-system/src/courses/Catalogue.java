@@ -11,6 +11,8 @@ package courses;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Contains information for all Schedules in general.
@@ -34,7 +36,7 @@ public class Catalogue
   /**
    * Master Course list from the catalogue.
    */
-  private final Collection<Course> my_course_list;
+  private final Map<String, Course> my_course_map;
 
   /**
    * All possible combinations of days during which sections
@@ -51,52 +53,54 @@ public class Catalogue
   /**
    * Creates a Catalogue object.
    * 
-   * @param the_course_list The list of courses within the
-   *          schedule.
+   * @param the_course_map A mapping of course IDs to
+   *          Courses for all Courses offered.
    * @param the_day_slots The available combinations of days
-   *          sections may be offered.
+   *          Sections may be offered.
    * @param a_day_night_cutoff The day/night cutoff time,
    *          where day classes end and evening classes
    *          begin.
    * @author Gregory Cloitier
    * @author Jonathan Caddey (modified signature)
    */
-  public Catalogue(final Collection<Course> the_course_list,
+  public Catalogue(final Map<String, Course> the_course_map,
                    final Collection<DaySlot> the_day_slots,
                    final Time a_day_night_cutoff)
   {
-    my_course_list = new ArrayList<Course>(the_course_list);
+    my_course_map =
+        new HashMap<String, Course>(the_course_map);
     my_day_slots = new ArrayList<DaySlot>(the_day_slots);
     my_day_night_cutoff = a_day_night_cutoff;
   }
 
   /**
-   * Checks to see if a course is within the catalogue or
-   * not.
+   * Finds a Course given a course ID, or returns null if it
+   * is not found.
    * 
-   * <br>
-   * <br>
-   * <b>Invariants:</b>
-   * <ul>
-   * <li>The course to be checked</li>
-   * <li>The course list</li>
-   * </ul>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>None</li>
+   * <li>the_course != null</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>none</li>
    * </ul>
    * 
-   * @param the_course The course to be checked.
-   * @return True if the course is in the catalogue, false
-   *         when otherwise.
+   * @author Jonathan Caddey
+   * @param the_ID the ID of the Course sought.
+   * @return the Course with the given ID, or null if no
+   *         course is found. when otherwise.
+   * @throws IllegalArgumentException if the_ID is null.
    */
-  public boolean isInCatalogue(final Course the_course)
+  public Course getCourse(final String the_ID)
+      throws IllegalArgumentException
   {
-    return my_course_list.contains(the_course);
+    if (the_ID == null)
+    {
+      throw new IllegalArgumentException(
+        "Cannot look for null ID");
+    }
+    return my_course_map.get(the_ID);
   }
 
   /**

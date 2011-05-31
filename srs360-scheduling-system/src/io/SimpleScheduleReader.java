@@ -8,13 +8,15 @@
 
 package io;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.Scanner;
-import java.util.StringTokenizer;
 
+import users.User;
 import courses.Catalogue;
+import courses.Course;
+import courses.DaySlot;
+import courses.Schedule;
+import courses.Section;
+import courses.Time;
 
 /**
  * <p>
@@ -38,7 +40,8 @@ import courses.Catalogue;
  * left blank, or contain "TBA". Of the cells, only
  * INSTRUCTOR, DAYS, START_TIME, and END_TIME may be TBA.
  * Input must be read with a read invocation before the
- * Schedule can be retrieved.
+ * Schedule can be retrieved. Multiple Schedules may be read
+ * over the lifetime of this instance.
  * </p>
  * <b>Invariants:</b>
  * <ul>
@@ -75,9 +78,34 @@ public final class SimpleScheduleReader
   public static final int DEFAULT_ROW_OFFSET = 2;
 
   /**
-   * Whether input has been read successfully.
+   * Contains the Schedule constructed from the last
+   * succesfull read invocation.
    */
-  private boolean my_successfully_read = false;
+  private Schedule my_schedule;
+
+  /**
+   * Already read all the names of Days.
+   */
+  private final TimeSlotReader my_reader;
+
+  /**
+   * Contains information on all instructors.
+   */
+  private final Catalogue my_catalogue;
+
+  /**
+   * Creates an instance.
+   * 
+   * @param the_reader already read input containing names
+   *          of all the Days.
+   * @param the_catalogue populated with any instructors.
+   */
+  public SimpleScheduleReader(final TimeSlotReader the_reader,
+                              final Catalogue the_catalogue)
+  {
+    my_reader = the_reader;
+    my_catalogue = the_catalogue;
+  }
 
   /**
    * Reads input in the format described in the class
@@ -92,40 +120,19 @@ public final class SimpleScheduleReader
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>none</li>
    * </ul>
    * 
    * @param the_scanner reads input which has the proper
    *          format.
-   * @param the_reader has read input containing the names
-   *          for all Days.
-   * @param the_catalogue used to lookup instructor names.
-   * @throws IllegalStateException if data has already been
-   *           read.
    */
   public void read(final Scanner the_scanner,
       final TimeSlotReader the_reader,
       final Catalogue the_catalogue)
-      throws IllegalStateException
   {
-    if (my_successfully_read)
-    {
-      throw new IllegalStateException(
-        "Can only read input once.");
-    }
     String line;
     int to_skip = DEFAULT_ROW_OFFSET;
 
-    String course_id; // should look up from Catalogue
-    String section; // useful for making section
-    String title; // does not need--in catalogue
-    String instructor; // needs to get a reference to the
-                       // actual instructor User from
-                       // Catalogue.
-    String days; // must parse with TimeSlotReader
-    String start_time; // must parse with TimeSlotReader
-    String end_time; // must parse with TimeSlotReader
-    String credits; // must parse with Integer
     line = the_scanner.nextLine();
 
     // Must skip first few lines.
@@ -140,10 +147,18 @@ public final class SimpleScheduleReader
     }
 
     // now treat each non-commented line as a Section.
-    while (null != line)
+    while (the_scanner.hasNextLine())
     {
+      line = the_scanner.nextLine();
+      if (!line.startsWith(DEFAULT_COMMENT_STRING) &&
+          !line.startsWith(DEFAULT_DELIMITER))
+      {
+        parseSectionString(line);
 
+      }
     }
+
+    // my_schedule = schedule;
   }
 
   /**
@@ -185,6 +200,55 @@ public final class SimpleScheduleReader
       }
     }
     return r;
+  }
+
+  protected Section parseSectionString(final String the_line)
+  {
+    // course_id; // should look up from Catalogue
+    // section; // useful for making section
+    // title; // does not need--in catalogue
+    // instructor; // needs to get a reference to the
+    // // actual instructor User from
+    // // Catalogue.
+    // days; // must parse with TimeSlotReader
+    // start_time; // must parse with TimeSlotReader
+    // end_time; // must parse with TimeSlotReader
+    // credits; // must parse with Integer
+    final String[] token = parseCells(the_line);
+
+    User instructor = null;
+    DaySlot dayslot = null;
+    Time start_time = null;
+    Time end_time = null;
+
+    int i = 0;
+    final Course course =
+        my_catalogue.getCourse(token[i++]);
+    final String section = token[i++];
+    i++; // skip title
+    if (token[i] != null)
+    {
+      instructor = my_catalogue.getInstructor(token[i]);
+    }
+    i++;
+    if (token[i] != null)
+    {
+      dayslot =
+          new DaySlot(my_reader.parseDayString(token[i]));
+    }
+    i++;
+    if (token[i] != null)
+    {
+      start_time = my_reader.parseTimeString(token[i]);
+    }
+    i++;
+    if (token[i] != null)
+    {
+      end_time = my_reader.parseTimeString(token[i]);
+    }
+    // credits ignored.
+    // TODO finish this. make Section, need new constructor.
+    return null;
   }
 
   public static void main(final String[] the_args)
