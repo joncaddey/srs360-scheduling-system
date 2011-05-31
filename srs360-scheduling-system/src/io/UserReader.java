@@ -440,34 +440,14 @@ public class UserReader
 
   public static void main(String[] args)
   {
-    // try
-    // {
-    // new UserReader().read(new File(
-    // "src/io/testUserReaderFile.txt"));
-    // }
-    // catch (IOException the_e)
-    // {
-    // System.out.println(the_e.getMessage());
-    // }
-    Scanner scanner;
-    try
-    {
-      String separator =
-          System.getProperty("line.separator");
-      scanner =
-          new Scanner(new File(
-            "src/io/testUserReaderFile.txt"))
-              .useDelimiter("[(aa)(bb)]");// %[^\n]+\n+
-
-      System.out.println(scanner.next());
-      System.out.println(scanner.next());
-      System.out.println(scanner.next());
-      System.out.println(scanner.next());
-
-    }
-    catch (IOException the_e)
-    {
-      System.out.println(the_e.getMessage());
-    }
+    Collection<String> hello = new ArrayList<String>();
+    hello.add("Hello");
+    hello.add("World");
+    Collection<String> goodbye = new ArrayList<String>(hello);
+    hello.remove("Hello");
+    System.out.println(hello);
+    System.out.println(goodbye);
+    
+    
   }
 }
