@@ -1,8 +1,13 @@
+/*
+ * Simple Random Sample
+ * 
+ * srs360-scheduling-system
+ */
 package users;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
-import org.junit.Before;
 import org.junit.Test;
 
 import courses.Course;
@@ -10,56 +15,69 @@ import courses.Schedule;
 import courses.Section;
 import static org.junit.Assert.*;
 
+/**
+ * Tests the getAdvisorFeedback method.
+ * <br>
+ * <b>Invariants:</b>
+ * <ul>
+ * <li>none</li>
+ * </ul>
+ * 
+ * @author David
+ * @version May 30, 2011: Class created.
+ */
 public class TestAdvisorPreferences
 {
-  private AdvisorPreferences my_adv_prefs;
-  private Section my_test_section;
-  
-  @Before
-  public void setUp()
-  {
-    my_adv_prefs = new AdvisorPreferences();
-    Course course = new Course("TCSS360", "Prog QA", 5);
-    User user = new User("Dave", "liddid", "password",
-                          true, false, false, false);
-    my_test_course = new Section(course, user);                         
-  }
-  
-  @Test
-  public void testAddandRemoveSection()
-  {
-    my_adv_prefs.addcourse(my_test_course);
-    assertTrue("addcourse failed", my_adv_prefs.
-          getPreferredcourses().contains(my_test_course));
-    my_adv_prefs.removecourse(my_test_course);
-    assertFalse("removecourse failed", my_adv_prefs.
-          getPreferredcourses().contains(my_test_course));
-  }
-  
+   /**
+    * Tests the getAdvisorFeedback method.
+    * <br>
+    * <b>Preconditions:</b>
+    * <ul>
+    * <li>none</li>
+    * </ul>
+    * <b>Postconditions:</b>
+    * <ul>
+    * <li>assertions for expected output</li>
+    * </ul>
+    */
   @Test
   public void testGetAdvisorFeedback()
   {
-    Schedule schedule = new Schedule(null);
+    // This Collection<Course> contains 305 and 142. 
+    Collection<Course> courseCollection =
+                                    new ArrayList<Course>();
+    Course course305 = new Course
+                           ("TCSS305", "PROG PRACTICUM", 5);
+    Course course142 = new Course
+                               ("TCSS142", "INTRO PROG", 5);
+    courseCollection.add(course305);
+    courseCollection.add(course142);
+     
+    // This Collection<Section> contains only 305.
+    Collection<Section> sectionCollection =
+                                   new ArrayList<Section>();
+    Section section305 = new Section
+                              (course305, null, null, null);
+    sectionCollection.add(section305);
     
+    // This schedule contains only 305.
+    Schedule schedule = new Schedule(sectionCollection);
     
+    // The Advisor wants both 305 and 142.
+    AdvisorPreferences adv_prefs =
+                   new AdvisorPreferences(courseCollection);
+    
+    // This missing Collection<Course> has the courses
+    // wanted by the Advisor but not on the Schedule. It is
+    // returned by the getAdvisorFeedback method which is
+    // being tested.
+    Collection<Course> missing_courses =
+                     adv_prefs.getAdvisorFeedback(schedule);
+    
+    // 305 is not missing from the Schedule.
+    assertTrue(!missing_courses.contains(course305));
+    // 142 is missing from the Schedule.
+    assertTrue(missing_courses.contains(course142));
   } 
   
-  
-  
-  public Collection<Course> getAdvisorFeedback
-                               (final Schedule the_schedule)
-  {
-    Collection<Section> all_sections = the_schedule.getSections();
-
-    for (Section each_section : all_sections)
-    {
-       if (my_pref_courses.contains(each_section.getCourse()))
-       {
-          my_pref_courses.remove(each_section.getCourse());
-       }
-    }
-    // the courses remaining after all the ones on the 
-    // schedule have been removed
-    return my_pref_courses;
-  }
 }

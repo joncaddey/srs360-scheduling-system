@@ -7,6 +7,7 @@ package users;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import courses.Course;
@@ -95,7 +96,7 @@ public class StudentPreferences
 
   public Collection<Course> getPreferredCourses()
   {
-    return my_pref_courses;
+    return Collections.unmodifiableCollection(my_pref_courses);
   }
 
   /**
@@ -148,7 +149,7 @@ public class StudentPreferences
 
   public Collection<Day> getPreferredDays()
   {
-    return my_pref_days;
+    return Collections.unmodifiableCollection(my_pref_days);
   }
 
   /**
@@ -201,7 +202,7 @@ public class StudentPreferences
 
   public Collection<GeneralTime> getPreferredGeneralTimes()
   {
-    return my_pref_times;
+    return Collections.unmodifiableCollection(my_pref_times);
   }
    
   /**
@@ -258,7 +259,7 @@ public class StudentPreferences
         for (DaySlot each_dayslot : the_dayslot_collection)
         {
           for (GeneralTime each_time :
-                                  GeneralTime.getAllTimes())
+                                  GeneralTime.values())
           {
             if (my_pref_days.containsAll
                          (each_dayslot.getDays()) &&

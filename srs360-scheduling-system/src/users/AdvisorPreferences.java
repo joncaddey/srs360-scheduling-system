@@ -56,7 +56,7 @@ public class AdvisorPreferences
   public Collection<Course> getPreferredCourses()
   {
     return Collections
-        .unmodifiableCollection(my_pref_courses);
+                   .unmodifiableCollection(my_pref_courses);
   }
 
   /**
@@ -77,28 +77,27 @@ public class AdvisorPreferences
    *           null
    */
   public Collection<Course> getAdvisorFeedback(
-      final Schedule the_schedule)
-      throws IllegalArgumentException
+                             final Schedule the_schedule)
+                             throws IllegalArgumentException
   {
     if (the_schedule == null)
     {
       throw new IllegalArgumentException();
     }
-
-    Collection<Section> all_sections =
-        the_schedule.getSections();
-
+    final Collection<Section> all_sections =
+                                 the_schedule.getSections();
+    final Collection<Course> missing_courses =
+                     new ArrayList<Course>(my_pref_courses);
     for (Section each_section : all_sections)
     {
-      if (my_pref_courses
-          .contains(each_section.getCourse()))
+      if (missing_courses.contains(each_section.getCourse()))
       {
-        my_pref_courses.remove(each_section.getCourse());
+        missing_courses.remove(each_section.getCourse());
       }
     }
     // the courses remaining after all the ones on the
     // schedule have been removed
-    return my_pref_courses;
+    return missing_courses;
   }
 
 }
