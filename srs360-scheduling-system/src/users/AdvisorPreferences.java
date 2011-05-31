@@ -94,8 +94,8 @@ public class AdvisorPreferences
   }
 
   /**
-   * Returns a collection of sections the advisor wants on 
-   * the schedule that it does not presently have.
+   * Returns a collection of Courses the Advisor wants on 
+   * the Schedule that it does not presently have.
    * <br>
    * <b>Preconditions:</b>
    * <ul>
@@ -109,24 +109,27 @@ public class AdvisorPreferences
    * @return A collection of missing sections
    * @throws IllegalArgumentException if the schedule == null
    */
-  public Collection<Section> getAdvisorFeedback
+  public Collection<Course> getAdvisorFeedback
                                (final Schedule the_schedule)
                              throws IllegalArgumentException
   {
     if (the_schedule == null)
     {
       throw new IllegalArgumentException();
-    } 
-      final List<Course> missing_sections =
-                                   new ArrayList<Section>();
-      for (Section each_section : my_pref_sections)
+    }
+    
+    Collection<Section> all_sections = the_schedule.getSections();
+    
+      for (Section each_section : all_sections)
       {
-        if (!the_schedule.getSections().contains(each_section))
+        if (my_pref_courses.contains(each_section.getCourse()))
         {
-          missing_sections.add(each_section);
+          my_pref_courses.remove(each_section.getCourse());
         }
       }
-      return missing_sections;
+      // the courses remaining after all the ones on the 
+      // schedule have been removed
+      return my_pref_courses;
     }
 
 }
