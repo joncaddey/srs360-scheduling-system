@@ -73,7 +73,7 @@ public class Section
   public Section(final Course the_course,
                  final User the_instructor,
                  final TimeSlot the_time_slot,
-                 final Catalogue the_catalogue)
+                 final GeneralTime the_time)
     throws IllegalArgumentException
   {
     if (the_course == null)
@@ -92,8 +92,7 @@ public class Section
     my_time_slot = the_time_slot;
     my_start_time = the_time_slot.getStart();
     my_end_time = the_time_slot.getEnd();
-    my_general_time = the_catalogue.getGeneralTime
-                                             (my_time_slot);    
+    my_general_time = the_time;                                               
   }
 
   /**
