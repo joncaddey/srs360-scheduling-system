@@ -43,13 +43,21 @@ public class DaySlot
       throw new IllegalArgumentException(
         "the_days must not be null");
     }
-    my_days = new ArrayList<Day>();
-    for (Day day : the_days)
-    {
-      my_days.add(day);
-    }
+    my_days = new ArrayList<Day>(the_days);
   }
 
+  /**
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>none.</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null.</li>
+   * </ul>
+   * 
+   * @return the days this DaySlot is composed of.
+   */
   public Collection<Day> getDays()
   {
     return Collections.unmodifiableCollection(my_days);
