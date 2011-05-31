@@ -15,7 +15,10 @@ import java.util.Scanner;
 
 import org.junit.*;
 
+import users.StudentPreferences;
+
 import courses.Course;
+import courses.Day;
 import courses.GeneralTime;
 
 /**
@@ -102,4 +105,27 @@ public class TestUserReader
   {
     my_reader.parseGeneralTimeString("MORNING, EVENING");
   }
+
+  /**
+   * parseStudentPreferences when working properly. This
+   * method is so dependent on other well-tested methods
+   * that it is not exercised so thoroughly.
+   */
+  @Test
+  public void testOkayParseStudentPreferences()
+  {
+
+    StudentPreferences student =
+        my_reader
+            .parseStudentPreferences(new LineCommentScanner(
+              new Scanner("MTWThF\n" + "MORNING\n"
+                          + "TCSS360,TCSS305")));
+    assertTrue(
+        "Should be in MORNING",
+        student.getPreferredGeneralTimes().contains(
+            GeneralTime.MORNING));
+    assertEquals("Wrong number of preferred Days", 5,
+        student.getPreferredDays().size());
+  }
+  
 }

@@ -5,6 +5,7 @@
  * 
  * srs360-scheduling-system
  */
+
 package courses;
 
 import static org.junit.Assert.*;
@@ -15,9 +16,10 @@ import org.junit.*;
  * Tests the methods from Time class. It's testing Time.
  * 
  * @author Jonthan Caddey
- * @author David 
+ * @author David
  * @version May 20, 2011: Class created.
  * @version May 29, 2011: David added constructor tests.
+ * @version May 30, 2011: Jonathan added compareTo tests.
  */
 public class TestTime
 {
@@ -79,7 +81,7 @@ public class TestTime
    * duration's end, but neither lasts the other's entire
    * duration.
    */
-  //@Test
+  // @Test
   public void testMidnightEndOverlap()
   {
     assertTrue("Should have overlapped midnight end",
@@ -95,7 +97,7 @@ public class TestTime
    * other very nearly overlaps at the midnight duration's
    * end.
    */
-  //@Test
+  // @Test
   public void testMidnightEndNoOverlap()
   {
 
@@ -113,7 +115,7 @@ public class TestTime
    * duration's start, but neither lasts the other's entire
    * duration.
    */
-  //@Test
+  // @Test
   public void testMidnightStartOverlap()
   {
     assertTrue("Should have overlapped midnight start",
@@ -128,7 +130,7 @@ public class TestTime
    * other very nearly overlaps at the midnight duration's
    * start.
    */
-  //@Test
+  // @Test
   public void testMidnightStartNoOverlap()
   {
     assertFalse(
@@ -144,7 +146,7 @@ public class TestTime
    * Time.overlap when the durations overlap and both cross
    * midnight.
    */
-  //@Test
+  // @Test
   public void testBothMidnightOverlap()
   {
     assertTrue("Should have overlapped over midnight",
@@ -163,7 +165,7 @@ public class TestTime
   {
     Time.overlap(my_2300, my_100, my_2200, my_200, -1);
   }
-  
+
   /**
    * Time(int, int) when the arguments are negative.
    */
@@ -172,7 +174,7 @@ public class TestTime
   {
     new Time(-1, -1);
   }
-  
+
   /**
    * Time(int, int) when the hours > 23 or the minutes > 59
    * time is normalized.
@@ -182,13 +184,13 @@ public class TestTime
   {
     final Time time1 = new Time(25, 0);
     assertTrue("the hours are not normalized",
-                time1.getHour() == 1);
-    
+        time1.getHour() == 1);
+
     final Time time2 = new Time(0, 65);
     assertTrue("the minutes are not normalized",
-                time2.getMinute() == 5);
+        time2.getMinute() == 5);
   }
-  
+
   /**
    * Time(int) when the argument < 0.
    */
@@ -197,7 +199,7 @@ public class TestTime
   {
     new Time(-1);
   }
-  
+
   /**
    * Time(int) when the argument/100 > 23.
    */
@@ -206,15 +208,37 @@ public class TestTime
   {
     new Time(2400);
   }
-  
+
   /**
-   * Time(int) when the argument % 100 > 59. 
+   * Time(int) when the argument % 100 > 59.
    */
   @Test(expected = IllegalArgumentException.class)
   public void testIncorrectParametersTime()
   {
-    new Time(60);   
+    new Time(60);
   }
-  
 
+  /**
+   * compareTo when not equal.
+   */
+  @Test
+  public void testNotEqualCompareTo()
+  {
+    assertTrue("Wrong inequality",
+        my_100.compareTo(my_115) < 0);
+    assertTrue("Wrong inequality (reversed)",
+        my_115.compareTo(my_100) > 0);
+  }
+
+  /**
+   * compareTo and equals when equal but not same reference.
+   */
+  @Test
+  public void testEqualCompareTo()
+  {
+    assertTrue("Should be equal",
+        my_100.compareTo(new Time(100)) == 0);
+    assertTrue("Should be equal by equal method",
+        my_100.equals(new Time(100)));
+  }
 }
