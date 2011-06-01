@@ -33,7 +33,8 @@ public class Schedule
   /**
    * Mapping of Courses to Sections.
    */
-  private final Map<Course, Collection<Section>> my_course_to_sections;
+  private final Map<Course, Collection<Section>>
+  my_course_to_sections;
 
   /**
    * Collection of all Sections.
@@ -55,8 +56,8 @@ public class Schedule
         new HashMap<Course, Collection<Section>>();
     for (Section section : the_sections)
     {
-      if (!my_course_to_sections.containsKey(section
-          .getCourse()))
+      if (!my_course_to_sections.containsKey
+      (section.getCourse()))
       {
         my_course_to_sections.put(section.getCourse(),
             new ArrayList<Section>());
@@ -64,7 +65,7 @@ public class Schedule
       my_course_to_sections.get(section.getCourse()).add(
           section);
     }
-    my_sections = new ArrayList(the_sections);
+    my_sections = new ArrayList<Section>(the_sections);
 
   }
 
@@ -128,7 +129,7 @@ public class Schedule
   public boolean hasSection(final Course the_course,
       final Collection<Day> the_days,
       final Collection<GeneralTime> the_times)
-      throws NullPointerException
+    throws NullPointerException
   {
     boolean has_section = false;
     final Collection<Section> sections =
