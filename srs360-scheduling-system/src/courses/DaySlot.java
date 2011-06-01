@@ -62,4 +62,8 @@ public class DaySlot
   {
     return Collections.unmodifiableCollection(my_days);
   }
+  
+  public String toString() {
+    return my_days.toString();
+  }
 }

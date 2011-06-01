@@ -204,7 +204,6 @@ public class UserReader
     final LineCommentScanner scanner =
         new LineCommentScanner(the_scanner);
     tag = scanner.getNonComment();
-    System.out.println(tag);
     while (tag != null)
     {
       // TODO if not USER_TAG then something's up

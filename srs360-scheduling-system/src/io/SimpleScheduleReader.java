@@ -8,6 +8,8 @@
 
 package io;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Scanner;
 
 import users.User;
@@ -15,6 +17,7 @@ import users.UserCommunity;
 import courses.Catalogue;
 import courses.Course;
 import courses.DaySlot;
+import courses.GeneralTime;
 import courses.Schedule;
 import courses.Section;
 import courses.Time;
@@ -31,8 +34,7 @@ import courses.Time;
  * </p>
  * <p>
  * <code>
- * COURSE_ID, SECTION, CLASS_TITLE, INSTRUCTOR, DAYS, 
- * START_TIME, END_TIME, CREDITS
+ * COURSE_ID,SECTION,CLASS_TITLE,INSTRUCTOR,DAYS,START_TIME,END_TIME,CREDITS
  * </code>
  * </p>
  * 
@@ -130,39 +132,41 @@ public final class SimpleScheduleReader
    * @param the_scanner reads input which has the proper
    *          format.
    */
-  public void read(final Scanner the_scanner,
-      final TimeSlotReader the_reader,
-      final Catalogue the_catalogue)
+  public void read(final Scanner the_scanner)
   {
+    final Collection<Section> sections =
+        new ArrayList<Section>();
     String line;
     int to_skip = DEFAULT_ROW_OFFSET;
 
     line = the_scanner.nextLine();
 
     // Must skip first few lines.
-    while (null != line && to_skip > 0)
+    while (to_skip > 0)
     {
-      if (!line.startsWith(DEFAULT_COMMENT_STRING))
+      if (!line.startsWith(DEFAULT_COMMENT_STRING) &&
+          !line.startsWith(DEFAULT_DELIMITER))
       {
         to_skip--;
-        System.out.println("Skipped line: " + line);
       }
       line = the_scanner.nextLine();
     }
 
     // now treat each non-commented line as a Section.
+    // TODO refactor this when you care.
+    sections.add(parseSectionString(line));
     while (the_scanner.hasNextLine())
     {
-      line = the_scanner.nextLine();
       if (!line.startsWith(DEFAULT_COMMENT_STRING) &&
           !line.startsWith(DEFAULT_DELIMITER))
       {
-        parseSectionString(line);
+        sections.add(parseSectionString(line));
 
       }
+      line = the_scanner.nextLine();
     }
 
-    // my_schedule = schedule;
+    my_schedule = new Schedule(sections);
   }
 
   /**
@@ -225,6 +229,7 @@ public final class SimpleScheduleReader
     DaySlot dayslot = null;
     Time start_time = null;
     Time end_time = null;
+    GeneralTime general_time = null;
 
     int i = 0;
     final Course course =
@@ -247,6 +252,8 @@ public final class SimpleScheduleReader
     if (token[i] != null)
     {
       start_time = my_reader.parseTimeString(token[i]);
+      general_time =
+          my_catalogue.getGeneralTime(start_time);
     }
     i++;
     if (token[i] != null)
@@ -255,20 +262,18 @@ public final class SimpleScheduleReader
     }
     // credits ignored.
     return new Section(course, instructor, dayslot,
-      my_catalogue.getGeneralTime(start_time), start_time,
-      end_time);
+      general_time, start_time, end_time);
   }
 
-  public static void main(final String[] the_args)
+  public Schedule getSchedule()
+      throws IllegalStateException
   {
-    String string = ",Hello,,";
-    String[] parts = string.split(",");
-    System.out.println(parts.length);
-    for (int i = 0; i < parts.length; i++)
+    if (my_schedule == null)
     {
-      System.out.println(parts[i]);
+      throw new IllegalStateException(
+        "Must read a Schedule in first");
     }
-
+    return my_schedule;
   }
 
 }
