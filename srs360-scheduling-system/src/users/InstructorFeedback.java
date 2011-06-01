@@ -7,6 +7,8 @@
  */
 package users;
 
+import java.util.Collection;
+
 import courses.Course;
 import courses.Day;
 import courses.GeneralTime;
@@ -22,12 +24,34 @@ import courses.GeneralTime;
  */
 public class InstructorFeedback
 {
-
-  public InstructorFeedback(final Course each_course,
-                            final Day each_day,
-                            final GeneralTime each_time)
+  private Collection<Course> my_unwanted_courses;
+  private Collection<Course> my_time_conflicted_courses;
+  private int my_assigned_credit_hours;
+  
+  public InstructorFeedback
+      (final Collection<Course> the_unwanted_courses,
+       final Collection<Course> the_time_conflicted_courses,
+       int the_assigned_credit_hours)                         
   {
-    // TODO Auto-generated constructor stub
+    my_unwanted_courses = the_unwanted_courses;
+    my_time_conflicted_courses = the_time_conflicted_courses;
+    my_assigned_credit_hours = the_assigned_credit_hours;
   }
 
+  public Collection<Course> getMy_unwanted_courses()
+  {
+    return my_unwanted_courses;
+  }
+
+  public Collection<Course> getMy_time_conflicted_courses()
+  {
+    return my_time_conflicted_courses;
+  }
+
+  public int getMy_assigned_credit_hours()
+  {
+    return my_assigned_credit_hours;
+  }
+
+ 
 }
