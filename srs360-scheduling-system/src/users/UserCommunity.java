@@ -23,13 +23,15 @@ import courses.Schedule;
  * 
  * <b>Invariants:</b>
  * <ul>
- * <li>List of users</li>
+ * <li>List of users.</li>
  * </ul>
  * 
  * @author Gregory Cloutier
+ * @author Jon Caddey (gather feedback implementation)
  * @version 05/16/11 Made class
  * @version 05/18/11 Updated authenticate() and constructor
  *          method.
+ * @version 06/01/11 Added javadoc.
  */
 public class UserCommunity
 {
@@ -44,16 +46,23 @@ public class UserCommunity
    */
   private final Catalogue my_catalogue;
 
+  /**
+   * List of student feedback.
+   */
   private List<StudentFeedbackSummary> my_student_feedback;
+
   private Collection<InstructorFeedback> my_instructor_feedback;
   private Collection<AdvisorFeedback> my_advisor_feedback;
 
   /**
+   * Creates a UserCommunity using the following parameters.
+   * 
    * @param the_catalogue The catalogue of courses possibly
    *          offered.
    * @param a_list_of_users List of authenticated users.
    */
-  public UserCommunity(final Collection<User> a_list_of_users,
+  public UserCommunity(final Collection<User>
+                                       a_list_of_users,
                        final Catalogue the_catalogue)
   {
     my_catalogue = the_catalogue;
@@ -91,35 +100,44 @@ public class UserCommunity
     if (my_authenticated_users.containsKey(a_user_id))
     {
       is_correct =
-          my_authenticated_users.get(a_user_id)
-              .authenticate(a_password);
+          my_authenticated_users.get
+        (a_user_id).authenticate(a_password);
     }
     return is_correct;
   }
 
   /**
    * 
-   * TODO add Description
+   * Gathers feedback by processing the schedule by
+   * iterating over the UserCommunity's list of students.
+   * The feedback is then stored and ready to be returned
+   * when prompted.
    * 
    * <br>
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>The schedule has been processed and is nonnull</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>TODO</li>
+   * <li>Internal data representations of feedback ready to
+   * be prompted for.</li>
    * </ul>
    * 
-   * @author Jonathan Caddey
+   * @param the_schedule The schedule to be processed.
+   * 
+   * @author Jonathan Caddey (implementation of Greg's
+   *   concept and the rest of the method)
+   * @author Greg Cloutier (javaDoc and concept for student
+   *    feedback iteration)
    */
   public void gatherFeedback(final Schedule the_schedule)
   {
     my_instructor_feedback =
         new ArrayList<InstructorFeedback>();
     my_advisor_feedback = new ArrayList<AdvisorFeedback>();
-    Map<StudentFeedbackSummary, Integer> sfs_map =
+    final Map<StudentFeedbackSummary, Integer> sfs_map =
         new HashMap<StudentFeedbackSummary, Integer>();
     for (User user : my_authenticated_users.values())
     {
@@ -188,6 +206,9 @@ public class UserCommunity
 
   }
 
+  /**
+   * @return The Advisor feedback on the schedule.
+   */
   public Collection<AdvisorFeedback> getAdvisorFeedback()
   {
     return new ArrayList<AdvisorFeedback>(
@@ -195,13 +216,25 @@ public class UserCommunity
 
   }
 
-  public Collection<InstructorFeedback> getInstructorFeedback()
+  /**
+   * @return The instructor feedback on the schedule.
+   */
+  public Collection<InstructorFeedback>
+  getInstructorFeedback()
   {
     return new ArrayList<InstructorFeedback>(
       my_instructor_feedback);
 
   }
 
+  /**
+   * Attempts to return the instructor from the list
+   * of users.
+   * 
+   * @param the_name The instructors name.
+   * @return The User representation of the instructor,
+   *    null if not found.
+   */
   public User getInstructor(final String the_name)
   {
     // TODO this is not a good implementation.
@@ -215,10 +248,13 @@ public class UserCommunity
     return null;
   }
 
+  /**
+   * @return The student feedback.
+   */
   public List<StudentFeedbackSummary> getStudentFeedback()
   {
 
-    return Collections
-        .unmodifiableList(my_student_feedback);
+    return
+    Collections.unmodifiableList(my_student_feedback);
   }
 }
