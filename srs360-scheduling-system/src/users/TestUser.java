@@ -33,39 +33,38 @@ import courses.Schedule;
  */
 public class TestUser
 {
-  private User user;
-  private AdvisorPreferences advisor_preferences;
-
-  @Before
-  public void setUp()
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullNameUser()
   {
-    user = new User("David");
-    advisor_preferences = new AdvisorPreferences();
+    new User(null, "password", null, null, null, false);
   }
-
+  
+  @Test(expected = IllegalArgumentException.class)
+  public void testNullPasswordUser()
+  {
+    new User("name", null, null, null, null, false);
+  }
+  
   /**
-   * <br>
+   * Tests the authenticate method.
    * <br>
    * <b>Preconditions:</b>
    * <ul>
-   * <li>pre1: a valid Schedule containing TCSS360</li>
+   * <li>name is not null</li>
+   * <li>password is not null</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>post1: verification that TCSS360 is not included in
-   * the List of missing Courses</li>
+   * <li>returns verification of user by password</li>
    * </ul>
-   * 
-   * @param the_schedule The Schedule of Courses
    */
   @Test
-  public void testGetAdvisorFeedback(Schedule the_schedule)
+  public void testAuthenticate()
   {
-    Course tcss360 = new Course("TCSS360");
-    advisor_preferences.addCourse(tcss360);
-    List<Course> missingCourses =
-        user.getAdvisorFeedback(the_schedule);
-    assertFalse(missingCourses.contains(tcss360));
+    User user = new User
+              ("user", "password", null, null, null, false);
+    String password = "password";
+    assertTrue(user.authenticate("password"));  
   }
 
 }
