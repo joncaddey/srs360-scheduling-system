@@ -84,7 +84,6 @@ public class UserCommunity
    * authentication</li>
    * </ul>
    * 
-   * @author Gregory Cloutier
    * @param a_user_id the user's ID
    * @param a_password The password correlated with the
    *          user's ID
@@ -125,10 +124,6 @@ public class UserCommunity
    * 
    * @param the_schedule The schedule to be processed.
    * 
-   * @author Jonathan Caddey (implementation of Greg's
-   *   concept and the rest of the method)
-   * @author Greg Cloutier (javaDoc and concept for student
-   *    feedback iteration)
    */
   public void gatherFeedback(final Schedule the_schedule)
   {

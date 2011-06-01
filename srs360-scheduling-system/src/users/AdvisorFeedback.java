@@ -48,7 +48,6 @@ public class AdvisorFeedback
 
   /**
    * @return a String representation of the object.
-   * @author Jonathan Caddey
    */
   public String toString()
   {

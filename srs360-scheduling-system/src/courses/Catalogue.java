@@ -58,8 +58,6 @@ public class Catalogue
    * @param a_day_night_cutoff The day/night cutoff time,
    *          where day classes end and evening classes
    *          begin.
-   * @author Gregory Cloitier
-   * @author Jonathan Caddey (modified signature)
    */
   public Catalogue(final Map<String, Course> the_course_map,
                    final Collection<DaySlot> the_day_slots,
@@ -84,7 +82,6 @@ public class Catalogue
    * <li>none</li>
    * </ul>
    * 
-   * @author Jonathan Caddey
    * @param the_ID the ID of the Course sought.
    * @return the Course with the given ID, or null if no
    *         course is found. when otherwise.
