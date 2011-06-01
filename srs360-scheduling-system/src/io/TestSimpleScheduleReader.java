@@ -5,14 +5,20 @@
  * 
  * srs360-scheduling-system
  */
+
 package io;
 
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Scanner;
 
 import org.junit.*;
+
+import users.UserCommunity;
+
+import courses.Catalogue;
 
 /**
  * Tests the methods of SimpleScheduleReader.
@@ -23,7 +29,7 @@ import org.junit.*;
 public class TestSimpleScheduleReader
 {
 
-  private final SimpleScheduleReader my_reader;
+  private SimpleScheduleReader my_reader;
 
   /**
    * Sets up objects for the unit tests.
@@ -31,11 +37,33 @@ public class TestSimpleScheduleReader
   @Before
   public void setUp()
   {
-    TimeSlotReader reader = new TimeSlotReader();
-    reader.read(new Scanner(new File("src/io/dayslots.txt")));
-    
+    try
+    {
+      TimeSlotReader reader = new TimeSlotReader();
+      reader.read(new Scanner(new File(
+        "src/io/dayslots.txt")));
+      CourseListReader course_list_reader =
+          new CourseListReader();
+      course_list_reader.read(new Scanner(new File(
+        "src/io/masterCourseList.txt")));
+      Catalogue catalogue =
+          new Catalogue(course_list_reader.getCourseMap(),
+            reader.getDaySlots(), reader.getCutoffTime());
+      UserReader user_reader =
+          new UserReader(reader,
+            course_list_reader.getCourseMap());
+      user_reader.read(new Scanner(
+        "src/io/testUserReaderFile.txt"));
 
-    my_reader = new SimpleScheduleReader(reader, the_catalogue, the_user_community)
+      my_reader =
+          new SimpleScheduleReader(reader, catalogue,
+            new UserCommunity(user_reader.getUserMap()
+                .values(), catalogue));
+    }
+    catch (final IOException the_e)
+    {
+      fail(the_e.getMessage());
+    }
   }
 
   /**
@@ -49,7 +77,7 @@ public class TestSimpleScheduleReader
         my_reader.parseCells("Hello, ,world!"));
 
   }
-  
+
   /**
    * parseCells reads a line with a TBA, blank, and comment.
    */
@@ -62,13 +90,13 @@ public class TestSimpleScheduleReader
         my_reader
             .parseCells(",Hello,TBA,%comments are ignored,world!,"));
   }
-  
-  
+
   /**
    * parseSectionString when working properly
    */
   @Test
-  public void testOkayParseSectionString() {
+  public void testOkayParseSectionString()
+  {
     fail();
   }
 

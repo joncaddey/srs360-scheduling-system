@@ -204,6 +204,7 @@ public class UserReader
     final LineCommentScanner scanner =
         new LineCommentScanner(the_scanner);
     tag = scanner.getNonComment();
+    System.out.println(tag);
     while (tag != null)
     {
       // TODO if not USER_TAG then something's up
@@ -213,6 +214,12 @@ public class UserReader
       final String user_id = scanner.getNonComment();
       final String password = scanner.getNonComment();
       // TODO if password is null something's wrong
+      if (password == null)
+      {
+        throw new InputFormatException(
+          "Missing parameters for User: " +
+              scanner.getLineNumber());
+      }
 
       StudentPreferences student = null;
       InstructorPreferences instructor = null;

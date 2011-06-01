@@ -57,7 +57,7 @@ public class TestAdvisorPreferences
     Collection<Section> sectionCollection =
                                    new ArrayList<Section>();
     Section section305 = new Section
-                              (course305, null, null, null);
+                              (course305, null, null, null, null, null);
     sectionCollection.add(section305);
     
     // This schedule contains only 305.

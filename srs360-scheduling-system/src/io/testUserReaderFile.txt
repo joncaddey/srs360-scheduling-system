@@ -1,6 +1,5 @@
 %Test data file for testOkayRead() in testUserReader
 %do not change idly, or else the test will fail.
-
 USER
 Alpha
 alpha
