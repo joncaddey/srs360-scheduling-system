@@ -19,10 +19,40 @@ import java.util.List;
  * 
  * @author David
  * @version May 28, 2011: Class created.
+ * @version June 1, 2011: added more JavaDoc.
  */
 public enum Day
 {
-  MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY,
+  /*
+   * Days of the week.
+   */
+  /**
+   * Monday.
+   */
+  MONDAY,
+  /**
+   * Tuesday.
+   */
+  TUESDAY,
+  /**
+   * Wednesday.
+   */
+  WEDNESDAY,
+  /**
+   * Thursday.
+   */
+  THURSDAY,
+  /**
+   * Friday.
+   */
+  FRIDAY,
+  /**
+   * Saturday.
+   */
+  SATURDAY,
+  /**
+   * Sunday.
+   */
   SUNDAY;
   
   /**
@@ -40,7 +70,7 @@ public enum Day
    */
   public static List<Day> getAllDays()
   {
-    List<Day> daysList = new ArrayList<Day>();
+    final List<Day> daysList = new ArrayList<Day>();
     daysList.add(Day.MONDAY);
     daysList.add(Day.TUESDAY);
     daysList.add(Day.WEDNESDAY);

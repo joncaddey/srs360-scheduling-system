@@ -93,7 +93,7 @@ public class Catalogue
    * @throws IllegalArgumentException if the_ID is null.
    */
   public Course getCourse(final String the_ID)
-      throws IllegalArgumentException
+    throws IllegalArgumentException
   {
     if (the_ID == null)
     {
@@ -142,7 +142,7 @@ public class Catalogue
    * @throws NullPointerException if the_time is null.
    */
   public GeneralTime getGeneralTime(final Time the_time)
-      throws NullPointerException
+    throws NullPointerException
   {
     GeneralTime time;
     if (the_time.compareTo(my_day_night_cutoff) < 0)
