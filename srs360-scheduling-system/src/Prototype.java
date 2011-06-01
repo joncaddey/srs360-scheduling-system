@@ -16,6 +16,8 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+import javax.management.RuntimeErrorException;
+
 import users.AdvisorFeedback;
 import users.StudentFeedbackSummary;
 import users.UserCommunity;
@@ -35,13 +37,12 @@ import courses.Schedule;
  */
 public class Prototype
 {
+  private static final String my_error_path = "error.txt";
 
-  private String my_time_slot_file_path =
-      "timeslots.txt";
+  private String my_time_slot_file_path = "timeslots.txt";
   private String my_course_list_file_path =
       "master_course_list.txt";
-  private String my_user_list_file_path =
-      "user_list.txt";
+  private String my_user_list_file_path = "user_list.txt";
   private String my_schedule_path = "schedule.csv";
   private String my_feedback_path = "feedback.txt";
 
@@ -133,8 +134,20 @@ public class Prototype
       prototype.initialize();
       prototype.writeFeedback();
     }
-    catch (final IOException the_e)
+    catch (final Exception the_e)
     {
+      try
+      {
+        final BufferedWriter writer =
+            new BufferedWriter(new FileWriter(new File(
+              my_error_path)));
+        writer.write(the_e.getMessage());
+        writer.close();
+      }
+      catch (final IOException the_e2)
+      {
+        // nothing to do here.
+      }
       System.err.println(the_e.getMessage());
     }
 
