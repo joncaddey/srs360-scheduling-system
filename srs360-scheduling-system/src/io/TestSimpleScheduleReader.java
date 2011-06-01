@@ -19,6 +19,8 @@ import org.junit.*;
 import users.UserCommunity;
 
 import courses.Catalogue;
+import courses.Course;
+import courses.Section;
 
 /**
  * Tests the methods of SimpleScheduleReader.
@@ -52,8 +54,8 @@ public class TestSimpleScheduleReader
       UserReader user_reader =
           new UserReader(reader,
             course_list_reader.getCourseMap());
-      user_reader.read(new Scanner(
-        "src/io/testUserReaderFile.txt"));
+      user_reader.read(new Scanner(new File(
+        "src/io/testUserReaderFile.txt")));
 
       my_reader =
           new SimpleScheduleReader(reader, catalogue,
@@ -92,12 +94,39 @@ public class TestSimpleScheduleReader
   }
 
   /**
-   * parseSectionString when working properly
+   * parseSectionString when working properly.
    */
   @Test
   public void testOkayParseSectionString()
   {
-    fail();
+    Section section =
+        my_reader
+            .parseSectionString("TCSS360,A,Don't Care in Catalogue,Papa,MW,1615,1820,5");
+    assertEquals("Wrong ID, Title, or credits", new Course(
+      "TCSS360", "SOFTWARE DEV AND QA", 5),
+        section.getCourse());
+    assertTrue("Not an instructor", section.getInstructor()
+        .isInstructor());
+
+  }
+
+  /**
+   * read when working properly.
+   */
+  @Test
+  public void testOkayRead()
+  {
+    try
+    {
+      my_reader.read(new Scanner(new File(
+        "src/io/testSchedule.csv")));
+    }
+    catch (final IOException the_e)
+    {
+      fail(the_e.getMessage());
+    }
+    assertEquals("Wrong number classes.", 3, my_reader
+        .getSchedule().getSections().size());
   }
 
 }

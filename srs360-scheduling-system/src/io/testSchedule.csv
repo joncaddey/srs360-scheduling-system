@@ -1,0 +1,12 @@
+% Generated: 5/17/2011,,,,,,,
+% Adapated from format by Not Drowning Waving,,,,,,,
+% This is a comment line. ,,,,,,,
+% On input each row can be in any order,,,,,,,
+% On output put each row in sorted order for easier reading,,,,,,,
+% By sorted I mean earliest start time of first meeting of week,,,,,,,
+% Day of week abbreviations: MTWRFSN,,,,,,,
+Fall 2011 Schedule,,,,,,,
+COURSE_ID,SECTION,CLASS_TITLE,INSTRUCTOR,DAYS,START_TIME,END_TIME,CREDITS
+TCSS305,A,PROGRAMMING PRACT,Quebec,MW,830,1035,5
+TCSS360,A,SOFTWARE DEV & QA,Romeo,TR,830,1035,5
+TCSS372,A,COMP ARCH,TBA,,,,5
