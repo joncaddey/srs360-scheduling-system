@@ -37,13 +37,13 @@ public class Prototype
 {
 
   private String my_time_slot_file_path =
-      "src/timeslots.txt";
+      "timeslots.txt";
   private String my_course_list_file_path =
-      "src/master_course_list.txt";
+      "master_course_list.txt";
   private String my_user_list_file_path =
-      "src/user_list.txt";
-  private String my_schedule_path = "src/schedule.csv";
-  private String my_feedback_path = "../feedback.txt";
+      "user_list.txt";
+  private String my_schedule_path = "schedule.csv";
+  private String my_feedback_path = "feedback.txt";
 
   private UserCommunity my_user_community;
   private Catalogue my_catalogue;
