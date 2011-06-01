@@ -23,12 +23,17 @@ import users.StudentFeedbackSummary;
  * 
  * @author Jonathan Caddey (up until May 19)
  * @author David Liddington
+ * @author Greg Cloutier (added JavaDoc)
  * @version May 19, 2011: Class created, original signatures
  *          added.
  * @version May 27, 2011: Completed construction, getter.
+ * @version June 1, 2011: Added JavaDoc.
  */
 public class DaySlot
 {
+  /**
+   * Collection of Day objects.
+   */
   private final Collection<Day> my_days;
 
   /**
@@ -65,18 +70,31 @@ public class DaySlot
     return Collections.unmodifiableCollection(my_days);
   }
 
+  /**
+   * Returns the collection of days.
+   * 
+   * @return The collection of days in String representation
+   */
   public String toString()
   {
     return my_days.toString();
   }
 
+  /**
+   * Determines whether this DaySlot is the same as
+   * the_other object.
+   * 
+   * @param the_other The object to be compared.
+   * @return True if the_other object is the same as this
+   *         DaySlot, false if otherwise
+   */
   public boolean equals(final Object the_other)
   {
     boolean to_return = the_other == this;
     if (!to_return && the_other != null &&
         the_other.getClass() == getClass())
     {
-      DaySlot ds = (DaySlot) the_other;
+      final DaySlot ds = (DaySlot) the_other;
       to_return =
           ds.getDays().containsAll(this.getDays()) &&
               getDays().containsAll(ds.getDays());
@@ -84,8 +102,12 @@ public class DaySlot
 
     return to_return;
   }
-  
-  public int hashCode() {
+
+  /**
+   * @return The hashcode of the DaySlot object.
+   */
+  public int hashCode()
+  {
     return 42;
   }
 

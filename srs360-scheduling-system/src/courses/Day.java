@@ -18,6 +18,7 @@ import java.util.List;
  * </ul>
  * 
  * @author David
+ * @author Greg (added JavaDoc)
  * @version May 28, 2011: Class created.
  * @version June 1, 2011: added more JavaDoc.
  */
