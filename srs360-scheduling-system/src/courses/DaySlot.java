@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 
+import users.StudentFeedbackSummary;
+
 /**
  * DaySlot is a combination of days on which a Section may
  * be offered. DaySlots are immutable.<br>
@@ -62,8 +64,29 @@ public class DaySlot
   {
     return Collections.unmodifiableCollection(my_days);
   }
-  
-  public String toString() {
+
+  public String toString()
+  {
     return my_days.toString();
   }
+
+  public boolean equals(final Object the_other)
+  {
+    boolean to_return = the_other == this;
+    if (!to_return && the_other != null &&
+        the_other.getClass() == getClass())
+    {
+      DaySlot ds = (DaySlot) the_other;
+      to_return =
+          ds.getDays().containsAll(this.getDays()) &&
+              getDays().containsAll(ds.getDays());
+    }
+
+    return to_return;
+  }
+  
+  public int hashCode() {
+    return 42;
+  }
+
 }

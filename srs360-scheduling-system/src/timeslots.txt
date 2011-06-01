@@ -8,15 +8,15 @@ M,T,W,R,F,S,N
 
 %The rest of the lines are the dayslots--every 
 %combination of days when classes can be scheduled.
-M
-MT
-MTR
+%M
+%MT
+%MTR
 MW
-MWR
-MWF
-T
+%MWR
+%MWF
+%T
 TR
-W
-R
-F
-S
+%W
+%R
+%F
+%S

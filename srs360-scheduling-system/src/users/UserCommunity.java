@@ -11,7 +11,9 @@ package users;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import courses.Catalogue;
@@ -42,7 +44,7 @@ public class UserCommunity
    */
   private final Catalogue my_catalogue;
 
-  private Collection<StudentFeedbackSummary> my_student_feedback;
+  private List<StudentFeedbackSummary> my_student_feedback;
   private Collection<InstructorFeedback> my_instructor_feedback;
   private Collection<AdvisorFeedback> my_advisor_feedback;
 
@@ -121,36 +123,69 @@ public class UserCommunity
         new HashMap<StudentFeedbackSummary, Integer>();
     for (User user : my_authenticated_users.values())
     {
-      if (user.isInstructor())
-      {
-        my_instructor_feedback.add(user
-            .getInstructorFeedback(the_schedule));
-      }
+      // if (user.isInstructor())
+      // {
+      // my_instructor_feedback.add(user
+      // .getInstructorFeedback(the_schedule));
+      // }
       if (user.isAdvisor())
       {
-        my_advisor_feedback.add(user
-            .getAdvisorFeedback(the_schedule));
+        final AdvisorFeedback feedback =
+            user.getAdvisorFeedback(the_schedule);
+        if (!feedback.getCourses().isEmpty())
+        {
+          my_advisor_feedback.add(feedback);
+        }
       }
       if (user.isStudent())
       {
         final Collection<StudentFeedbackSummary> sfs =
             user.getStudentFeedback(the_schedule,
                 my_catalogue.getDaySlots());
-        for (StudentFeedbackSummary s : sfs)
+
+        // if students actually have something to say
+        if (!sfs.isEmpty())
         {
-          if (sfs_map.containsKey(s))
+          for (StudentFeedbackSummary s : sfs)
           {
-            sfs_map.put(s, sfs_map.get(s) + 1);
-          }
-          else
-          {
-            sfs_map.put(s, 1);
+            if (sfs_map.containsKey(s))
+            {
+              sfs_map.put(s, sfs_map.get(s) + 1);
+            }
+            else
+            {
+              sfs_map.put(s, 1);
+            }
           }
         }
       }
-      // TODO not sure if any of this works. May want to
-      // focus on one thing at a time.
     }
+
+    // make a list of studentFeedbackSummaries.
+    my_student_feedback =
+        new ArrayList<StudentFeedbackSummary>(
+          sfs_map.size());
+    for (StudentFeedbackSummary sfs : sfs_map.keySet())
+    {
+      my_student_feedback.add(new StudentFeedbackSummary(
+        sfs.getCourse(), sfs.getDaySlot(), sfs
+            .getGeneralTime(), sfs_map.get(sfs)));
+    }
+    Collections.sort(my_student_feedback,
+        new Comparator<StudentFeedbackSummary>()
+        {
+
+          @Override
+          public int compare(StudentFeedbackSummary the_o1,
+              StudentFeedbackSummary the_o2)
+          {
+
+            return the_o2.getFrequency() -
+                   the_o1.getFrequency();
+          }
+
+        });
+
   }
 
   public Collection<AdvisorFeedback> getAdvisorFeedback()
@@ -178,5 +213,12 @@ public class UserCommunity
       }
     }
     return null;
+  }
+
+  public List<StudentFeedbackSummary> getStudentFeedback()
+  {
+
+    return Collections
+        .unmodifiableList(my_student_feedback);
   }
 }
