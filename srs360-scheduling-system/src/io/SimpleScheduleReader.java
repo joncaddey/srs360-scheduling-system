@@ -160,6 +160,7 @@ public final class SimpleScheduleReader
       if (!line.startsWith(DEFAULT_COMMENT_STRING) &&
           !line.startsWith(DEFAULT_DELIMITER))
       {
+        
         sections.add(parseSectionString(line));
 
       }
