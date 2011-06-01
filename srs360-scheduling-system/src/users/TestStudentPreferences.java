@@ -32,11 +32,10 @@ public class TestStudentPreferences
   @Before
   public void setUp()
   {
-    my_student_prefs = new StudentPreferences();
     my_test_course = new Course("100", "CSS360", 5);
     my_test_day = Day.MONDAY;
     my_test_time = GeneralTime.MORNING;
-  }
+  } 
   
   @Test
   public void testAddandRemoveMethods()
@@ -66,60 +65,4 @@ public class TestStudentPreferences
              getPreferredGeneralTimes().contains(my_test_time));
   }
   
-  @Test
-  public void testGetStudentFeedback()
-  {
-    Collection<Section> sections = new ArrayList<Section>();
-    Schedule schedule = new Schedule(sections);
-    Collection<DaySlot> dayslots = new ArrayList<DaySlot>();
-    Collection<StudentFeedbackSummary> fbk =
-                    new ArrayList<StudentFeedbackSummary>();
-    Collection<Course> pref_courses = new ArrayList<Course>();
-    Collection<>
-
-    
-  }
-  
- 
-  
-  public Collection<StudentFeedbackSummary> getStudentFeedback
-  (final Schedule the_schedule,
-   final Collection<DaySlot> the_dayslot_collection)
-
-// the collection of feedbacks that will be returned
-final Collection<StudentFeedbackSummary> fbk_collection =
-            new ArrayList<StudentFeedbackSummary>();
-// In English: "For each course I want to take, if the 
-// schedule does not have it on a day and at a time I
-// am on campus, put every combination of meeting days
-// (MW, TR, etc) and time (day, evening) that I will be
-// on campus into a collection and return that." 
-for (Course each_course : my_pref_courses)
-{
-if (!the_schedule.hasSection(each_course,
-                           my_pref_days, 
-                           my_pref_times))
-{       
-for (DaySlot each_dayslot : the_dayslot_collection)
-{
-  for (GeneralTime each_time :
-                          GeneralTime.getAllTimes())
-  {
-    if (my_pref_days.containsAll
-                 (each_dayslot.getDays()) &&
-                  my_pref_times.contains(each_time))
-    {
-      StudentFeedbackSummary stud_fbk =
-            new StudentFeedbackSummary(each_course,
-                                       each_dayslot,
-                                       each_time);
-      fbk_collection.add(stud_fbk);
-    }
-  }
-}     
-}
-} 
-return fbk_collection;   
-}
-
 }
