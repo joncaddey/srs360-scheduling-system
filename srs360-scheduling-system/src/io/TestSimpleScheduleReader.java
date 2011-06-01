@@ -9,6 +9,7 @@ package io;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.Scanner;
 
 import org.junit.*;
@@ -31,7 +32,7 @@ public class TestSimpleScheduleReader
   public void setUp()
   {
     TimeSlotReader reader = new TimeSlotReader();
-    reader.read(new Scanner("M,T,W,Th,F,S,Sn\n1615\nMW\nTR\nF"));
+    reader.read(new Scanner(new File("src/io/dayslots.txt")));
     
 
     my_reader = new SimpleScheduleReader(reader, the_catalogue, the_user_community)

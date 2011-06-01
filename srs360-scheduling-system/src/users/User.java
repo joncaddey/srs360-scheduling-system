@@ -227,7 +227,8 @@ public class User
   public AdvisorFeedback getAdvisorFeedback(
       final Schedule the_schedule)
   {
-    return my_adv_prefs.getAdvisorFeedback(the_schedule);
+    return new AdvisorFeedback(
+      my_adv_prefs.getAdvisorFeedback(the_schedule), this);
   }
 
   /**
