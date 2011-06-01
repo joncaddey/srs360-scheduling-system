@@ -1,0 +1,19 @@
+Jonathan Caddey, David Liddington, Gregory Cloutier
+Simple Random Sample
+TCSS360 Tenenberg 5
+May 31 2011
+
+Project State:
+
+INPUT FILES
+
+The program can read a list of day slots (combinations of days on which classes meet), a list of courses, and a list of user preferences from files.  These files must be in the main directory of the jar file to be read.  The user can not specify which file containing the schedule to read--it must be named schedule.csv and be in the main directory of the .jar.  The .csv file might not be read if the editor automatically places quotes around each cell.  The classes that read files are not robust.
+
+CONSTRAINT CHECKING
+
+A file called feedback.txt contains the violated constraints.  First are the advisor constraints broken, generated for each Advisor who does not see a section of every course they want on the schedule.  Next are the student constraints, which appear as a course, time, and day combination not offered by the current schedule and how many students would like that combination.
+
+Instructor constraints are not processed, though there preferences are read in from file.  The program does NOT indicate which sections are unwanted by instructors, which instructors are assigned to teach more credit hours than they'd like, or what sections have overlapping durations but are taught by the same instructor.
+
+There is NO list of violated business rules.  The only business rule we planned to check was that no instructor could teach two sections at the same time, and we decided to move that to regular instructor constraint checking, so we deleted our BusinessRule class (this was never implemented.)
+
