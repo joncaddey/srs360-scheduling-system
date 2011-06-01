@@ -41,12 +41,11 @@ public class User
    * Constructs a unique user of the scheduling system.
    * 
    * @param the_name The user's name
-   * @param the_user_ID The user's system name
    * @param the_password The user's system password
-   * @param the_student The user's student status (T/F)
-   * @param the_instructor The user's instructor status
+   * @param the_stud_prefs The user's student status (T/F)
+   * @param the_inst_prefs The user's instructor status
    *          (T/F)
-   * @param the_advisor The user's advisor status (T/F)
+   * @param the_adv_prefs The user's advisor status (T/F)
    * @param the_scheduler The user's scheduler status (T/F)
    * @throws IllegalArgumentException if name, user name, or
    *           password == null
