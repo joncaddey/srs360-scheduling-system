@@ -6,9 +6,6 @@
 
 package courses;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * A general division of the day. <br>
  * 
