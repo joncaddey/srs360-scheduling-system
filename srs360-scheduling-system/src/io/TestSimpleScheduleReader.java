@@ -68,7 +68,7 @@ public class TestSimpleScheduleReader
    */
   @Test
   public void testOkayParseSectionString() {
-    
+    fail();
   }
 
 }

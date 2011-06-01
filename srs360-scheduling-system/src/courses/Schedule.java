@@ -8,7 +8,9 @@
 
 package courses;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.Map;
 
 import users.User;
@@ -28,7 +30,15 @@ import users.User;
 public class Schedule
 {
 
+  /**
+   * Mapping of Courses to Sections.
+   */
   private final Map<Course, Collection<Section>> my_course_to_sections;
+
+  /**
+   * Collection of all Sections.
+   */
+  private final Collection<Section> my_sections;
 
   /**
    * Creates a Schedule with the given Sections.
@@ -41,6 +51,20 @@ public class Schedule
   public Schedule(final Collection<Section> the_sections)
     throws IllegalArgumentException
   {
+    my_course_to_sections =
+        new HashMap<Course, Collection<Section>>();
+    for (Section section : the_sections)
+    {
+      if (!my_course_to_sections.containsKey(section
+          .getCourse()))
+      {
+        my_course_to_sections.put(section.getCourse(),
+            new ArrayList<Section>());
+      }
+      my_course_to_sections.get(section.getCourse()).add(
+          section);
+    }
+    my_sections = new ArrayList(the_sections);
 
   }
 
@@ -164,7 +188,7 @@ public class Schedule
    */
   public Collection<Section> getSections()
   {
-    return null;
+    return new ArrayList<Section>(my_sections);
 
   }
 }

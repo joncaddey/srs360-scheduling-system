@@ -42,6 +42,8 @@ public class UserCommunity
    */
   private final Catalogue my_catalogue;
 
+  private Collection<StudentFeedbackSummary> my_student_feedback;
+  private Collection<InstructorFeedback> my_instructor_feedback;
   private Collection<AdvisorFeedback> my_advisor_feedback;
 
   /**
@@ -107,17 +109,47 @@ public class UserCommunity
    * <ul>
    * <li>TODO</li>
    * </ul>
+   * 
+   * @author Jonathan Caddey
    */
   public void gatherFeedback(final Schedule the_schedule)
   {
+    my_instructor_feedback =
+        new ArrayList<InstructorFeedback>();
     my_advisor_feedback = new ArrayList<AdvisorFeedback>();
+    Map<StudentFeedbackSummary, Integer> sfs_map =
+        new HashMap<StudentFeedbackSummary, Integer>();
     for (User user : my_authenticated_users.values())
     {
+      if (user.isInstructor())
+      {
+        my_instructor_feedback.add(user
+            .getInstructorFeedback(the_schedule));
+      }
       if (user.isAdvisor())
       {
         my_advisor_feedback.add(user
             .getAdvisorFeedback(the_schedule));
       }
+      if (user.isStudent())
+      {
+        final Collection<StudentFeedbackSummary> sfs =
+            user.getStudentFeedback(the_schedule,
+                my_catalogue.getDaySlots());
+        for (StudentFeedbackSummary s : sfs)
+        {
+          if (sfs_map.containsKey(s))
+          {
+            sfs_map.put(s, sfs_map.get(s) + 1);
+          }
+          else
+          {
+            sfs_map.put(s, 1);
+          }
+        }
+      }
+      // TODO not sure if any of this works. May want to
+      // focus on one thing at a time.
     }
   }
 
@@ -125,6 +157,13 @@ public class UserCommunity
   {
     return new ArrayList<AdvisorFeedback>(
       my_advisor_feedback);
+
+  }
+
+  public Collection<InstructorFeedback> getInstructorFeedback()
+  {
+    return new ArrayList<InstructorFeedback>(
+      my_instructor_feedback);
 
   }
 
