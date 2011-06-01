@@ -27,7 +27,6 @@ public class TestInstructorPreferences
   @Before
   public void setUp()
   {
-    my_instructor_prefs = new InstructorPreferences();
     my_test_course = new Course("100", "CSS360", 5);
     my_test_day = Day.MONDAY;
     my_test_time = GeneralTime.MORNING;
