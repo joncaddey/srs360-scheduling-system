@@ -24,8 +24,10 @@ import users.User;
  * 
  * @author Jonathan Caddey
  * @author David Liddington modified constructor
+ * @author Greg Cloutier (added JavaDoc)
  * @version May 31, 2011: Jon eliminated TimeSlot fields.
  * @version May 13, 2011
+ * @version June 1, 2011: added java doc
  */
 public class Section
 {
@@ -39,6 +41,9 @@ public class Section
    */
   private final User my_instructor;
 
+  /**
+   * The days which the section is taught.
+   */
   private final DaySlot my_day_slot;
   /**
    * The start Time for the Section.
@@ -55,6 +60,17 @@ public class Section
    */
   private final GeneralTime my_general_time;
 
+  /**
+   * Constructs a Section.
+   * 
+   * @param the_course The course
+   * @param the_instructor The user who teaches this section
+   * @param the_day_slot The days of instruction
+   * @param the_general_time The general time of this
+   *          section (morning or evening)
+   * @param the_start_time The time the section begins.
+   * @param the_end_time The time the section ends.
+   */
   public Section(final Course the_course,
                  final User the_instructor,
                  final DaySlot the_day_slot,
