@@ -155,14 +155,12 @@ public final class SimpleScheduleReader
     sections.add(parseSectionString(line));
     while (the_scanner.hasNextLine())
     {
+      line = the_scanner.nextLine();
       if (!line.startsWith(DEFAULT_COMMENT_STRING) &&
           !line.startsWith(DEFAULT_DELIMITER))
       {
-        
         sections.add(parseSectionString(line));
-
       }
-      line = the_scanner.nextLine();
     }
 
     my_schedule = new Schedule(sections);
