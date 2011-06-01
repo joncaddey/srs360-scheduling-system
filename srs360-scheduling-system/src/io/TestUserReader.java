@@ -43,12 +43,19 @@ public class TestUserReader
   public void setup()
   {
     final TimeSlotReader time_reader = new TimeSlotReader();
-    time_reader.read(new Scanner("M,T,W,Th,F,S,Sn\n"
-                                 + "1615\nMW\nTTh"));
+    time_reader.read(new Scanner("M,T,W,R,F,S,N\n"
+                                 + "1615\nMW\nTR"));
     final CourseListReader course_reader =
         new CourseListReader();
-    course_reader.read(new Scanner(
-      "TCSS360,QA,5\nTCSS305,PROG PRACT,5"));
+    try
+    {
+      course_reader.read(new Scanner(new File(
+        "src/io/masterCourseList.txt")));
+    }
+    catch (final IOException the_e)
+    {
+      fail();
+    }
     my_reader =
         new UserReader(time_reader,
           course_reader.getCourseMap());
@@ -63,10 +70,10 @@ public class TestUserReader
     final Collection<Course> courses =
         my_reader.parseCourseString("TCSS360,TCSS305");
     assertTrue("Did not find first course",
-        courses.contains(new Course("TCSS360", "QA", 5)));
+        courses.contains(new Course("TCSS360", "SOFTWARE DEV AND QA", 5)));
     assertTrue("Did not find second course",
         courses.contains(new Course("TCSS305",
-          "PROG PRACT", 5)));
+          "PROG PRACTICUM", 5)));
   }
 
   /**
@@ -122,7 +129,7 @@ public class TestUserReader
     StudentPreferences student =
         my_reader
             .parseStudentPreferences(new LineCommentScanner(
-              new Scanner("MTWThF\n" + "MORNING\n"
+              new Scanner("MTWRF\n" + "MORNING\n"
                           + "TCSS360,TCSS305")));
     assertTrue(
         "Should be in MORNING",
@@ -149,9 +156,9 @@ public class TestUserReader
     }
     final Map<String, User> map = my_reader.getUserMap();
     assertTrue("Should have had first user",
-        map.containsKey("bbody"));
+        map.containsKey("alpha"));
     assertTrue("Should have read Scheduler in.",
-        map.get("sscheduler").isScheduler());
+        map.get("bravo").isScheduler());
   }
 
 }
