@@ -6,6 +6,7 @@
 
 package courses;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import users.User;
@@ -150,6 +151,9 @@ public class Section
    */
   public Collection<Day> getDays()
   {
+    if (my_day_slot == null) {
+      return new ArrayList<Day>();
+    }
     return my_day_slot.getDays();
   }
 
