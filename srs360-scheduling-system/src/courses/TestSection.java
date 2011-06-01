@@ -1,3 +1,9 @@
+/*
+ * Simple Random Sample
+ * 
+ * srs360-scheduling-system
+ */
+
 package courses;
 
 import org.junit.Before;
