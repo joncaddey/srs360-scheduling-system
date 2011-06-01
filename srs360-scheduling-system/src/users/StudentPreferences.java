@@ -268,7 +268,7 @@ public class StudentPreferences
               StudentFeedbackSummary stud_fbk =
                     new StudentFeedbackSummary(each_course,
                                                each_dayslot,
-                                               each_time);
+                                               each_time, 1);
               fbk_collection.add(stud_fbk);
             }
           }

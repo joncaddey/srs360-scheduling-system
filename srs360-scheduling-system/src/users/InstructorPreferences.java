@@ -2,7 +2,8 @@
  * Simple Random Sample
  * 
  * srs360-scheduling-system
- */   
+ */
+
 package users;
 
 import java.util.ArrayList;
@@ -18,14 +19,15 @@ import courses.Section;
 
 /**
  * Provides the instructor's preferences of courses he wants
- * to teach and days and times he wants to work.
- * <br>
+ * to teach and days and times he wants to work. <br>
  * <b>Invariants:</b>
  * <ul>
  * <li>none</li>
  * </ul>
  * 
  * @author David
+ * @author Jonathan: changed return type of
+ *         getInstructorPreferences
  * @version May 27, 2011: Class created.
  */
 public class InstructorPreferences
@@ -39,9 +41,9 @@ public class InstructorPreferences
    * Constructs an InstructorPreferences.
    */
   public InstructorPreferences(final Collection<Day> the_days,
-                    final Collection<GeneralTime> the_times,
-                    final Collection<Course> the_courses,
-                    int the_max_hours)
+                               final Collection<GeneralTime> the_times,
+                               final Collection<Course> the_courses,
+                               int the_max_hours)
   {
     my_pref_days = the_days;
     my_pref_times = the_times;
@@ -49,188 +51,189 @@ public class InstructorPreferences
     my_max_credit_hours = the_max_hours;
   }
 
-    /**
-     * Adds a course to the instructor's course list.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>The added course is not null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the course is added to the list</li>
-     * </ul>
-     * @param the_course The course to be added
-     * @throws IllegalArgumentException if the course == null
-     */
-    public void addCourse(final Course the_course)
-                             throws IllegalArgumentException
+  /**
+   * Adds a course to the instructor's course list. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>The added course is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the course is added to the list</li>
+   * </ul>
+   * 
+   * @param the_course The course to be added
+   * @throws IllegalArgumentException if the course == null
+   */
+  public void addCourse(final Course the_course)
+      throws IllegalArgumentException
+  {
+    if (the_course == null)
     {
-      if (the_course == null)
-      {
-        throw new IllegalArgumentException();
-      }
-      my_pref_courses.add(the_course);
+      throw new IllegalArgumentException();
     }
-    
-    /**
-     * Removes a course from the instructor's course list.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>The removed course is not null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the course is removed from the list</li>
-     * </ul>
-     * @param the_course The course to be removed
-     * @throws IllegalArgumentException if the course == null
-     */
-    public void removeCourse(final Course the_course)
-                             throws IllegalArgumentException
-    {
-      if (the_course == null)
-      {
-        throw new IllegalArgumentException();
-      }
-      my_pref_courses.remove(the_course);
-    }
+    my_pref_courses.add(the_course);
+  }
 
-    public Collection<Course> getPreferredCourses()
+  /**
+   * Removes a course from the instructor's course list. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>The removed course is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the course is removed from the list</li>
+   * </ul>
+   * 
+   * @param the_course The course to be removed
+   * @throws IllegalArgumentException if the course == null
+   */
+  public void removeCourse(final Course the_course)
+      throws IllegalArgumentException
+  {
+    if (the_course == null)
     {
-      return Collections.unmodifiableCollection(my_pref_courses);
+      throw new IllegalArgumentException();
     }
+    my_pref_courses.remove(the_course);
+  }
 
-    /**
-     * Adds a day to the instructor's day list.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>The added day is not null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the day is added to the list</li>
-     * </ul>
-     * @param the_day The day to be added
-     * @throws IllegalArgumentException if the day == null
-     */
-    public void addDay(final Day the_day)
-                             throws IllegalArgumentException
-    {
-      if (the_day == null)
-      {
-        throw new IllegalArgumentException();
-      }
-      my_pref_days.add(the_day);
-    }
+  public Collection<Course> getPreferredCourses()
+  {
+    return Collections
+        .unmodifiableCollection(my_pref_courses);
+  }
 
-    /**
-     * Removes a day from the instructor's day list.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>The removed day is not null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the day is removed from the list</li>
-     * </ul>
-     * @param the_day The day to be removed
-     * @throws IllegalArgumentException if the day == null
-     */
-    public void removeDay(final Day the_day)
-                             throws IllegalArgumentException
+  /**
+   * Adds a day to the instructor's day list. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>The added day is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the day is added to the list</li>
+   * </ul>
+   * 
+   * @param the_day The day to be added
+   * @throws IllegalArgumentException if the day == null
+   */
+  public void addDay(final Day the_day)
+      throws IllegalArgumentException
+  {
+    if (the_day == null)
     {
-      if (the_day == null)
-      {
-        throw new IllegalArgumentException();
-      }
-      my_pref_days.remove(the_day);
+      throw new IllegalArgumentException();
     }
+    my_pref_days.add(the_day);
+  }
 
-    public Collection<Day> getPreferredDays()
+  /**
+   * Removes a day from the instructor's day list. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>The removed day is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the day is removed from the list</li>
+   * </ul>
+   * 
+   * @param the_day The day to be removed
+   * @throws IllegalArgumentException if the day == null
+   */
+  public void removeDay(final Day the_day)
+      throws IllegalArgumentException
+  {
+    if (the_day == null)
     {
-      return Collections.unmodifiableCollection(my_pref_days);
+      throw new IllegalArgumentException();
     }
+    my_pref_days.remove(the_day);
+  }
 
-    /**
-     * Adds a time to the instructor's time list.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>The added time is not null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the time is added to the list</li>
-     * </ul>
-     * @param the_time The time to be added
-     * @throws IllegalArgumentException if the time == null
-     */
-    public void addTime(final GeneralTime the_time)
-                             throws IllegalArgumentException
-    {
-      if (the_time == null)
-      {
-        throw new IllegalArgumentException();
-      }
-      my_pref_times.add(the_time);
-    }
+  public Collection<Day> getPreferredDays()
+  {
+    return Collections.unmodifiableCollection(my_pref_days);
+  }
 
-    /**
-     * Removes a time from the instructor's time list.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>The removed time is not null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the time is removed from the list</li>
-     * </ul>
-     * @param the_time The time to be removed
-     * @throws IllegalArgumentException if the time == null
-     */
-    public void removeTime(final GeneralTime the_time)
-                             throws IllegalArgumentException
+  /**
+   * Adds a time to the instructor's time list. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>The added time is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the time is added to the list</li>
+   * </ul>
+   * 
+   * @param the_time The time to be added
+   * @throws IllegalArgumentException if the time == null
+   */
+  public void addTime(final GeneralTime the_time)
+      throws IllegalArgumentException
+  {
+    if (the_time == null)
     {
-      if (the_time == null)
-      {
-        throw new IllegalArgumentException();
-      }
-      my_pref_times.remove(the_time);
+      throw new IllegalArgumentException();
     }
+    my_pref_times.add(the_time);
+  }
 
-    public Collection<GeneralTime> getPreferredGeneralTimes()
+  /**
+   * Removes a time from the instructor's time list. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>The removed time is not null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>the time is removed from the list</li>
+   * </ul>
+   * 
+   * @param the_time The time to be removed
+   * @throws IllegalArgumentException if the time == null
+   */
+  public void removeTime(final GeneralTime the_time)
+      throws IllegalArgumentException
+  {
+    if (the_time == null)
     {
-      return Collections.unmodifiableCollection(my_pref_times);
+      throw new IllegalArgumentException();
     }
-        
-    /**
-     * This method compares every course/day/time assigned
-     * to this instructor with the courses/days/times he
-     * wants to teach and returns a collection of course
-     * sections that do not match.
-     * <br>
-     * <b>Preconditions:</b>
-     * <ul>
-     * <li>the schedule != null</li>
-     * <li>the instructor != null</li>
-     * </ul>
-     * <b>Postconditions:</b>
-     * <ul>
-     * <li>the collection of unwanted sections != null</li>
-     * </ul>
-     * @param the_schedule The schedule of courses
-     * @param the_instructor The instructor for whom the
-     * collection of unwanted sections is prepared
-     * @return The collection of unwanted sections
-     * @throws IllegalArgumentException if the schedule or
-     * the instructor == null
-     */
-  public Collection<Section> getInstructorFeedback
+    my_pref_times.remove(the_time);
+  }
+
+  public Collection<GeneralTime> getPreferredGeneralTimes()
+  {
+    return Collections
+        .unmodifiableCollection(my_pref_times);
+  }
+
+  /**
+   * This method compares every course/day/time assigned to
+   * this instructor with the courses/days/times he wants to
+   * teach. <br>
+   * <b>Preconditions:</b>
+   * <ul>
+   * <li>the schedule != null</li>
+   * <li>the instructor != null</li>
+   * </ul>
+   * <b>Postconditions:</b>
+   * <ul>
+   * <li>does not return null</li>
+   * </ul>
+   * 
+   * @param the_schedule The schedule of courses
+   * @param the_instructor The instructor for whom the
+   *          collection of unwanted sections is prepared
+   * @return The collection of unwanted sections
+   * @throws IllegalArgumentException if the schedule or the
+   *           instructor == null
+   */
+  public InstructorFeedback getInstructorFeedback
                                (final Schedule the_schedule,
                                 final User the_instructor)
   { 
@@ -260,9 +263,9 @@ public class InstructorPreferences
       {
         unwanted_sections.add(each_section);
       }    
-    }   
-    return unwanted_sections;
+    }
+    
+    return new InstructorFeedback(the_instructor, unwanted_sections);
     
   }
-  
 }

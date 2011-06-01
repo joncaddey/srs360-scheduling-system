@@ -79,7 +79,7 @@ public class User
   }
 
   /**
-   * Authenticates a user with his password. <br>
+   * Authenticates a user with his password. <br>the_schedule
    * <b>Preconditions:</b>
    * <ul>
    * <li>the password is not null</li>
@@ -234,28 +234,24 @@ public class User
   /**
    * This method compares every course/day/time assigned to
    * this instructor with the courses/days/times he wants to
-   * teach and returns a collection of course sections that
-   * do not match. <br>
+   * teach. <br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>the schedule != null</li>
-   * <li>the instructor != null</li>
    * </ul>
    * <b>Postconditions:</b>
    * <ul>
-   * <li>the collection of unwanted sections != null</li>
+   * <li>does not return null</li>
    * </ul>
    * 
    * @param the_schedule The schedule of courses
-   * @param the_instructor The instructor for whom the
-   *          collection of unwanted sections is prepared
-   * @return The collection of unwanted sections
+   * @return an object which collection of unwanted sections.
    */
-  public Collection<Section> getInstructorFeedback(
-      final Schedule the_schedule, final User the_instructor)
+  public InstructorFeedback getInstructorFeedback(
+      final Schedule the_schedule)
   {
     return my_inst_prefs.getInstructorFeedback(
-        the_schedule, the_instructor);
+        the_schedule, this);
   }
 
 }
