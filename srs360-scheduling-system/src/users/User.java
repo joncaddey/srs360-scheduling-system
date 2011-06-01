@@ -110,7 +110,7 @@ public class User
   }
 
   /**
-   * Returns the Student role of the User <br>
+   * Returns the Student role of the User.<br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -128,7 +128,7 @@ public class User
   }
 
   /**
-   * Returns the Instructor role of the User <br>
+   * Returns the Instructor role of the User.<br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -146,7 +146,7 @@ public class User
   }
 
   /**
-   * Returns the Advisor role of the User <br>
+   * Returns the Advisor role of the User.<br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -164,7 +164,7 @@ public class User
   }
 
   /**
-   * Returns the Scheduler role of the User <br>
+   * Returns the Scheduler role of the User.<br>
    * <b>Preconditions:</b>
    * <ul>
    * <li>none</li>
@@ -201,7 +201,8 @@ public class User
    *          dayslots
    * @return The feedback collection of days and times
    */
-  public Collection<StudentFeedbackSummary> getStudentFeedback(
+  public Collection<StudentFeedbackSummary>
+  getStudentFeedback(
       final Schedule the_schedule,
       final Collection<DaySlot> the_dayslot_collection)
   {

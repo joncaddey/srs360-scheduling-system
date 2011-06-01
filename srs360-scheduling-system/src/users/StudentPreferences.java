@@ -227,20 +227,21 @@ public class StudentPreferences
    * @throws IllegalArgumentException if the schedule or the
    * dayslot collection == null
    */
-  public Collection<StudentFeedbackSummary> getStudentFeedback
-          (final Schedule the_schedule,
+  public Collection<StudentFeedbackSummary>
+  getStudentFeedback
+  (final Schedule the_schedule,
            final Collection<DaySlot> the_dayslot_collection)
-           throws IllegalArgumentException
+    throws IllegalArgumentException
   {
     if (the_schedule == null)
     { 
       throw new IllegalArgumentException
-                                ("schedule cannot be null");
+      ("schedule cannot be null");
     }
     if (the_dayslot_collection == null)
     {
       throw new IllegalArgumentException
-                      ("dayslot collection cannot be null");
+      ("dayslot collection cannot be null");
     }
     // the collection of feedbacks that will be returned
     final Collection<StudentFeedbackSummary> fbk_collection =
